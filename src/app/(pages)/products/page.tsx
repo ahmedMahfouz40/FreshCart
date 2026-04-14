@@ -33,7 +33,7 @@ const page = async () => {
         <p className="text-sm leading-5 text-[#6A7282] my-10">
           Showing {products?.length} products
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
+        <div className="grid  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
           {products?.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}

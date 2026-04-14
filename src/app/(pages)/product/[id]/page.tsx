@@ -170,7 +170,7 @@ const ProductDetails = async ({
                 </button>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
+            <div className="grid  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
               {subProducts?.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
