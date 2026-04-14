@@ -90,11 +90,11 @@ const OrderCard = ({ order }: { order: orderData }) => {
       {/* Toggle Content */}
       <div
         className={`bg-gray-50 overflow-hidden transition-all duration-500 ease-in-out
-                  ${isOpen ? "max-h-250 p-6 opacity-100" : "max-h-0 p-0 opacity-0"}`}
+                  ${isOpen ? "max-h-250 p-2 sm:p-6 opacity-100" : "max-h-0 p-0 opacity-0"}`}
       >
         {/* border items */}
         <div>
-          <h4 className="flex mb-5 items-center gap-2 text-heading font-semibold text-sm leading-5">
+          <h4 className="flex mb-5 mt-2 items-center gap-2 text-heading font-semibold text-sm leading-5">
             <span className="w-6 h-6  flex items-center justify-center bg-[#DCFCE7] rounded-lg text-primary-700">
               <TbReceipt />
             </span>

@@ -113,12 +113,12 @@ export default function HomeSlider() {
           ))}
         </Swiper>
         {/* Custom Buttons Navigation*/}
-        <button className="custom-prev absolute left-4 top-1/2 -translate-y-1/2 z-10">
-          <FaChevronLeft className=" hover:scale-110 transition-transform" />
+        <button className="custom-prev hidden! sm:flex! absolute left-4 top-1/2 -translate-y-1/2 z-10">
+          <FaChevronLeft className="hover:scale-110 transition-transform" />
         </button>
 
-        <button className="custom-next absolute right-4 top-1/2 -translate-y-1/2 z-10">
-          <FaChevronRight className=" hover:scale-110 transition-transform" />
+        <button className="custom-next hidden! sm:flex! absolute right-4 top-1/2 -translate-y-1/2 z-10">
+          <FaChevronRight className="hover:scale-110 transition-transform" />
         </button>
       </div>
     </div>

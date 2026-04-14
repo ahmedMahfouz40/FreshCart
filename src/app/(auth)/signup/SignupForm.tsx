@@ -202,16 +202,19 @@ const SignupForm = () => {
               className="cursor-pointer"
               name="terms-checkbox"
             />
+
             <Label htmlFor="terms-checkbox text-[#364153]">
-              I agree to the
-              <Link href={"/"} className="text-primary">
-                Terms of Service
-              </Link>
-              and
-              <Link href={"/"} className="text-primary">
-                Privacy Policy
-              </Link>
-              *
+              <div className="flex flex-wrap gap-2 items-center">
+                I agree to the
+                <Link href={"/"} className="text-primary">
+                  Terms of Service
+                </Link>
+                and
+                <Link href={"/"} className="text-primary">
+                  Privacy Policy
+                </Link>
+                *
+              </div>
             </Label>
           </Field>
         </div>

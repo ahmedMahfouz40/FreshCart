@@ -324,7 +324,7 @@ const Page = () => {
                                 <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                                   <FaPhone />
                                 </div>
-                                <p className="absolute inset-e-5 top-[50%] -translate-y-1/2 text-xs text-gray-400">
+                                <p className="absolute hidden sm:block inset-e-5 top-[50%] -translate-y-1/2 text-xs text-gray-400">
                                   Egyptian numbers only
                                 </p>
                               </div>
@@ -357,10 +357,10 @@ const Page = () => {
                                 {fieldState.invalid && (
                                   <FieldError errors={[fieldState.error]} />
                                 )}
-                                <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
+                                <div className="absolute  left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                                   <FaMapPin />
                                 </div>
-                                <p className="absolute inset-e-5 top-[50%] -translate-y-1/2 text-xs text-gray-400">
+                                <p className="absolute hidden sm:block inset-e-5 top-[50%] -translate-y-1/2 text-xs text-gray-400">
                                   Used for accurate delivery to your area.
                                 </p>
                               </div>
