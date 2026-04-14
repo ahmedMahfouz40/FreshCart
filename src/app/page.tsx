@@ -1,11 +1,49 @@
-import React from 'react'
+import ProductCard from "./_components/ProductCard/ProductCard";
+import { getAllProducts } from "@/services/products";
+import { lazy, Suspense } from "react";
 
-const Home = () => {
+const ShopByCategories = lazy(
+  () => import("./_components/ShopByCategories/ShopByCategories"),
+);
+
+import CardsHome from "./_components/CardsHome/CardsHome";
+import Figure from "./_components/SmallCards/Figure";
+import HomeSlider from "./_sliders/HomeSlider";
+import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
+import Container from "./_components/Container/Container";
+const Home = async () => {
+  const products = await getAllProducts();
+
   return (  
-    <div>
-      hello
-    </div>
-  )
-}
+    <>
+      <div className=" my-5">
+        <HomeSlider />
+        <Container>
+          <div>
+            {/* layout */}
+            <Figure />
+            {/* Categories */}
+            <Suspense fallback={<CategorySkeleton />}>
+              <ShopByCategories />
+            </Suspense>
+            {/* Cards */}
+            <CardsHome />
+            <h2 className="border-s-5 border-primary-600 px-2 rounded my-3 font-bold text-3xl">
+              <span>Featured</span>
+              <span className="text-primary-600 border-primary-600">
+                Products
+              </span>
+            </h2>
+            <div className="grid sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
+              {products?.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </div>
+    </>
+  );
+};
 
-export default Home
+export default Home;
