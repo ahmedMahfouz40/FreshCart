@@ -41,7 +41,7 @@ export default function NavTabs({ product }: { product: productType }) {
           <p className="text-gray-600">{product.description}</p>
         </div>
         <div className="p-4 grid grid-cols-2 gap-4">
-          <div className="bg-gray-50 p-2 space-y-2">
+          <div className="bg-gray-50 col-span-2 sm:col-span-1 p-2 space-y-2">
             <h4 className="text-[#101828]">Product Information</h4>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Ctegory </span>
@@ -66,7 +66,7 @@ export default function NavTabs({ product }: { product: productType }) {
               <span className="text-sm text-[#101828]">{product.sold}</span>
             </div>
           </div>
-          <div className="bg-gray-50 p-2 space-y-2">
+          <div className="bg-gray-50 col-span-2 sm:col-span-1 p-2 space-y-2">
             <h4 className="text-[#101828]">Key Features</h4>
             <div className="flex gap-2">
               <span className="text-primary-600">

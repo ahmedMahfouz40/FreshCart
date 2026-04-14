@@ -5,7 +5,7 @@ import React from "react";
 import { FaBoxOpen } from "react-icons/fa";
 
 const page = async () => {
-   const products = await getAllProducts();
+  const products = await getAllProducts();
   return (
     <div>
       <div className="text-white bg-linear-to-br   from-[#16A34A] via-[#22C55E] to-[#4ADE80] w-full h-50 py-14 px-4">
@@ -30,13 +30,15 @@ const page = async () => {
         </Container>
       </div>
       <Container>
-
-      <p className="text-sm leading-5 text-[#6A7282] my-10">Showing {products?.length} products</p>
-      <div className="grid sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
-        {products?.map(product =>  <ProductCard  key={product._id} product={product} /> )}
-      </div>
+        <p className="text-sm leading-5 text-[#6A7282] my-10">
+          Showing {products?.length} products
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
+          {products?.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
       </Container>
-
     </div>
   );
 };

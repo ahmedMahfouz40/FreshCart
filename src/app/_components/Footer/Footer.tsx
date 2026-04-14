@@ -34,7 +34,7 @@ const Footer = () => {
   ];
 
   const shopList = [
-    { label: "All Products", link: "/allProducts" },
+    { label: "All Products", link: "/Products" },
     { label: "Categories", link: "/categories" },
     { label: "Brands", link: "/Brands" },
     { label: "Electronics", link: "/Electronics" },
@@ -43,7 +43,7 @@ const Footer = () => {
   ];
   const accountList = [
     { label: "My Account", link: "/profile" },
-    { label: "Order History", link: "/orders" },
+    { label: "Order History", link: "/allorders" },
     { label: "Wishlist", link: "/wishlist" },
     { label: "Shopping Cart", link: "/cart" },
     { label: "Sign In", link: "/login" },
@@ -54,12 +54,12 @@ const Footer = () => {
     { label: "Help Center", link: "/help" },
     { label: "Shipping Info", link: "/shipping" },
     { label: "Returns & Refunds", link: "/returns" },
-    { label: "Track Order", link: "/orders" },
+    { label: "Track Order", link: "/allorders" },
   ];
   const legaltList = [
     { label: "Privacy Policy", link: "/privacy" },
     { label: "Terms Of Service", link: "/service" },
-    { label: "Cookie Policy", link: "/ppolicy" },
+    { label: "Cookie Policy", link: "/policy" },
   ];
 
   return (

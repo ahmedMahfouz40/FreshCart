@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { cartContext } from "@/app/_context/CartContextProvider";
 const ShoppingSidebar = () => {
   const { totalCartPrice, numOfCartItems } = useContext(cartContext);
-  
+
   return (
     <>
       <div>
