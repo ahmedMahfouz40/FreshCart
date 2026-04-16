@@ -12,6 +12,7 @@ import {
   FaMoneyBill,
   FaPhone,
   FaReceipt,
+  FaSpinner,
   FaTruck,
 } from "react-icons/fa6";
 import {
@@ -38,7 +39,7 @@ import InfoBanner from "@/app/_components/InfoBanner/InfoBanner";
 import { BsBox2Fill, BsFillCreditCard2BackFill } from "react-icons/bs";
 import Image from "next/image";
 import { Controller, useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { cartContext } from "@/app/_context/CartContextProvider";
 import OrderSummaryCart from "@/app/_skeletons/OrderSummaryCart";
 import { Label } from "@/components/ui/label";
@@ -79,8 +80,8 @@ const egyptGovernorates = [
   { value: "north-sinai", label: "North Sinai" },
   { value: "south-sinai", label: "South Sinai" },
 ];
-
 const Page = () => {
+  const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const router = useRouter();
   const {
     totalCartPrice,
@@ -105,7 +106,8 @@ const Page = () => {
     mode: "onChange",
   });
 
-  async function createOrderCash(values: orderValues) {
+  async function handleCreateOrder(values: orderValues) {
+    setIsPaymentLoading(true);
     const userData = {
       shippingAddress: {
         details: values.details,
@@ -116,32 +118,52 @@ const Page = () => {
     };
 
     if (values.paymentMethod == "cash") {
-      const res = await createCashOrder(cartId, userData);
+      try {
+        const res = await createCashOrder(cartId, userData);
 
-      if (res.status === "success") {
-        toast.success(res.message, {
-          position: "top-center",
+        if (res.status === "success") {
+          toast.success(res.message, {
+            position: "top-center",
+            richColors: true,
+          });
+
+          const params = new URLSearchParams({
+            success: "true",
+          });
+          router.push(`/allorders?${params.toString()}`);
+
+          setTotalCartPrice(0);
+          setNumofCartItems(0);
+          setCartProducts([]);
+        }
+      } catch (error) {
+        console.log("error during payment", error);
+        toast.error("payment Faild", {
+          position: "top-right",
           richColors: true,
         });
-
-        const params = new URLSearchParams({
-          success: "true",
-        });
-        router.push(`/allorders?${params.toString()}`);
-
-        setTotalCartPrice(0);
-        setNumofCartItems(0);
-        setCartProducts([]);
+      } finally {
+        setIsPaymentLoading(false);
       }
     } else if (values.paymentMethod == "visa") {
-      const res = await createVisaOrder(cartId, userData);
-      console.log(res);
+      try {
+        const res = await createVisaOrder(cartId, userData);
+        console.log(res);
 
-      if (res.status === "success") {
-        window.open(res.session.url);
-        setTotalCartPrice(0);
-        setNumofCartItems(0);
-        setCartProducts([]);
+        if (res.status === "success") {
+          window.open(res.session.url);
+          setTotalCartPrice(0);
+          setNumofCartItems(0);
+          setCartProducts([]);
+        }
+      } catch (error) {
+        console.log("error payment", error);
+        toast.error("payment Faild", {
+          position: "top-right",
+          richColors: true,
+        });
+      } finally {
+        setIsPaymentLoading(false);
       }
     }
   }
@@ -217,7 +239,7 @@ const Page = () => {
                   </div>
                   <form
                     id="myForm"
-                    onSubmit={form.handleSubmit(createOrderCash)}
+                    onSubmit={form.handleSubmit(handleCreateOrder)}
                   >
                     <div className="p-4  rounded-b-2xl mb-5 space-y-5 shadow-xl">
                       {/* City */}
@@ -573,9 +595,19 @@ const Page = () => {
                       <button
                         form="myForm"
                         type="submit"
-                        className="bg-linear-to-r  from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800  text-white transition-colors flex items-center justify-center w-full  text-sm cursor-pointer rounded-xl  py-4 gap-2"
+                        disabled={isPaymentLoading}
+                        className={`bg-linear-to-r disabled:opacity-50 disabled:cursor-not-allowed from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800  text-white transition-colors flex items-center justify-center w-full  text-sm cursor-pointer rounded-xl  py-4 gap-2`}
                       >
-                        <BsBox2Fill /> Place Order
+                        {isPaymentLoading ? (
+                          <>
+                            <FaSpinner className="animate-spin" />{" "}
+                            Processing...{" "}
+                          </>
+                        ) : (
+                          <>
+                            <BsBox2Fill /> Place Order
+                          </>
+                        )}
                       </button>
 
                       <div className="flex items-center gap-2 mt-10 justify-around border-t border-gray-100 pt-3 text-center text-sm text-gray-500">

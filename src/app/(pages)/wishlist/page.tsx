@@ -3,7 +3,13 @@
 import Container from "@/app/_components/Container/Container";
 import Image from "next/image";
 import Link from "next/link";
-import { FaCartShopping, FaCheck, FaHeart, FaTrash } from "react-icons/fa6";
+import {
+  FaCartShopping,
+  FaCheck,
+  FaHeart,
+  FaSpinner,
+  FaTrash,
+} from "react-icons/fa6";
 import {
   DeleteFromWishlist,
   getUserWishlist,
@@ -14,9 +20,15 @@ import EmptyWishlist from "@/app/_components/EmptyWishlist/EmptyWishlist";
 import { toast } from "sonner";
 import { wishlistDataType } from "@/types/wishlist.type";
 import { useAddToCart } from "@/app/_hooks/useAddToCart";
+import { useContext, useEffect } from "react";
+import { cartContext } from "@/app/_context/CartContextProvider";
 
 const Wishlist = () => {
-  const { handleAddToCart } = useAddToCart();
+  const {
+    handleAddToCart,
+    isLoading: isAddingTocartId,
+    isSuccess: isAddedToCart,
+  } = useAddToCart();
 
   const queryClient = useQueryClient();
   const {
@@ -29,6 +41,16 @@ const Wishlist = () => {
     queryFn: getUserWishlist,
   });
 
+  const { cartProducts } = useContext(cartContext);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.message, {
+        position: "top-center",
+        richColors: true,
+      });
+    }
+  }, [isError, error]);
   const { mutate, isPending: isDeleting } = useMutation({
     mutationFn: DeleteFromWishlist,
     onSuccess: () => {
@@ -40,13 +62,9 @@ const Wishlist = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (isError) {
-    toast.error(error.message, {
-      position: "top-center",
-      richColors: true,
-    });
-  }
-  if (wishlist?.data.length == 0) return <EmptyWishlist />;
+  if (wishlist && wishlist.data.length == 0) return <EmptyWishlist />;
+  console.log("wishlist", wishlist);
+  console.log("cartProducts", cartProducts);
 
   return (
     <div>
@@ -94,96 +112,115 @@ const Wishlist = () => {
             </div>
           </div>
           {/*  Row */}
-          {wishlist?.data?.map((item) => (
-            <div
-              key={item._id}
-              className="grid grid-cols-12 gap-2 py-4 px-6 items-center"
-            >
-              <div className="col-span-12 md:col-span-6">
-                <div className="flex gap-4 items-center">
-                  <div className=" relative w-20 h-20 rounded-xl border border-[#F3F4F6] overflow-hidden">
-                    <Image
-                      fill
-                      src={item.imageCover}
-                      alt={item.title}
-                      className="w-full"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-heading">{item.title}</h3>
-                    <p className="text-sm text-[#99A1AF] leading-5">
-                      {item.category.name}
-                    </p>
+          {wishlist?.data?.map((item) => {
+            const isInCart = cartProducts?.some(
+              (prod) => String(prod.product._id) == item._id,
+            );
+            return (
+              <div
+                key={item._id}
+                className="grid grid-cols-12 gap-2 py-4 px-6 items-center"
+              >
+                <div className="col-span-12 md:col-span-6">
+                  <div className="flex gap-4 items-center">
+                    <div className=" relative w-20 h-20 rounded-xl border border-[#F3F4F6] overflow-hidden">
+                      <Image
+                        fill
+                        src={item.imageCover}
+                        alt={item.title}
+                        className="w-full"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-heading">{item.title}</h3>
+                      <p className="text-sm text-[#99A1AF] leading-5">
+                        {item.category.name}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-span-12 md:col-span-2 md:text-center text-heading font-semibold">
-                <div className="flex items-center md:block gap-2">
-                  <span className="bg-gray-50 text-sm md:hidden text-[#6A7282]">
-                    price:
-                  </span>
-                  <div>
-                    {item.priceAfterDiscount ? (
-                      <>
-                        <p>{item.priceAfterDiscount} EGP</p>
-                        <p className="text-gray-500 font-light text-sm line-through">
-                          {item.price} EGP
-                        </p>
-                      </>
-                    ) : (
-                      <p>{item.price} EGP</p>
+                <div className="col-span-12 md:col-span-2 md:text-center text-heading font-semibold">
+                  <div className="flex items-center md:block gap-2">
+                    <span className="bg-gray-50 text-sm md:hidden text-[#6A7282]">
+                      price:
+                    </span>
+                    <div>
+                      {item.priceAfterDiscount ? (
+                        <>
+                          <p>{item.priceAfterDiscount} EGP</p>
+                          <p className="text-gray-500 font-light text-sm line-through">
+                            {item.price} EGP
+                          </p>
+                        </>
+                      ) : (
+                        <p>{item.price} EGP</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="col-span-12 md:col-span-2 md:text-center">
+                  <div className="flex items-center md:block  gap-2">
+                    <span className="bg-gray-50 text-sm md:hidden text-[#6A7282]">
+                      status:
+                    </span>
+                    {item.quantity > 0 && (
+                      <div className="inline-flex items-center text-sm leading-5 gap-2 bg-green-50 px-3 py-1.5 rounded-full">
+                        <span className={`w-2 h-2 rounded-full  bg-green-500 ${isInCart && 'hidden'}`}></span>
+                        {isInCart && <FaCartShopping className="text-primary " />}
+                        <span className="text-green-600 font-semibold ">
+                         {isInCart ? 'In Cart' : ' In Stock' }
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
-              </div>
-              <div className="col-span-12 md:col-span-2 md:text-center">
-                <div className="flex items-center md:block  gap-2">
-                  <span className="bg-gray-50 text-sm md:hidden text-[#6A7282]">
-                    status:
-                  </span>
-                  {item.quantity > 0 && (
-                    <div className="inline-flex items-center text-sm leading-5 gap-2 bg-green-50 px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                      <FaCartShopping className="text-primary hidden" />
-                      <span className="text-green-600 font-semibold ">
-                        In Stock
-                      </span>
-                    </div>
-                  )}
+                <div className="col-span-12 md:col-span-2 md:text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    {isInCart ? (
+                      <Link
+                        className="  flex-1 md:flex-none inline-flex  items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
+                        href="/cart"
+                      >
+                        <FaCheck className="text-primary text-xs" />
+
+                        <span className="md:hidden xl:inline">View Cart</span>
+                      </Link>
+                    ) : (
+                      <>
+                        <button
+                          disabled={isAddingTocartId == item._id}
+                          onClick={() => handleAddToCart(item._id)}
+                          className=" bg-primary flex-1 justify-center disabled:opacity-50  text-white flex items-center gap-2 py-2.5 px-2 rounded-lg cursor-pointer hover:bg-primary-700 transition-colors duration-300"
+                        >
+                          {isAddingTocartId == item._id ? (
+                            <FaSpinner className="animate-spin " />
+                          ) : isAddedToCart == item._id ? (
+                            <FaCheck />
+                          ) : (
+                            <FaCartShopping />
+                          )}
+
+                          <span className="  md:hidden xl:inline">
+                            {isAddingTocartId == item._id
+                              ? "Adding "
+                              : "Add To cart"}
+                          </span>
+                        </button>
+
+                      </>
+                    )}
+                        <button
+                          disabled={isDeleting}
+                          onClick={() => mutate(item._id)}
+                          className="border rounded-lg h-11 disabled:cursor-not-allowed disabled:opacity-60 w-11  border-[#E5E7EB] flex items-center justify-center bg-white text-[#99A1AF] hover:bg-red-500  hover:text-white cursor-pointer transition-colors duration-300"
+                        >
+                          <FaTrash />
+                        </button>
+                  </div>
                 </div>
               </div>
-              <div className="col-span-12 md:col-span-2 md:text-center">
-                <div className="flex items-center gap-2">
-                  <Link
-                    className="  flex-1 md:flex-none inline-flex hidden! items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all"
-                    href="/cart"
-                  >
-                    <FaCheck className="text-primary text-xs" />
-
-                    <span className="md:hidden lg:inline">View Cart</span>
-                  </Link>
-
-                  <button
-                    onClick={() => handleAddToCart(item._id)}
-                    className=" bg-primary flex-1 justify-center text-white flex items-center gap-2 py-2.5 px-2 rounded-lg cursor-pointer hover:bg-primary-700 transition-colors duration-300"
-                  >
-                    <FaCartShopping />
-                    <span className="  md:hidden xl:inline">
-                      Add To cart
-                    </span>
-                  </button>
-
-                  <button
-                    disabled={isDeleting}
-                    onClick={() => mutate(item._id)}
-                    className="border rounded-lg h-11 disabled:cursor-not-allowed disabled:opacity-60 w-11  border-[#E5E7EB] flex items-center justify-center bg-white text-[#99A1AF] hover:bg-red-500  hover:text-white cursor-pointer transition-colors duration-300"
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {/* =================== */}
         <div className="my-8 flex items-center justify-between">

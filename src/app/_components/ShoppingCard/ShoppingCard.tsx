@@ -127,7 +127,7 @@ const ShoppingCard = () => {
                         onClick={() =>
                           handleUpdateProduct(cart.product._id, cart.count - 1)
                         }
-                        className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-wait"
+                        className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-wait disabled:opacity-50"
                       >
                         -
                       </button>
@@ -139,7 +139,7 @@ const ShoppingCard = () => {
                         onClick={() =>
                           handleUpdateProduct(cart.product._id, cart.count + 1)
                         }
-                        className="w-9 h-9 rounded-lg bg-primary text-white shadow text-2xl cursor-pointer disabled:cursor-wait"
+                        className="w-9 h-9 rounded-lg bg-primary text-white shadow text-2xl cursor-pointer disabled:cursor-wait disabled:opacity-50"
                       >
                         +
                       </button>

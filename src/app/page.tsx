@@ -11,9 +11,11 @@ import Figure from "./_components/SmallCards/Figure";
 import HomeSlider from "./_sliders/HomeSlider";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
 import Container from "./_components/Container/Container";
+import getMyToken from "@/utils/getMyToken";
 const Home = async () => {
   const products = await getAllProducts();
-
+  const token = await getMyToken()
+  console.log( "token : " , token)
   return (
     <>
       <div className=" my-5">

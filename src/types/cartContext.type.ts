@@ -14,6 +14,7 @@ export interface cartResType {
 export interface cartItemType {
   price: number;
   count: number;
+  _id?:string
   product: productType;
 }
 

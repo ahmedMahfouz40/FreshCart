@@ -10,15 +10,15 @@ export function useAddToCart() {
   const { setNumofCartItems, setCartProducts, setTotalCartPrice ,setCartId } =
     useContext(cartContext);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<string | null>(null);
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<string | null>(null);
+
   async function handleAddToCart(productId: string) {
-    setIsLoading(true);
+    setIsLoading(productId);
 
     try {
       const res = await addProductToCart(productId);
-      console.log(res, 'res from hook');
       
       if (res.status === "success") {
         toast.success(res.message, {
@@ -26,14 +26,14 @@ export function useAddToCart() {
           richColors: true,
         });
 
-        setIsSuccess(true);
+        setIsSuccess(productId);
 
         setNumofCartItems(res.numOfCartItems);
         setTotalCartPrice(res.data.totalCartPrice);
         setCartProducts(res.data.products);
         setCartId(res.cartId)
         setTimeout(() => {
-          setIsSuccess(false);
+          setIsSuccess(null);
         }, 2500);
 
         return true;
@@ -52,7 +52,7 @@ export function useAddToCart() {
       console.log("error from add to cart", error);
       return false;
     } finally {
-      setIsLoading(false);
+      setIsLoading(null);
     }
   }
 

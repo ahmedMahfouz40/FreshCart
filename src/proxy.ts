@@ -9,5 +9,5 @@ export default async function proxy(req: NextRequest) {
   return NextResponse.redirect(new URL("/login", req.url));
 }
 export const config = {
-  matcher: ["/payment", "/allorders", "/cart"],
+  matcher: ["/payment", "/allorders", "/cart" , "/wishlist"],
 };
