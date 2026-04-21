@@ -5,8 +5,8 @@ import Navbar from "./_components/Navbar/Navbar";
 import { Toaster } from "sonner";
 import MySessionProvider from "./_providers/MySessionProvider";
 import Footer from "./_components/Footer/Footer";
-import CartContextProvider from "./_context/CartContextProvider";
-import QueryProvider from "./_providers/QueryProvider";
+import ReduxProvider from "./_providers/ReduxProvider";
+import CartInitializer from "./_components/CartInitializer/CartInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,14 +41,13 @@ export default function RootLayout({
         className={` ${exo.className} ${geistSans.variable}  ${geistMono.variable} antialiased`}
       >
         <MySessionProvider>
-          <QueryProvider>
-            <CartContextProvider>
-                <Toaster />
-                <Navbar />
-                {children}
-                <Footer />
-            </CartContextProvider>
-          </QueryProvider>
+          <ReduxProvider>
+            <CartInitializer />
+            <Toaster />
+            <Navbar />
+            {children}
+            <Footer />
+          </ReduxProvider>
         </MySessionProvider>
       </body>
     </html>

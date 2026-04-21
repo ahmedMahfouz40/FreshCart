@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { addToWishlist } from "../_actions/wishlist.actions";
-import { useQueryClient } from "@tanstack/react-query";
+import {
+  addToWishlist,
+} from "../_actions/wishlist.actions";
+import { useAppDispatch, useAppSelector } from "./reduxHooks";
+import {
+  fetchUserWishlist,
+} from "../_redux/slices/wishlistSlice";
+import { useDeleteFromWishlist } from "./useDeleteFromWishlist";
 
 export function useAddToWishlist() {
-  const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState<string | null>(null);
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  const { handleDeleteFromWishlist } = useDeleteFromWishlist();
+  
+  const { wishlistIds } = useAppSelector((state) => state.wishlistReducer);
+  const isInWishlist = (productId: string) => wishlistIds?.includes(productId);
 
   async function handleAddToWishlist(productId: string) {
-    setIsLoading(true);
-
+    setIsLoading(productId);
     try {
+      if (wishlistIds?.includes(productId)) {
+        await handleDeleteFromWishlist(productId);
+        return;
+      }
+
       const res = await addToWishlist(productId);
 
       if (res.status === "success") {
@@ -20,13 +34,10 @@ export function useAddToWishlist() {
           position: "top-center",
           richColors: true,
         });
-        queryClient.invalidateQueries({
-          queryKey: ["wishlist"],
-        });
-        setIsSuccess(true);
-
+        dispatch(fetchUserWishlist());
+        setIsSuccess(productId);
         setTimeout(() => {
-          setIsSuccess(false);
+          setIsSuccess(null);
         }, 2500);
 
         return true;
@@ -36,18 +47,18 @@ export function useAddToWishlist() {
           richColors: true,
         });
       }
-
       return false;
     } catch (error) {
       console.log("error during addition to wishlist", error);
       return false;
     } finally {
-      setIsLoading(false);
+      setIsLoading(null);
     }
   }
 
   return {
     handleAddToWishlist,
+    isInWishlist,
     isLoading,
     isSuccess,
   };

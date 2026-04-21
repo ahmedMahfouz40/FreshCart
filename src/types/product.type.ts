@@ -1,7 +1,7 @@
 export interface Root {
   results: number;
   metadata: Metadata;
-  data: productType[];
+  data: productType[] ;
 }
 
 export interface Metadata {

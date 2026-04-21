@@ -35,21 +35,18 @@ import { signOut, useSession } from "next-auth/react";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import Dropdown from "./Dropdown";
-import { cartContext } from "@/app/_context/CartContextProvider";
-import { useQuery } from "@tanstack/react-query";
-import { getUserWishlist } from "@/app/_actions/wishlist.actions";
+import { useAppSelector } from "@/app/_hooks/reduxHooks";
 export default function Navbar() {
-  const { data } = useQuery({
-    queryKey: ["wishlist"],
-    queryFn: getUserWishlist,
-  });
-  const count = data?.count || 0;
+
+  const {wishlistProducts} = useAppSelector(state=> state.wishlistReducer)
+  const wishlistCount = wishlistProducts?.length || 0;
   const session = useSession();
-  const { numOfCartItems } = React.useContext(cartContext);
 
   function handleSignOut() {
     signOut({ redirect: true, callbackUrl: "/login" });
   }
+
+  const cartReducer = useAppSelector((state) => state.cartReducer);
 
   return (
     <>
@@ -208,9 +205,9 @@ export default function Navbar() {
               className="relative hover:bg-red-50/50 hover:text-red-500 cursor-pointer w-10 h-10 rounded-full flex items-center justify-center"
             >
               <CiHeart />
-              {count > 0 && (
+              {wishlistCount > 0 && (
                 <span className="absolute -top-1 inset-e-0 font-bold  text-xs text-white w-5 h-5 flex items-center justify-center rounded-full bg-red-500">
-                  {count}
+                  {wishlistCount}
                 </span>
               )}
             </Link>
@@ -220,9 +217,9 @@ export default function Navbar() {
               className="relative hover:bg-primary-50/50 hover:text-primary cursor-pointer w-10 h-10 rounded-full flex items-center justify-center"
             >
               <FaCartShopping />
-              {numOfCartItems > 0 && (
+              {cartReducer.numOfCartItems > 0 && (
                 <span className="absolute -top-1 inset-e-0 font-bold  text-xs text-white w-5 h-5 flex items-center justify-center rounded-full bg-primary">
-                  {numOfCartItems}
+                  {cartReducer.numOfCartItems}
                 </span>
               )}
             </Link>
@@ -328,9 +325,9 @@ export default function Navbar() {
                           </span>
                         </div>
                         <span
-                          className={`${count == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
+                          className={`${wishlistCount == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
                         >
-                          {count}
+                          {wishlistCount}
                         </span>
                       </Link>
                       <Link
@@ -346,9 +343,9 @@ export default function Navbar() {
                           </span>
                         </div>
                         <span
-                          className={`${numOfCartItems == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
+                          className={`${cartReducer.numOfCartItems == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
                         >
-                          {numOfCartItems}
+                          {cartReducer.numOfCartItems}
                         </span>
                       </Link>
                     </div>

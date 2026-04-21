@@ -1,14 +1,13 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { addProductToCart } from "../_actions/cart.actions";
-import { cartContext } from "../_context/CartContextProvider";
-
+import { fetchUserCart } from "../_redux/slices/cartSlice";
+import { useAppDispatch } from "./reduxHooks";
 export function useAddToCart() {
   const router = useRouter();
 
-  const { setNumofCartItems, setCartProducts, setTotalCartPrice ,setCartId } =
-    useContext(cartContext);
+  const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
@@ -16,22 +15,16 @@ export function useAddToCart() {
 
   async function handleAddToCart(productId: string) {
     setIsLoading(productId);
-
     try {
       const res = await addProductToCart(productId);
-      
+
       if (res.status === "success") {
         toast.success(res.message, {
           position: "top-center",
           richColors: true,
         });
-
+        dispatch(fetchUserCart());
         setIsSuccess(productId);
-
-        setNumofCartItems(res.numOfCartItems);
-        setTotalCartPrice(res.data.totalCartPrice);
-        setCartProducts(res.data.products);
-        setCartId(res.cartId)
         setTimeout(() => {
           setIsSuccess(null);
         }, 2500);

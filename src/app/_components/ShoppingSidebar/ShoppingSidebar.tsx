@@ -3,18 +3,17 @@ import Link from "next/link";
 import { FaShieldAlt, FaShoppingBag } from "react-icons/fa";
 import { FaLock, FaTag, FaTruck } from "react-icons/fa6";
 import InfoBanner from "../InfoBanner/InfoBanner";
-import { useContext } from "react";
-import { cartContext } from "@/app/_context/CartContextProvider";
-const ShoppingSidebar = () => {
-  const { totalCartPrice, numOfCartItems } = useContext(cartContext);
+import { useAppSelector } from "@/app/_hooks/reduxHooks";
 
+const ShoppingSidebar = () => {
+  const cartReducer = useAppSelector((state) => state.cartReducer);
   return (
     <>
       <div>
         <InfoBanner
           icon={<FaShoppingBag />}
           title="Order Summary"
-          desc={` ${numOfCartItems} items in your cart`}
+          desc={` ${cartReducer.numOfCartItems} items in your cart`}
         />
         <div className="bg-white p-5">
           <div className="bg-primary-50 mb-5 shadow shadow-primary-50 rounded-xl p-4 flex items-center gap-2 ">
@@ -32,7 +31,9 @@ const ShoppingSidebar = () => {
             <div>
               <div className="flex justify-between items-center mb-5">
                 <span className="text-gray-600">Subtotal</span>
-                <span className="text-heading">{totalCartPrice} EGP</span>
+                <span className="text-heading">
+                  {cartReducer.totalCartPrice} EGP
+                </span>
               </div>
               <div className="flex justify-between items-center mb-5">
                 <span className="text-gray-600">Shipping</span>
@@ -43,7 +44,7 @@ const ShoppingSidebar = () => {
               <span className="text-heading font-semibold">Total</span>
               <div>
                 <span className="text-heading font-bold text-2xl">
-                  {totalCartPrice}
+                  {cartReducer.totalCartPrice}
                 </span>
                 <span className="text-gray-400 text-sm"> EGP</span>
               </div>

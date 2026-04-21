@@ -1,4 +1,4 @@
-import { cartItemType } from "./cartContext.type";
+import { cartItemType } from "./cart.type";
 
 export interface shippingAddressType {
   shippingAddress: orderValues;

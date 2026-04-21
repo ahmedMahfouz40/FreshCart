@@ -1,28 +1,31 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { deleteProductFromCart } from "../_actions/cart.actions";
 import { useAppDispatch } from "./reduxHooks";
-import { removeFromCart } from "../_redux/slices/cartSlice";
+import {  removeFromWishlist } from "../_redux/slices/wishlistSlice";
+import { DeleteFromWishlist } from "../_actions/wishlist.actions";
 
-export function useDeleteFromCart() {
+export function useDeleteFromWishlist() {
   const dispatch = useAppDispatch();
+
 
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
   const [isSuccess, setIsSuccess] = useState(false);
 
-  async function handleDeleteFromCart(productId: string) {
+  async function handleDeleteFromWishlist(productId: string) {
     setIsLoading(productId);
     try {
-      const res = await deleteProductFromCart(productId);
+      const res = await DeleteFromWishlist(productId);
+
       if (res.status == "success") {
         toast.success(res.message, {
           position: "top-center",
           richColors: true,
         });
         setIsSuccess(true);
-        dispatch(removeFromCart(productId));
+        dispatch(removeFromWishlist(productId));
       }
+
       if (res.statusMsg == "fail") {
         toast.error(res.message, { position: "top-center", richColors: true });
       }
@@ -34,7 +37,7 @@ export function useDeleteFromCart() {
   }
 
   return {
-    handleDeleteFromCart,
+    handleDeleteFromWishlist,
     isLoading,
     isSuccess,
   };

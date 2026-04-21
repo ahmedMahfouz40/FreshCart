@@ -1,5 +1,4 @@
 import ProductCard from "./_components/ProductCard/ProductCard";
-import { getAllProducts } from "@/services/products";
 import { lazy, Suspense } from "react";
 
 const ShopByCategories = lazy(
@@ -11,24 +10,19 @@ import Figure from "./_components/SmallCards/Figure";
 import HomeSlider from "./_sliders/HomeSlider";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
 import Container from "./_components/Container/Container";
-import getMyToken from "@/utils/getMyToken";
+import { getProducts } from "@/services/products";
 const Home = async () => {
-  const products = await getAllProducts();
-  const token = await getMyToken()
-  console.log( "token : " , token)
+  const products = await getProducts();
   return (
     <>
       <div className=" my-5">
         <HomeSlider />
         <Container>
           <div>
-            {/* layout */}
             <Figure />
-            {/* Categories */}
             <Suspense fallback={<CategorySkeleton />}>
               <ShopByCategories />
             </Suspense>
-            {/* Cards */}
             <CardsHome />
             <h2 className="border-s-5 border-primary-600 px-2 rounded my-3 font-bold text-3xl">
               <span>Featured</span>

@@ -39,8 +39,7 @@ import InfoBanner from "@/app/_components/InfoBanner/InfoBanner";
 import { BsBox2Fill, BsFillCreditCard2BackFill } from "react-icons/bs";
 import Image from "next/image";
 import { Controller, useForm } from "react-hook-form";
-import { useContext, useState } from "react";
-import { cartContext } from "@/app/_context/CartContextProvider";
+import { useState } from "react";
 import OrderSummaryCart from "@/app/_skeletons/OrderSummaryCart";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,6 +51,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import PaymentEmpty from "@/app/_components/PaymentEmpty/PaymentEmpty";
 import PaymentLoading from "@/app/_components/PaymentLoading/PaymentLoading";
+import { useAppDispatch, useAppSelector } from "@/app/_hooks/reduxHooks";
+import { clearCart, fetchUserCart } from "@/app/_redux/slices/cartSlice";
 const egyptGovernorates = [
   { value: "cairo", label: "Cairo" },
   { value: "alexandria", label: "Alexandria" },
@@ -83,16 +84,9 @@ const egyptGovernorates = [
 const Page = () => {
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const router = useRouter();
-  const {
-    totalCartPrice,
-    numOfCartItems,
-    cartProducts,
-    isUserDataLoading,
-    cartId,
-    setNumofCartItems,
-    setTotalCartPrice,
-    setCartProducts,
-  } = useContext(cartContext);
+
+  const cartReducer = useAppSelector((state) => state.cartReducer);
+  const dispatch = useAppDispatch();
 
   const form = useForm<paymentSchemeType>({
     defaultValues: {
@@ -119,7 +113,7 @@ const Page = () => {
 
     if (values.paymentMethod == "cash") {
       try {
-        const res = await createCashOrder(cartId, userData);
+        const res = await createCashOrder(cartReducer.cartId, userData);
 
         if (res.status === "success") {
           toast.success(res.message, {
@@ -131,10 +125,7 @@ const Page = () => {
             success: "true",
           });
           router.push(`/allorders?${params.toString()}`);
-
-          setTotalCartPrice(0);
-          setNumofCartItems(0);
-          setCartProducts([]);
+          dispatch(fetchUserCart());
         }
       } catch (error) {
         console.log("error during payment", error);
@@ -147,14 +138,12 @@ const Page = () => {
       }
     } else if (values.paymentMethod == "visa") {
       try {
-        const res = await createVisaOrder(cartId, userData);
+        const res = await createVisaOrder(cartReducer.cartId, userData);
         console.log(res);
 
         if (res.status === "success") {
           window.open(res.session.url);
-          setTotalCartPrice(0);
-          setNumofCartItems(0);
-          setCartProducts([]);
+          dispatch(clearCart());
         }
       } catch (error) {
         console.log("error payment", error);
@@ -167,12 +156,12 @@ const Page = () => {
       }
     }
   }
-  if (isUserDataLoading) return <PaymentLoading />;
+  if (cartReducer.isLoading) return <PaymentLoading />;
   return (
     <>
       <div className="bg-gray-50">
         <Container>
-          {numOfCartItems > 0 ? (
+          {cartReducer.numOfCartItems > 0 ? (
             <>
               <div className="header space-y-5 py-4">
                 <div className="text-sm leading-5">
@@ -517,19 +506,19 @@ const Page = () => {
                     <InfoBanner
                       icon={<FaLock />}
                       title="Order Summary"
-                      desc={`${numOfCartItems} items`}
+                      desc={`${cartReducer.numOfCartItems} items`}
                     />
                     <div className="bg-white shadow p-5 mb-3 rounded-b-2xl">
                       <div className="max-h-56 overflow-y-auto  ">
                         {/*   Item */}
-                        {isUserDataLoading ? (
+                        {cartReducer.isLoading ? (
                           <>
                             {[1, 2, 3].map((i) => (
                               <OrderSummaryCart key={i} />
                             ))}
                           </>
                         ) : (
-                          cartProducts?.map((item) => (
+                          cartReducer.cartProducts?.map((item) => (
                             <div
                               key={item.product._id}
                               className="p-3  mb-4 bg-[#F9FAFB] rounded-xl flex items-center justify-between gap-3"
@@ -565,7 +554,7 @@ const Page = () => {
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-gray-500">Subtotal</span>
                               <span className="text-primary">
-                                {totalCartPrice} EGP
+                                {cartReducer.totalCartPrice} EGP
                               </span>
                             </div>
                             <div className="flex justify-between items-center mb-2">
@@ -581,12 +570,9 @@ const Page = () => {
                             </span>
                             <div>
                               <span className="text-primary font-bold text-2xl">
-                                {totalCartPrice}
+                                {cartReducer.totalCartPrice}
                               </span>
-                              <span className="text-gray-400 text-sm">
-                                {" "}
-                                EGP
-                              </span>
+                              <span className="text-gray-400 text-sm">EGP</span>
                             </div>
                           </div>
                         </div>

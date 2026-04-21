@@ -14,7 +14,7 @@ const ShopByCategories = async () => {
           Shop By <span className="text-primary-600 ">Category</span>
         </h2>
         <Link
-          href={"/"}
+          href={"/categories"}
           className="text-primary-600 leading-6 self-end sm:self-stretch"
         >
           View All Categories <FaArrowRight className="inline" />

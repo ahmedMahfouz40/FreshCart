@@ -1,35 +1,33 @@
 "use client";
 import Image from "next/image";
 import { FaCheck, FaTrash } from "react-icons/fa6";
-import { useContext, useState } from "react";
-import { cartContext } from "@/app/_context/CartContextProvider";
+import { useState } from "react";
 import { updateCartProduct } from "@/app/_actions/cart.actions";
 import { toast } from "sonner";
 import CardEmpty from "../CardEmpty/CardEmpty";
 import Link from "next/link";
 import CartItemSkeleton from "@/app/_skeletons/CartItemSkeleton";
 import { useDeleteFromCart } from "@/app/_hooks/useDeleteFromCart";
+import { useAppDispatch, useAppSelector } from "@/app/_hooks/reduxHooks";
+import {
+  fetchUserCart,
+  updateCartQuantity,
+} from "@/app/_redux/slices/cartSlice";
 
 const ShoppingCard = () => {
   const [LoadingUpdateId, setLoadingupdateId] = useState<string | null>(null);
   const { isLoading: isDeleting, handleDeleteFromCart } = useDeleteFromCart();
 
-  const {
-    cartProducts,
-    setCartProducts,
-    setTotalCartPrice,
-    setNumofCartItems,
-    isUserDataLoading,
-    setCartId,
-  } = useContext(cartContext);
+  const dispatch = useAppDispatch();
+  const cartReducer = useAppSelector((state) => state.cartReducer);
 
-  if (isUserDataLoading) {
+  if (cartReducer.isLoading) {
     return Array.from({ length: 3 }).map((_, i) => (
       <CartItemSkeleton key={i} />
     ));
   }
 
-  if (!cartProducts || cartProducts.length === 0) {
+  if (!cartReducer.cartProducts || cartReducer.cartProducts.length === 0) {
     return <CardEmpty />;
   }
 
@@ -42,10 +40,15 @@ const ShoppingCard = () => {
           position: "top-center",
           richColors: true,
         });
-        setNumofCartItems(res.numOfCartItems);
-        setTotalCartPrice(res.data.totalCartPrice);
-        setCartProducts(res.data.products);
-        setCartId(res.cartId);
+
+        dispatch(
+          updateCartQuantity({
+            productId: id,
+            quantity: count,
+          }),
+        );
+      } else {
+        dispatch(fetchUserCart());
       }
       if (res.statusMsg == "fail") {
         toast.error(res.message, { position: "top-center", richColors: true });
@@ -63,15 +66,15 @@ const ShoppingCard = () => {
 
   return (
     <>
-      {isUserDataLoading ? (
+      {cartReducer.isLoading ? (
         Array.from({ length: 3 }).map((_, i) => <CartItemSkeleton key={i} />)
-      ) : !cartProducts || cartProducts.length === 0 ? (
+      ) : !cartReducer.cartProducts || cartReducer.cartProducts.length === 0 ? (
         <>
           <CardEmpty />
         </>
       ) : (
         <>
-          {cartProducts?.map((cart) => {
+          {cartReducer.cartProducts?.map((cart) => {
             return (
               <div
                 key={cart.product._id}

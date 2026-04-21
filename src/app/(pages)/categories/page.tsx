@@ -15,7 +15,7 @@ const page = async () => {
         <Container>
           <div className="space-y-5">
             <p className="text-sm leading-5 ">
-              <Link href={"/"} className="opacity-70">
+              <Link href={"/"} className="opacity-70 hover:opacity-100 transition-colors">
                 Home /
               </Link>
               <span> Categories</span>
@@ -37,25 +37,25 @@ const page = async () => {
         </Container>
       </div>
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4 py-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4 py-4 my-5">
           {categories?.map((category) => (
             <Link
-              href={`category/${category._id}`}
+              href={`/products?subCategory=${category._id}`}
               key={category._id}
-              className="p-5  text-center group h-full flex flex-col space-y-4 shadow hover:shadow-xl transition-all duration-500 rounded-2xl"
+              className="p-5  text-center group h-full border border-gray-100 flex flex-col space-y-4 shadow hover:shadow-xl hover:-translate-y-1.5 transition-all duration-400 rounded-2xl"
             >
               <div className="relative bg-[#F9FAFB] p-4 rounded-lg shadow aspect-square overflow-hidden">
                 <Image
                   src={category.image}
                   alt="image"
                   fill
-                  className="object-contain group-hover:scale-[1.2] transition-all duration-500 rounded p-2"
+                  className="object-contain group-hover:scale-[1.1] transition-all duration-400 rounded p-2"
                 />
               </div>
               <h3 className="font-semibold flex-1 leading-5 group-hover:text-primary-600 text-heading">
                 {category.name}
               </h3>
-              <span className="text-sm text-primary-600 flex opacity-0 group-hover:opacity-100 transition-all duration-500 items-center gap-1 justify-center">
+              <span className="text-sm text-primary-600 flex opacity-0 group-hover:opacity-100 transition-all duration-400 items-center gap-1 justify-center">
                 View Subcategories
                 <FaArrowRight className="text-[10px]" />
               </span>

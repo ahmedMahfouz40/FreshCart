@@ -5,26 +5,26 @@ import { IoClipboard } from "react-icons/io5";
 import { TbReload } from "react-icons/tb";
 export default function NavTabs({ product }: { product: productType }) {
   return (
-    <Tabs defaultValue="ProductDetails" className="w-full  my-5">
+    <Tabs defaultValue="ProductDetails" className="w-full  my-5 ">
       <TabsList variant="line" className=" w-full sm:w-[70%] me-auto">
         <TabsTrigger
           tabIndex={-1}
           value="ProductDetails"
-          className="text-[#4A5565] cursor-pointer hover:text-primary-600 py-4 px-6 hover:bg-primary-50"
+          className="text-[#4A5565] cursor-pointer hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6 hover:bg-primary-50"
         >
           <IoClipboard /> <span>Product Details</span>
         </TabsTrigger>
         <TabsTrigger
           tabIndex={-1}
           value="Reviews"
-          className="text-[#4A5565] cursor-pointer  hover:text-primary-600 py-4 px-6  hover:bg-primary-50"
+          className="text-[#4A5565] cursor-pointer  hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6  hover:bg-primary-50"
         >
           <FaStar /> Reviews ({product.reviews?.length})
         </TabsTrigger>
         <TabsTrigger
           tabIndex={-1}
           value="ShippingReturns"
-          className="text-[#4A5565] cursor-pointer hover:text-primary-600 py-4 px-6 hover:bg-primary-50"
+          className="text-[#4A5565] cursor-pointer hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6 hover:bg-primary-50"
         >
           <FaTruck /> Shipping & Returns
         </TabsTrigger>
@@ -35,7 +35,7 @@ export default function NavTabs({ product }: { product: productType }) {
         className="p-6 border-t shadow rounded-xl"
       >
         <div className="leading-7">
-          <h3 className="font-semibold  text-[#101828] mb-4">
+          <h3 className="font-semibold  text-heading mb-4">
             About this Product
           </h3>
           <p className="text-gray-600">{product.description}</p>
@@ -101,7 +101,7 @@ export default function NavTabs({ product }: { product: productType }) {
           </div>
         </div>
       </TabsContent>
-      <TabsContent value="Reviews">Change your password here.</TabsContent>
+      <TabsContent value="Reviews">Reviews</TabsContent>
       <TabsContent value="ShippingReturns">
         <div className="grid sm:grid-cols-2 gap-4 my-5">
           <div className="bg-gray-100 p-5 rounded-lg space-y-2">

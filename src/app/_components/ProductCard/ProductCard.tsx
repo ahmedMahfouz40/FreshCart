@@ -1,6 +1,6 @@
 import { productType } from "@/types/product.type";
 import Image from "next/image";
-import { FaEye, FaRegHeart } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa6";
 import { FiRefreshCw } from "react-icons/fi";
 import Link from "next/link";
 import Rating from "../Rating/Rating";
@@ -72,7 +72,7 @@ const ProductCard = ({ product }: { product: productType }) => {
           <FiRefreshCw />
         </div>
         <Link
-          href={`product/${product._id}`}
+          href={`products/${product._id}`}
           className=" w-8 h-8 border rounded-full flex items-center justify-center shadow-md hover:text-primary-600"
         >
           <FaEye />

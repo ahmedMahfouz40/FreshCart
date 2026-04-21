@@ -10,18 +10,14 @@ import {
   FaSpinner,
   FaTrash,
 } from "react-icons/fa6";
-import {
-  DeleteFromWishlist,
-  getUserWishlist,
-} from "@/app/_actions/wishlist.actions";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "./loading";
 import EmptyWishlist from "@/app/_components/EmptyWishlist/EmptyWishlist";
 import { toast } from "sonner";
-import { wishlistDataType } from "@/types/wishlist.type";
 import { useAddToCart } from "@/app/_hooks/useAddToCart";
-import { useContext, useEffect } from "react";
-import { cartContext } from "@/app/_context/CartContextProvider";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/_hooks/reduxHooks";
+import { fetchUserWishlist } from "@/app/_redux/slices/wishlistSlice";
+import { useDeleteFromWishlist } from "@/app/_hooks/useDeleteFromWishlist";
 
 const Wishlist = () => {
   const {
@@ -30,41 +26,31 @@ const Wishlist = () => {
     isSuccess: isAddedToCart,
   } = useAddToCart();
 
-  const queryClient = useQueryClient();
   const {
-    data: wishlist,
+    wishlistProducts: wishlist,
     isLoading,
     isError,
-    error,
-  } = useQuery<wishlistDataType>({
-    queryKey: ["wishlist"],
-    queryFn: getUserWishlist,
-  });
+  } = useAppSelector((state) => state.wishlistReducer);
+  const dispatch = useAppDispatch();
 
-  const { cartProducts } = useContext(cartContext);
+  useEffect(() => {
+    dispatch(fetchUserWishlist());
+  }, [dispatch]);
 
   useEffect(() => {
     if (isError) {
-      toast.error(error.message, {
+      toast.error("Error 404 cannot get your wishlist ", {
         position: "top-center",
         richColors: true,
       });
     }
-  }, [isError, error]);
-  const { mutate, isPending: isDeleting } = useMutation({
-    mutationFn: DeleteFromWishlist,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
-    },
-    onError: (error) => {
-      console.log("error from mutation", error);
-    },
-  });
+  }, [isError]);
+  const { handleDeleteFromWishlist, isLoading: isDeleting } =
+    useDeleteFromWishlist();
+  const { cartProducts } = useAppSelector((state) => state.cartReducer);
 
   if (isLoading) return <Loading />;
-  if (wishlist && wishlist.data.length == 0) return <EmptyWishlist />;
-  console.log("wishlist", wishlist);
-  console.log("cartProducts", cartProducts);
+  if (wishlist && wishlist.length == 0) return <EmptyWishlist />;
 
   return (
     <div>
@@ -89,7 +75,7 @@ const Wishlist = () => {
                 My Wishlist
               </h1>
               <p className="leading-5 text-sm text-[#6A7282]">
-                {wishlist?.data.length || 0} items saved
+                {wishlist?.length || 0} items saved
               </p>
             </div>
           </div>
@@ -112,7 +98,7 @@ const Wishlist = () => {
             </div>
           </div>
           {/*  Row */}
-          {wishlist?.data?.map((item) => {
+          {wishlist?.map((item) => {
             const isInCart = cartProducts?.some(
               (prod) => String(prod.product._id) == item._id,
             );
@@ -165,10 +151,14 @@ const Wishlist = () => {
                     </span>
                     {item.quantity > 0 && (
                       <div className="inline-flex items-center text-sm leading-5 gap-2 bg-green-50 px-3 py-1.5 rounded-full">
-                        <span className={`w-2 h-2 rounded-full  bg-green-500 ${isInCart && 'hidden'}`}></span>
-                        {isInCart && <FaCartShopping className="text-primary " />}
+                        <span
+                          className={`w-2 h-2 rounded-full  bg-green-500 ${isInCart && "hidden"}`}
+                        ></span>
+                        {isInCart && (
+                          <FaCartShopping className="text-primary " />
+                        )}
                         <span className="text-green-600 font-semibold ">
-                         {isInCart ? 'In Cart' : ' In Stock' }
+                          {isInCart ? "In Cart" : " In Stock"}
                         </span>
                       </div>
                     )}
@@ -206,16 +196,19 @@ const Wishlist = () => {
                               : "Add To cart"}
                           </span>
                         </button>
-
                       </>
                     )}
-                        <button
-                          disabled={isDeleting}
-                          onClick={() => mutate(item._id)}
-                          className="border rounded-lg h-11 disabled:cursor-not-allowed disabled:opacity-60 w-11  border-[#E5E7EB] flex items-center justify-center bg-white text-[#99A1AF] hover:bg-red-500  hover:text-white cursor-pointer transition-colors duration-300"
-                        >
-                          <FaTrash />
-                        </button>
+                    <button
+                      disabled={isDeleting == item._id}
+                      onClick={() => handleDeleteFromWishlist(item._id)}
+                      className="border rounded-lg h-11 disabled:cursor-not-allowed disabled:opacity-60 w-11  border-[#E5E7EB] flex items-center justify-center bg-white text-[#99A1AF] hover:bg-red-500  hover:text-white cursor-pointer transition-colors duration-300"
+                    >
+                      {isDeleting == item._id ? (
+                        <FaSpinner className="animate-spin" />
+                      ) : (
+                        <FaTrash />
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>

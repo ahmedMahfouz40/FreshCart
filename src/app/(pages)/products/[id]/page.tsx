@@ -14,6 +14,7 @@ import {
 } from "react-icons/md";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Container from "@/app/_components/Container/Container";
+import Slider from "../../../_sliders/subProductsFromProductDetails";
 
 const figure = [
   {
@@ -161,20 +162,8 @@ const ProductDetails = async ({
               <h2 className="border-s-8 border-primary-600 rounded text-2xl ps-3 font-bold text-gray-800">
                 You May Also <span className=" text-primary-600">Like</span>
               </h2>
-              <div className="flex">
-                <button className="p-2 cursor-pointer flex items-center justify-center text-2xl w-10 h-10 text-gray-800 hover:text-primary rounded-full bg-gray-100 mx-2 hover:bg-primary/15">
-                  <MdOutlineKeyboardArrowLeft />
-                </button>
-                <button className="p-2 cursor-pointer flex items-center justify-center text-2xl w-10 h-10 text-gray-800 hover:text-primary rounded-full bg-gray-100 mx-2 hover:bg-primary/15">
-                  <MdOutlineKeyboardArrowRight />
-                </button>
-              </div>
             </div>
-            <div className="grid  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
-              {subProducts?.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
+            <Slider key={product._id} products={subProducts} />
           </div>
         </div>
       </Container>

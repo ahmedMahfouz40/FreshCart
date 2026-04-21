@@ -4,36 +4,31 @@ import React from "react";
 import { FaArrowRight, FaTags } from "react-icons/fa6";
 import { getAllBrands } from "@/app/_actions/brands.actions";
 import Link from "next/link";
+import Header from "@/app/_components/Header/Header";
 const page = async () => {
   const brands = await getAllBrands();
   console.log("brands", brands);
 
   return (
     <div>
-      <div className="text-white bg-linear-to-br   from-[#7F22FE] via-[#8E51FF] to-[#C27AFF] w-full h-50 py-14 px-4">
-        <Container>
-          <div className="space-y-5">
-            <p className="text-sm leading-5 ">
-              <Link href={'/'} className="opacity-70">Home /</Link>
-              <span> Brands</span>
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl  bg-white/20">
-                <FaTags />
-              </div>
-              <div>
-                <h1 className="text-4xl leading-10 font-bold ">Top Brands</h1>
-                <p className="opacity-80">Shop from your favorite brands</p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
+      <Header
+        icon={<FaTags />}
+        title="Top Brands"
+        desc="Shop from your favorite brands"
+        style={[
+          "text-white",
+          "bg-linear-to-br",
+          "from-[#7F22FE]",
+          "via-[#8E51FF]",
+          "to-[#C27AFF]",
+        ]}
+      />
+
       <Container>
-         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4 py-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4 py-4">
           {brands.data.map((brand) => (
             <Link
-              href={`brand/${brand._id}`}
+              href={`/products?brand=${brand._id}`}
               key={brand._id}
               className="p-5  text-center group space-y-4 shadow hover:shadow-xl transition-all duration-500 rounded-2xl"
             >

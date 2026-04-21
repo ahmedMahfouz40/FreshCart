@@ -1,6 +1,6 @@
 "use server";
 
-import { cartResType } from "@/types/cartContext.type";
+import { cartResType } from "@/types/cart.type";
 import getMyToken from "@/utils/getMyToken";
 
 export async function addProductToCart(
@@ -77,6 +77,3 @@ export async function ClearUserCart() {
   const finalRes = await res.json();
   return finalRes;
 }
-
-
-

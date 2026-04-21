@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa6";
 
@@ -18,9 +19,9 @@ const CardsHome = () => {
             <span className=" text-sm opacity-75"> Use code: </span>
             <span>ORGANIC40</span>
           </div>
-          <button className="bg-white text-primary p-3 rounded-3xl cursor-pointer hover:bg-gray-100 ">
+          <Link href="/products" className="bg-white text-primary p-3 rounded-3xl cursor-pointer hover:bg-gray-100 ">
             Shop Now <FaArrowRight className="inline" />
-          </button>
+          </Link>
           <div className="absolute top-[-10%] inset-e-[-10%] w-32 h-32 rounded-full bg-white/10"></div>
           <div className="absolute bottom-[-10%] inset-s-[-10%] w-32 h-32 rounded-full bg-white/10"></div>
         </div>
