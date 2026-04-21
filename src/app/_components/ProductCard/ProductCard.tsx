@@ -72,7 +72,7 @@ const ProductCard = ({ product }: { product: productType }) => {
           <FiRefreshCw />
         </div>
         <Link
-          href={`products/${product._id}`}
+          href={`/products/${product._id}`}
           className=" w-8 h-8 border rounded-full flex items-center justify-center shadow-md hover:text-primary-600"
         >
           <FaEye />

@@ -1,21 +1,20 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  addToWishlist,
-} from "../_actions/wishlist.actions";
+import { addToWishlist } from "../_actions/wishlist.actions";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import {
-  fetchUserWishlist,
-} from "../_redux/slices/wishlistSlice";
+import { fetchUserWishlist } from "../_redux/slices/wishlistSlice";
 import { useDeleteFromWishlist } from "./useDeleteFromWishlist";
+import { useRouter } from "next/navigation";
 
 export function useAddToWishlist() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<string | null>(null);
 
   const { handleDeleteFromWishlist } = useDeleteFromWishlist();
-  
+
   const { wishlistIds } = useAppSelector((state) => state.wishlistReducer);
   const isInWishlist = (productId: string) => wishlistIds?.includes(productId);
 
@@ -46,6 +45,7 @@ export function useAddToWishlist() {
           position: "top-center",
           richColors: true,
         });
+        router.push("/login");
       }
       return false;
     } catch (error) {
