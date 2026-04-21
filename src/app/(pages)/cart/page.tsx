@@ -1,11 +1,14 @@
+"use client";
 import Container from "@/app/_components/Container/Container";
 import { FaShoppingCart } from "react-icons/fa";
 import ShoppingCard from "../../_components/ShoppingCard/ShoppingCard";
 import ShoppingSidebar from "../../_components/ShoppingSidebar/ShoppingSidebar";
 import Link from "next/link";
 import ClearCart from "@/app/_components/Buttons/ClearCart";
+import { useAppSelector } from "@/app/_hooks/reduxHooks";
 
-const page = () => {
+const Page = () => {
+  const { numOfCartItems } = useAppSelector((state) => state.cartReducer);
   return (
     <div className="bg-gray-50 relative">
       <Container>
@@ -21,8 +24,9 @@ const page = () => {
             <h3 className="font-bold  text-heading">Shopping Cart</h3>
           </div>
           <p className="text-muted-foreground font-semibold leading-4">
-            You have <span className="text-primary-600"> 4 items</span> in your
-            cart
+            You have{" "}
+            <span className="text-primary-600"> {numOfCartItems} items</span> in
+            your cart
           </p>
         </div>
         <div className="lg:grid lg:grid-cols-12 gap-6">
@@ -37,7 +41,7 @@ const page = () => {
               >
                 ← Continue Shopping
               </Link>
-              <ClearCart/>
+              <ClearCart />
             </div>
           </div>
           <div className="col-span-4 ">
@@ -51,4 +55,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

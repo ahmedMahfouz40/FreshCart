@@ -122,11 +122,8 @@ const Page = () => {
             richColors: true,
           });
 
-          const params = new URLSearchParams({
-            success: "true",
-          });
           await dispatch(fetchUserCart());
-          router.push(`/allorders?${params.toString()}`);
+          router.push(`/allorders`);
         }
       } catch (error) {
         console.log("error during payment", error);
