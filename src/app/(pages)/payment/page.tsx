@@ -81,6 +81,7 @@ const egyptGovernorates = [
   { value: "north-sinai", label: "North Sinai" },
   { value: "south-sinai", label: "South Sinai" },
 ];
+export const dynamic = "force-dynamic";
 const Page = () => {
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
   const router = useRouter();
@@ -124,8 +125,8 @@ const Page = () => {
           const params = new URLSearchParams({
             success: "true",
           });
+          await dispatch(fetchUserCart());
           router.push(`/allorders?${params.toString()}`);
-          dispatch(fetchUserCart());
         }
       } catch (error) {
         console.log("error during payment", error);
