@@ -6,7 +6,7 @@ import { TbReload } from "react-icons/tb";
 export default function NavTabs({ product }: { product: productType }) {
   return (
     <Tabs defaultValue="ProductDetails" className="w-full  my-5 ">
-      <TabsList variant="line" className=" w-full sm:w-[70%] me-auto">
+      <TabsList variant="line" className=" w-full lg:w-[70%] me-auto">
         <TabsTrigger
           tabIndex={-1}
           value="ProductDetails"
