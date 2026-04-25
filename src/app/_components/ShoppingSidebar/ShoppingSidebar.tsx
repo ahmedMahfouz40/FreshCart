@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaShieldAlt, FaShoppingBag } from "react-icons/fa";
 import { FaLock, FaTag, FaTruck } from "react-icons/fa6";
 import InfoBanner from "../InfoBanner/InfoBanner";
-import { useAppSelector } from "@/app/_hooks/reduxHooks";
+import { useAppSelector } from "@/hooks/reduxHooks";
 
 const ShoppingSidebar = () => {
   const cartReducer = useAppSelector((state) => state.cartReducer);

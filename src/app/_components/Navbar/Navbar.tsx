@@ -32,19 +32,18 @@ import {
 } from "@/components/ui/sheet";
 import { MdOutlineMail } from "react-icons/md";
 import { signOut, useSession } from "next-auth/react";
-import { FaRegUserCircle } from "react-icons/fa";
 
 import Dropdown from "./Dropdown";
-import { useAppSelector } from "@/app/_hooks/reduxHooks";
+import { useAppSelector } from "@/hooks/reduxHooks";
+import ProfileDropdown from "./ProfileDropdown";
 export default function Navbar() {
-
-  const {wishlistProducts} = useAppSelector(state=> state.wishlistReducer)
+  const { wishlistProducts } = useAppSelector((state) => state.wishlistReducer);
   const wishlistCount = wishlistProducts?.length || 0;
   const session = useSession();
 
-  function handleSignOut() {
+  const handleSignOut = React.useCallback(() => {
     signOut({ redirect: true, callbackUrl: "/login" });
-  }
+  }, []);
 
   const cartReducer = useAppSelector((state) => state.cartReducer);
 
@@ -85,7 +84,7 @@ export default function Navbar() {
               {/* If User Authenticated */}
               <div className="flex items-center gap-3 ">
                 <Link
-                  href={"/profile"}
+                  href={"/profile/settings "}
                   className="flex items-center gap-1  hover:text-primary transition-all"
                 >
                   <CiUser />
@@ -229,7 +228,11 @@ export default function Navbar() {
                   title="profile"
                   className="hidden lg:flex items-center justify-center hover:bg-primary-50/50  hover:text-primary cursor-pointer w-10 h-10 rounded-full "
                 >
-                  <FaRegUserCircle />
+                  <ProfileDropdown
+                    handleSignOut={handleSignOut}
+                    name={session.data.user?.name ?? ""}
+                    email={session.data.user?.email ?? ""}
+                  />
                 </div>
               ) : (
                 <Link
@@ -354,7 +357,7 @@ export default function Navbar() {
                         <div>
                           <Link
                             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
-                            href="/profile"
+                            href="/profile/settings"
                           >
                             <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
                               <FaUser className="text-gray-500" />
@@ -377,15 +380,15 @@ export default function Navbar() {
                         </div>
                       ) : (
                         <div className="p-4 space-y-1">
-                          <div className="grid grid-cols-2 gap-3 pt-2">
+                          <div className="grid sm:grid-cols-2 gap-3 pt-2">
                             <Link
-                              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
+                              className=" w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
                               href="/login"
                             >
                               Sign In
                             </Link>
                             <Link
-                              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-primary-600 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
+                              className=" w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-primary-600 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
                               href="/signup"
                             >
                               Sign Up

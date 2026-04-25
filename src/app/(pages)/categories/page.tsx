@@ -2,12 +2,29 @@ import Container from "@/app/_components/Container/Container";
 import { getAllCategories } from "@/services/categories";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
 import { FaArrowRight, FaLayerGroup } from "react-icons/fa6";
 
 const page = async () => {
   const categories = await getAllCategories();
-  console.log(categories, "categories");
+  if (!categories || categories?.length == 0) {
+    return (
+      <>
+        {" "}
+        <div className="text-center py-20 ">
+          <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
+            <FaLayerGroup className="text-3xl text-gray-400" />
+          </div>
+          <h3 className="text-lg font-bold text-gray-900 mb-2">
+            No Categories Found
+          </h3>
+          <p className="text-gray-500">
+            Categories will appear here once available.
+          </p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div>
@@ -15,7 +32,10 @@ const page = async () => {
         <Container>
           <div className="space-y-5">
             <p className="text-sm leading-5 ">
-              <Link href={"/"} className="opacity-70 hover:opacity-100 transition-colors">
+              <Link
+                href={"/"}
+                className="opacity-70 hover:opacity-100 transition-colors"
+              >
                 Home /
               </Link>
               <span> Categories</span>

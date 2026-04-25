@@ -13,11 +13,11 @@ import {
 import Loading from "./loading";
 import EmptyWishlist from "@/app/_components/EmptyWishlist/EmptyWishlist";
 import { toast } from "sonner";
-import { useAddToCart } from "@/app/_hooks/useAddToCart";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/_hooks/reduxHooks";
-import { fetchUserWishlist } from "@/app/_redux/slices/wishlistSlice";
-import { useDeleteFromWishlist } from "@/app/_hooks/useDeleteFromWishlist";
+import { useAddToCart } from "@/hooks/useAddToCart";
+import { useEffect, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { fetchUserWishlist } from "@/redux/slices/wishlistSlice";
+import { useDeleteFromWishlist } from "@/hooks/useDeleteFromWishlist";
 
 const Wishlist = () => {
   const {
@@ -32,25 +32,20 @@ const Wishlist = () => {
     isError,
   } = useAppSelector((state) => state.wishlistReducer);
   const dispatch = useAppDispatch();
-
+  const hasFetched = useRef(false);
   useEffect(() => {
-    dispatch(fetchUserWishlist());
+    if (!hasFetched.current) {
+      dispatch(fetchUserWishlist());
+      hasFetched.current = true;
+    }
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isError) {
-      toast.error("Error 404 cannot get your wishlist ", {
-        position: "top-center",
-        richColors: true,
-      });
-    }
-  }, [isError]);
   const { handleDeleteFromWishlist, isLoading: isDeleting } =
     useDeleteFromWishlist();
   const { cartProducts } = useAppSelector((state) => state.cartReducer);
 
-  if (isLoading) return <Loading />;
-  if (wishlist && wishlist.length == 0) return <EmptyWishlist />;
+  if (isLoading && wishlist.length === 0) return <Loading />;
+  if (!isLoading && wishlist.length === 0) return <EmptyWishlist />;
 
   return (
     <div>

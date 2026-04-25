@@ -1,8 +1,8 @@
 "use client";
-import { useAppSelector } from "@/app/_hooks/reduxHooks";
-import { useAddToCart } from "@/app/_hooks/useAddToCart";
-import { useAddToWishlist } from "@/app/_hooks/useAddToWishlist";
-import { useDeleteFromWishlist } from "@/app/_hooks/useDeleteFromWishlist";
+import { useAppSelector } from "@/hooks/reduxHooks";
+import { useAddToCart } from "@/hooks/useAddToCart";
+import { useAddToWishlist } from "@/hooks/useAddToWishlist";
+import { useDeleteFromWishlist } from "@/hooks/useDeleteFromWishlist";
 import {
   FaCartShopping,
   FaCheck,
@@ -50,7 +50,7 @@ const Btns = ({ productId }: { productId: string }) => {
                 : isInCart
                   ? "bg-primary-100 text-primary hover:bg-primary-200"
                   : "bg-primary-600 text-white"
-            } transition-colors flex items-center justify-center w-1/2 text-sm cursor-pointer rounded-xl py-4 gap-2`}
+            } active:scale-[0.98] transition-all flex items-center justify-center w-1/2 text-sm cursor-pointer rounded-xl py-4 gap-2`}
           >
             {isLoading ? (
               <FaSpinner className="animate-spin" />
@@ -69,7 +69,7 @@ const Btns = ({ productId }: { productId: string }) => {
             )}
           </button>
 
-          <button className="bg-black text-white transition-colors w-1/2 flex items-center justify-center text-sm cursor-pointer rounded-xl py-4 gap-2">
+          <button className="bg-black active:scale-[0.98] text-white transition-all w-1/2 flex items-center justify-center text-sm cursor-pointer rounded-xl py-4 gap-2">
             <MdElectricBolt /> Buy Now
           </button>
         </div>
@@ -82,7 +82,7 @@ const Btns = ({ productId }: { productId: string }) => {
               isInWishlist
                 ? "text-red-400 bg-red-50 border-red-200 hover:text-red-500 hover:border-red-500"
                 : "text-[#364153] hover:text-primary hover:border-primary bg-transparent"
-            } w-full border-2 transition-colors flex items-center justify-center text-sm cursor-pointer rounded-xl py-4 gap-2`}
+            } w-full active:scale-[0.98] border-2 transition-all flex items-center justify-center text-sm cursor-pointer rounded-xl py-4 gap-2`}
           >
             {isAddingToWishlist ? (
               <>
@@ -108,7 +108,7 @@ const Btns = ({ productId }: { productId: string }) => {
             )}
           </button>
 
-          <button className="p-4 w-14 h-14 border-2 rounded-xl hover:text-primary hover:border-primary transition-colors cursor-pointer">
+          <button className="p-4 active:scale-[0.98] w-14 h-14 border-2 rounded-xl hover:text-primary hover:border-primary transition-all cursor-pointer">
             <FaShareNodes />
           </button>
         </div>

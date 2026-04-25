@@ -1,5 +1,5 @@
 "use client";
-import { useAddToCart } from "@/app/_hooks/useAddToCart";
+import { useAddToCart } from "@/hooks/useAddToCart";
 import { FaCheck, FaSpinner } from "react-icons/fa6";
 
 const AddToCart = ({ productId }: { productId: string }) => {

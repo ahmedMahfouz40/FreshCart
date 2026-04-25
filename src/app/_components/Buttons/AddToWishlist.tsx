@@ -1,5 +1,5 @@
 "use client";
-import { useAddToWishlist } from "@/app/_hooks/useAddToWishlist";
+import { useAddToWishlist } from "@/hooks/useAddToWishlist";
 import { FaCheck, FaHeart, FaRegHeart, FaSpinner } from "react-icons/fa6";
 
 const AddToWishlist = ({ productId }: { productId: string }) => {

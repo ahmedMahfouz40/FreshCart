@@ -2,7 +2,7 @@ import Container from "@/app/_components/Container/Container";
 import Image from "next/image";
 import React from "react";
 import { FaArrowRight, FaTags } from "react-icons/fa6";
-import { getAllBrands } from "@/app/_actions/brands.actions";
+import { getAllBrands } from "@/actions/brands.actions";
 import Link from "next/link";
 import Header from "@/app/_components/Header/Header";
 const page = async () => {

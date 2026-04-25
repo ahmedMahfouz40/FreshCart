@@ -10,7 +10,6 @@ import { orderData } from "@/types/order.type";
 import { formatDate } from "@/utils/formateDate";
 const OrderCard = ({ order }: { order: orderData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("order", order);
 
   return (
     <div
@@ -103,7 +102,7 @@ const OrderCard = ({ order }: { order: orderData }) => {
           {/* order Items */}
           {order.cartItems.map((cart) => (
             <>
-              <div className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-4">
+              <div key={cart._id} className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-4">
                 {/* Left side */}
                 <div className="flex items-center gap-2 min-w-0 flex-1">
                   <div className="shrink-0 relative p-2 rounded-xl bg-[#F9FAFB] w-16 ">

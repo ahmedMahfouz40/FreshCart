@@ -1,4 +1,4 @@
-import { veriryToken } from "@/app/_actions/verifyToken";
+import { veriryToken } from "@/actions/verifyToken";
 
 export async function getToken() {
   const result = await veriryToken();

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Rating from "../Rating/Rating";
 import AddToCart from "../Buttons/AddToCartFromCart";
 import AddToWishlist from "../Buttons/AddToWishlist";
+import React from "react";
 
 const ProductCard = ({ product }: { product: productType }) => {
   const rating: number = product.ratingsAverage;
@@ -67,7 +68,7 @@ const ProductCard = ({ product }: { product: productType }) => {
         </div>
       )}
       <div className="absolute top-10 inset-e-1.5 space-y-3 text-lg  text-[#4A5565]">
-        <AddToWishlist productId = {product._id} />
+        <AddToWishlist productId={product._id} />
         <div className=" w-8 h-8 border rounded-full flex items-center justify-center shadow-md hover:text-primary-600 cursor-pointer">
           <FiRefreshCw />
         </div>
@@ -82,4 +83,4 @@ const ProductCard = ({ product }: { product: productType }) => {
   );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);

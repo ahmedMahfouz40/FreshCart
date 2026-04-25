@@ -23,7 +23,10 @@ const Header = ({
         <Container>
           <div className="space-y-5">
             <p className="text-sm leading-5 ">
-              <Link href={"/"} className="opacity-70 hover:opacity-100 transition-colors">
+              <Link
+                href={"/"}
+                className="opacity-70 hover:opacity-100 transition-colors"
+              >
                 Home /
               </Link>
               <span> {title.includes(" ") ? title.split(" ")[1] : title}</span>

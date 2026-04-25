@@ -11,10 +11,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-interface SliderHomeProps {
-  SliderImages: Slider[];
-}
-
 interface Slider {
   id: number;
   img: string;
@@ -89,7 +85,7 @@ export default function HomeSlider() {
                     height={500}
                     className="w-full h-100 object-cover"
                   />
-                  <div className="absolute inset-0 bg-linear-to-r from-primary-700/95 to-primary-500/60">
+                  <div className="absolute inset-0 bg-linear-to-r from-green-600/95 to-green-400/60">
                     <div className=" h-full w-[80%]   flex flex-col justify-center mx-auto">
                       <h3 className="text-white text-3xl font-bold mb-4 max-w-96">
                         {slide.title}

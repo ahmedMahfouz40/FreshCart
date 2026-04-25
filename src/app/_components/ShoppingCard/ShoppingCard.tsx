@@ -2,17 +2,14 @@
 import Image from "next/image";
 import { FaCheck, FaTrash } from "react-icons/fa6";
 import { useState } from "react";
-import { updateCartProduct } from "@/app/_actions/cart.actions";
+import { updateCartProduct } from "@/actions/cart.actions";
 import { toast } from "sonner";
 import CardEmpty from "../CardEmpty/CardEmpty";
 import Link from "next/link";
 import CartItemSkeleton from "@/app/_skeletons/CartItemSkeleton";
-import { useDeleteFromCart } from "@/app/_hooks/useDeleteFromCart";
-import { useAppDispatch, useAppSelector } from "@/app/_hooks/reduxHooks";
-import {
-  fetchUserCart,
-  updateCartQuantity,
-} from "@/app/_redux/slices/cartSlice";
+import { useDeleteFromCart } from "@/hooks/useDeleteFromCart";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { fetchUserCart, updateCartQuantity } from "@/redux/slices/cartSlice";
 
 const ShoppingCard = () => {
   const [LoadingUpdateId, setLoadingupdateId] = useState<string | null>(null);

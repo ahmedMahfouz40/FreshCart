@@ -1,5 +1,5 @@
 "use client";
-import { ClearUserCart } from "@/app/_actions/cart.actions";
+import { ClearUserCart } from "@/actions/cart.actions";
 import React, { useState } from "react";
 import { FaTrashCan } from "react-icons/fa6";
 import {
@@ -18,11 +18,12 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
 import { toast } from "sonner";
-import { useAppDispatch } from "@/app/_hooks/reduxHooks";
-import { fetchUserCart } from "@/app/_redux/slices/cartSlice";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { clearCart } from "@/redux/slices/cartSlice";
 const ClearCart = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
+
   async function handleClearCart() {
     setOpen(true);
 
@@ -32,7 +33,7 @@ const ClearCart = () => {
 
     const res = await ClearUserCart();
     if (res.status == "success") {
-      dispatch(() => fetchUserCart());
+      dispatch(clearCart());
     }
     if (res.statusMsg == "fail") {
       toast.error(res.message, { position: "top-center", richColors: true });

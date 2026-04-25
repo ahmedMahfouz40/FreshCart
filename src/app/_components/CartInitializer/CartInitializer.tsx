@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { clearCart, fetchUserCart } from "@/app/_redux/slices/cartSlice";
-import { useAppDispatch } from "@/app/_hooks/reduxHooks";
+import { clearCart, fetchUserCart } from "@/redux/slices/cartSlice";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 
 export default function CartInitializer() {
   const { status } = useSession();

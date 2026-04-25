@@ -1,7 +1,7 @@
 import Container from "@/app/_components/Container/Container";
 import OrderCard from "@/app/_components/OrderCard/OrderCard";
 import OrdersEmpty from "@/app/_components/OrdersEmpty/OrdersEmpty";
-import { getUserOrders } from "@/app/_actions/orders.action";
+import { getUserOrders } from "@/actions/orders.action";
 import Link from "next/link";
 import { BsFillBox2Fill } from "react-icons/bs";
 import { FaShoppingBag } from "react-icons/fa";

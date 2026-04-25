@@ -5,7 +5,7 @@ import ShoppingCard from "../../_components/ShoppingCard/ShoppingCard";
 import ShoppingSidebar from "../../_components/ShoppingSidebar/ShoppingSidebar";
 import Link from "next/link";
 import ClearCart from "@/app/_components/Buttons/ClearCart";
-import { useAppSelector } from "@/app/_hooks/reduxHooks";
+import { useAppSelector } from "@/hooks/reduxHooks";
 
 const Page = () => {
   const { numOfCartItems } = useAppSelector((state) => state.cartReducer);
@@ -51,7 +51,6 @@ const Page = () => {
           </div>
         </div>
       </Container>
-      
     </div>
   );
 };

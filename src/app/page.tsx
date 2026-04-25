@@ -7,12 +7,15 @@ const ShopByCategories = lazy(
 
 import CardsHome from "./_components/CardsHome/CardsHome";
 import Figure from "./_components/SmallCards/Figure";
-import HomeSlider from "./_sliders/HomeSlider";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
 import Container from "./_components/Container/Container";
 import { getProducts } from "@/services/products";
+import getMyToken from "@/utils/getMyToken";
+import HomeSlider from "./_sliders/HomeSlider";
 const Home = async () => {
   const products = await getProducts();
+  // console.log("token", await getMyToken());
+
   return (
     <>
       <div className=" my-5">

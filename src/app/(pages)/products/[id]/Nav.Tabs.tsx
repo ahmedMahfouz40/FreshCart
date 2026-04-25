@@ -6,7 +6,7 @@ import { TbReload } from "react-icons/tb";
 export default function NavTabs({ product }: { product: productType }) {
   return (
     <Tabs defaultValue="ProductDetails" className="w-full  my-5 ">
-      <TabsList variant="line" className=" w-full lg:w-[70%] me-auto">
+      <TabsList variant="line" className=" w-full lg:w-[70%] flex flex-wrap gap-2 me-auto mb-8">
         <TabsTrigger
           tabIndex={-1}
           value="ProductDetails"
@@ -42,32 +42,32 @@ export default function NavTabs({ product }: { product: productType }) {
         </div>
         <div className="p-4 grid grid-cols-2 gap-4">
           <div className="bg-gray-50 col-span-2 sm:col-span-1 p-2 space-y-2">
-            <h4 className="text-[#101828]">Product Information</h4>
+            <h4 className="text-heading">Product Information</h4>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Ctegory </span>
-              <span className="text-sm text-[#101828]">
+              <span className="text-sm text-heading">
                 {product.category.name}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Subcategory </span>
-              <span className="text-sm text-[#101828]">
+              <span className="text-sm text-heading">
                 {product.subcategory[0].name}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Brand </span>
-              <span className="text-sm text-[#101828]">
+              <span className="text-sm text-heading">
                 {product.brand.name}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Items Sold </span>
-              <span className="text-sm text-[#101828]">{product.sold}</span>
+              <span className="text-sm text-heading">{product.sold}</span>
             </div>
           </div>
           <div className="bg-gray-50 col-span-2 sm:col-span-1 p-2 space-y-2">
-            <h4 className="text-[#101828]">Key Features</h4>
+            <h4 className="text-heading">Key Features</h4>
             <div className="flex gap-2">
               <span className="text-primary-600">
                 <FaCheck />

@@ -10,6 +10,7 @@ export interface orderValues {
   city: string;
   postalCode: string;
   paymentMethod?: string;
+  address?: string;
 }
 
 export interface createOrderResponse {

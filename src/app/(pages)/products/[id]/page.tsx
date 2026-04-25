@@ -1,5 +1,4 @@
 import { getProduct, getSubProducts } from "@/services/products";
-import ProductDetailsSlider from "../../../_sliders/ProductDetailsSlider";
 import Rating from "@/app/_components/Rating/Rating";
 import Quantity from "./Quantity";
 import { FaTruckFast } from "react-icons/fa6";
@@ -7,14 +6,10 @@ import { FaShieldAlt } from "react-icons/fa";
 import { IoReload } from "react-icons/io5";
 import ProductDetailsBtns from "../../../_components/Buttons/ProductDetailsBtns";
 import NavTabs from "./Nav.Tabs";
-import ProductCard from "@/app/_components/ProductCard/ProductCard";
-import {
-  MdOutlineKeyboardArrowLeft,
-  MdOutlineKeyboardArrowRight,
-} from "react-icons/md";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Container from "@/app/_components/Container/Container";
-import Slider from "../../../_sliders/subProductsFromProductDetails";
+import ProductDetailsSlider from "@/app/_sliders/ProductDetailsSlider";
+import Slider from "@/app/_sliders/subProductsFromProductDetails";
 
 const figure = [
   {
