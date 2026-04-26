@@ -32,6 +32,7 @@ const LoginForm = () => {
       const result = await signIn("credentials", {
         ...values,
         redirect: false,
+        callbackUrl: "/",
       });
       console.log(result);
 

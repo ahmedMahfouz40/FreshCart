@@ -35,12 +35,15 @@ export const nextAuthConfig: NextAuthOptions = {
   ],
 
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl; // always go home after login
+    },
     jwt(params) {
       // console.log("params from jwt :", params);
       if (params.user)
         params.token.realToken = params.user.realTokenFromBackend;
       // console.log("token from params" , params.token);
-      
+
       return params.token;
     },
 
