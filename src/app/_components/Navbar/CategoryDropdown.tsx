@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IoIosArrowDown } from "react-icons/io";
 
-const Dropdown = () => {
+const CategoryDropdown = () => {
   return (
     <div>
       <div className="relative group ">
@@ -48,4 +48,4 @@ const Dropdown = () => {
   );
 };
 
-export default Dropdown;
+export default CategoryDropdown;

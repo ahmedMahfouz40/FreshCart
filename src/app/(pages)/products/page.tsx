@@ -1,7 +1,7 @@
 import Container from "@/app/_components/Container/Container";
 import NoProducts from "@/app/_components/NoProducts/NoProducts";
 import ProductCard from "@/app/_components/ProductCard/ProductCard";
-import { getProducts } from "@/services/products";
+import { getProducts } from "@/actions/products.action";
 import Image from "next/image";
 import Link from "next/link";
 import {

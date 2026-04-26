@@ -45,7 +45,7 @@ const AddressCart = ({ item }: { item: address }) => {
     <>
       <AddAddressModal
         defaultValues={{
-          name: item._id,
+          name: item.name,
           city: item.city,
           details: item.details,
           phone: item.phone,

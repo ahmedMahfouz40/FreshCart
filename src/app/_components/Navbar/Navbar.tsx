@@ -33,10 +33,13 @@ import {
 import { MdOutlineMail } from "react-icons/md";
 import { signOut, useSession } from "next-auth/react";
 
-import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/hooks/reduxHooks";
 import ProfileDropdown from "./ProfileDropdown";
+import CategoryDropdown from "./CategoryDropdown";
 export default function Navbar() {
+  const [sheetOpen, setSheetOpen] = React.useState(false);
+  const closeSheet = () => setSheetOpen(false);
+
   const { wishlistProducts } = useAppSelector((state) => state.wishlistReducer);
   const wishlistCount = wishlistProducts?.length || 0;
   const session = useSession();
@@ -182,10 +185,11 @@ export default function Navbar() {
           </NavigationMenuList>
           {/* Category Dropdown */}
           <div className="mx-2 hidden lg:block">
-            <Dropdown />
+            <CategoryDropdown />
           </div>
 
           <div className="flex gap-3 text-xl text-muted-foreground pe-3 items-center">
+            {/* Large Screen */}
             <div className="cursor-pointer hover:opacity-75 transition-all hidden lg:flex gap-2 border-r items-center border-[#E5E7EB] pe-3">
               <span className="text-primary bg-primary/5 flex items-center justify-center text-sm rounded-full w-10  h-10 ">
                 <FaHeadset />
@@ -243,81 +247,76 @@ export default function Navbar() {
                 </Link>
               )}
             </div>
-            {/* Trigger */}
+
+            {/* Small Screen */}
             <div className="lg:hidden">
-              <Sheet>
-                <SheetTrigger className="flex items-center justify-center lg:hidden cursor-pointer text-white bg-primary hover:bg-primary-700 transition-colors w-10 h-10  rounded-full">
+              <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+                <SheetTrigger className="flex items-center justify-center lg:hidden cursor-pointer text-white bg-primary hover:bg-primary-700 transition-colors w-10 h-10 rounded-full">
                   <FaBars />
                 </SheetTrigger>
                 <SheetContent showCloseButton={false}>
-                  <SheetHeader className="bg-gray-50 py-5 border-b-gray-200  items-center flex-row justify-between">
+                  <SheetHeader className="bg-gray-50 py-5 border-b-gray-200 items-center flex-row justify-between">
                     <SheetTitle>
                       <Image src={logo} alt="logo" />
                     </SheetTitle>
-                    <SheetClose className="w-10 h-10 rounded-full cursor-pointer bg-gray-100 flex items-center justify-center hover:bg-red-50 transition-colors ">
+                    <SheetClose className="w-10 h-10 rounded-full cursor-pointer bg-gray-100 flex items-center justify-center hover:bg-red-50 transition-colors">
                       <FaXmark className="text-gray-500 text-lg" />
                     </SheetClose>
                   </SheetHeader>
                   <div className="px-4 overflow-y-auto h-[calc(100vh-80px)] py-6">
-                    <button className=" w-full relative ">
+                    <button className="w-full relative">
                       <input
                         type="search"
-                        className="py-3 w-full ps-5 pe-8 border  border-[#E5E7EB] bg-white text-gray-600 font-medium  rounded-2xl"
-                        placeholder="Search  Products ..."
+                        className="py-3 w-full ps-5 pe-8 border border-[#E5E7EB] bg-white text-gray-600 font-medium rounded-2xl"
+                        placeholder="Search Products ..."
                       />
-                      <div className="absolute inset-e-3 top-1/2 -translate-y-1/2 bg-primary rounded-full w-9 h-9  flex items-center justify-center text-white text-xl">
+                      <div className="absolute inset-e-3 top-1/2 -translate-y-1/2 bg-primary rounded-full w-9 h-9 flex items-center justify-center text-white text-xl">
                         <IoMdSearch />
                       </div>
                     </button>
                     <div className="text-[#364153] my-4 border-b border-gray-200">
-                      {/* Home Link */}
-                      <div className="w-full   mb-3">
+                      <div className="w-full mb-3">
                         <Link
                           className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
                           href="/"
+                          onClick={closeSheet}
                         >
                           Home
                         </Link>
                       </div>
-                      {/* Shop Link */}
-                      <div className="peer bg-transparent!">
-                        <div className="w-full   mb-3">
-                          <Link
-                            className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
-                            href="/products"
-                          >
-                            Shop
-                          </Link>
-                        </div>
+                      <div className="w-full mb-3">
+                        <Link
+                          className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
+                          href="/products"
+                          onClick={closeSheet}
+                        >
+                          Shop
+                        </Link>
                       </div>
-                      {/* categories Link */}
-                      <div className="peer bg-transparent!">
-                        <div className="w-full   mb-3">
-                          <Link
-                            className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
-                            href="/categories"
-                          >
-                            Categories
-                          </Link>
-                        </div>
+                      <div className="w-full mb-3">
+                        <Link
+                          className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
+                          href="/categories"
+                          onClick={closeSheet}
+                        >
+                          Categories
+                        </Link>
                       </div>
-                      {/* Brands Link */}
-                      <div className="peer bg-transparent!">
-                        <div className="w-full   mb-3">
-                          <Link
-                            className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
-                            href="/brands"
-                          >
-                            Brands
-                          </Link>
-                        </div>
+                      <div className="w-full mb-3">
+                        <Link
+                          className="hover:text-primary p-4 hover:bg-primary-50/50 rounded-xl transition-colors w-full block"
+                          href="/brands"
+                          onClick={closeSheet}
+                        >
+                          Brands
+                        </Link>
                       </div>
                     </div>
-                    {/* wishlist & cart  */}
                     <div className="border-b border-gray-200 my-4 pb-4">
                       <Link
                         className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
                         href="/wishlist"
+                        onClick={closeSheet}
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center">
@@ -328,7 +327,7 @@ export default function Navbar() {
                           </span>
                         </div>
                         <span
-                          className={`${wishlistCount == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
+                          className={`${wishlistCount == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full`}
                         >
                           {wishlistCount}
                         </span>
@@ -336,6 +335,7 @@ export default function Navbar() {
                       <Link
                         className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
                         href="/cart"
+                        onClick={closeSheet}
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-full bg-primary-50 flex items-center justify-center">
@@ -346,7 +346,7 @@ export default function Navbar() {
                           </span>
                         </div>
                         <span
-                          className={`${cartReducer.numOfCartItems == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full `}
+                          className={`${cartReducer.numOfCartItems == 0 && "hidden"} bg-primary-600 text-white text-xs font-bold px-2.5 py-1 rounded-full`}
                         >
                           {cartReducer.numOfCartItems}
                         </span>
@@ -358,6 +358,7 @@ export default function Navbar() {
                           <Link
                             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
                             href="/profile/settings"
+                            onClick={closeSheet}
                           >
                             <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
                               <FaUser className="text-gray-500" />
@@ -367,7 +368,10 @@ export default function Navbar() {
                             </span>
                           </Link>
                           <button
-                            onClick={handleSignOut}
+                            onClick={() => {
+                              handleSignOut();
+                              closeSheet();
+                            }}
                             className="flex items-center gap-3 px-4 py-3 cursor-pointer rounded-xl hover:bg-red-50 transition-colors w-full text-left"
                           >
                             <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center">
@@ -382,14 +386,16 @@ export default function Navbar() {
                         <div className="p-4 space-y-1">
                           <div className="grid sm:grid-cols-2 gap-3 pt-2">
                             <Link
-                              className=" w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
+                              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-colors"
                               href="/login"
+                              onClick={closeSheet}
                             >
                               Sign In
                             </Link>
                             <Link
-                              className=" w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-primary-600 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
+                              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-primary-600 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
                               href="/signup"
+                              onClick={closeSheet}
                             >
                               Sign Up
                             </Link>
@@ -400,6 +406,7 @@ export default function Navbar() {
                     <Link
                       className="mx-4 mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center gap-3 hover:bg-primary-50 transition-colors"
                       href="/contact"
+                      onClick={closeSheet}
                     >
                       <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center">
                         <FaHeadset className="text-primary" />

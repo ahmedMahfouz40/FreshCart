@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaRegCircleUser, // trigger button
   FaCircleUser, // avatar in dropdown header
@@ -31,8 +31,9 @@ export default React.memo(function ProfileDropdown({
   email: string;
   name: string;
 }) {
+  const [open, setOpen] = useState(false);
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
@@ -58,6 +59,7 @@ export default React.memo(function ProfileDropdown({
           </DropdownMenuLabel>
           <DropdownMenuItem className="mt-2 ">
             <Link
+              onClick={() => setOpen(false)}
               className="flex items-center w-full gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600  transition-colors"
               href="/profile/settings"
             >
@@ -67,6 +69,7 @@ export default React.memo(function ProfileDropdown({
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
+              onClick={() => setOpen(false)}
               className="flex items-center w-full gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600  transition-colors"
               href="/allorders"
             >
@@ -76,6 +79,7 @@ export default React.memo(function ProfileDropdown({
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
+              onClick={() => setOpen(false)}
               className="flex items-center w-full gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600  transition-colors"
               href="/wishlist"
             >
@@ -85,6 +89,7 @@ export default React.memo(function ProfileDropdown({
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
+              onClick={() => setOpen(false)}
               className="flex items-center w-full gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600  transition-colors"
               href="/profile/address"
             >
@@ -94,6 +99,7 @@ export default React.memo(function ProfileDropdown({
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
+              onClick={() => setOpen(false)}
               className="flex items-center w-full gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-primary-600  transition-colors"
               href="/profile/settings"
             >
@@ -105,7 +111,10 @@ export default React.memo(function ProfileDropdown({
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <button
-            onClick={handleSignOut}
+            onClick={() => {
+              handleSignOut();
+              setOpen(false);
+            }}
             className="flex items-center active:scale-[0.98] gap-3 px-4 py-2.5 text-sm text-red-500  transition-colors w-full text-left cursor-pointer"
           >
             <FaRightFromBracket className="w-4" />

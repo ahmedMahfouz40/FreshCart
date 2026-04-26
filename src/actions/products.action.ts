@@ -1,3 +1,4 @@
+"use server";
 import { productType } from "@/types/product.type";
 
 export async function getProducts(

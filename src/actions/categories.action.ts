@@ -1,3 +1,4 @@
+"use server"
 import { Category } from "@/types/product.type";
 
 export async function getAllCategories(): Promise<Category[] | null> {

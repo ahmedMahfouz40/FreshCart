@@ -1,4 +1,4 @@
-import { getProduct, getSubProducts } from "@/services/products";
+import { getProduct, getSubProducts } from "@/actions/products.action";
 import Rating from "@/app/_components/Rating/Rating";
 import Quantity from "./Quantity";
 import { FaTruckFast } from "react-icons/fa6";

@@ -9,7 +9,7 @@ import CardsHome from "./_components/CardsHome/CardsHome";
 import Figure from "./_components/SmallCards/Figure";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
 import Container from "./_components/Container/Container";
-import { getProducts } from "@/services/products";
+import { getProducts } from "@/actions/products.action";
 import getMyToken from "@/utils/getMyToken";
 import HomeSlider from "./_sliders/HomeSlider";
 const Home = async () => {
