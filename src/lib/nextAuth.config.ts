@@ -35,7 +35,7 @@ export const nextAuthConfig: NextAuthOptions = {
   ],
 
   callbacks: {
-    async redirect({ url, baseUrl }) {
+    async redirect({baseUrl }) {
       return baseUrl; // always go home after login
     },
     jwt(params) {

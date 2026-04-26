@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { loginSchema } from "../../schemas/login.schema";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -18,7 +17,6 @@ import { signinDataType } from "@/types/LoginDatatype";
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -42,7 +40,7 @@ const LoginForm = () => {
           richColors: true,
         });
 
-        router.push("/");
+        window.location.href = "/";
       } else {
         toast.error("Unauthorized, You don't have an account!", {
           position: "top-center",
