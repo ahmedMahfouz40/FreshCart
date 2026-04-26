@@ -47,9 +47,6 @@ export async function DeleteAddress(
   return finalRes;
 }
 
-
-
-
 export async function updateUserAddress(
   addressId: string,
   userData: addAddressDataType,
