@@ -5,11 +5,12 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import imageSlider1 from "@/images/Home.png";
-
+import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import Link from "next/link";
 
 interface Slider {
   id: number;
@@ -19,6 +20,8 @@ interface Slider {
   btnColor: string;
   btnText1: string;
   btnText2: string;
+  href1: string;
+  href2: string;
 }
 
 const imgs: Slider[] = [
@@ -30,15 +33,8 @@ const imgs: Slider[] = [
     btnColor: "text-primary",
     btnText1: "Shop Now",
     btnText2: "View Deals",
-  },
-  {
-    id: 2,
-    img: imageSlider1.src,
-    title: "Fast & Free Delivery",
-    content: "Same day delivery available",
-    btnColor: "text-purple-500",
-    btnText1: "Order Now",
-    btnText2: "Delivery Info",
+    href1: "/products",
+    href2: "/deals",
   },
   {
     id: 3,
@@ -48,6 +44,19 @@ const imgs: Slider[] = [
     btnColor: "text-blue-500",
     btnText1: "Shop Now",
     btnText2: "Learn More",
+    href1: "/products",
+    href2: "/about",
+  },
+  {
+    id: 2,
+    img: imageSlider1.src,
+    title: "Fast & Free Delivery",
+    content: "Same day delivery available",
+    btnColor: "text-purple-500",
+    btnText1: "Order Now",
+    btnText2: "Delivery Info",
+    href1: "/cart",
+    href2: "/delivery",
   },
 ];
 
@@ -85,22 +94,36 @@ export default function HomeSlider() {
                     height={500}
                     className="w-full h-100 object-cover"
                   />
-                  <div className="absolute inset-0 bg-linear-to-r from-green-600/95 to-green-400/60">
-                    <div className=" h-full w-[80%]   flex flex-col justify-center mx-auto">
-                      <h3 className="text-white text-3xl font-bold mb-4 max-w-96">
-                        {slide.title}
-                      </h3>
-                      <p className="text-white font-normal">{slide.content}</p>
-                      <div className="flex gap-2.5 mt-4">
-                        <button
-                          className={`${slide.btnColor} font-semibold bg-white py-2 px-6 rounded-lg hover:scale-105 transition-transform`}
-                        >
-                          {slide.btnText1}
-                        </button>
-                        <button className="text-white border-2 font-semibold border-white/50 py-2 px-6 rounded-lg hover:scale-105 transition-transform">
-                          {slide.btnText2}
-                        </button>
-                      </div>
+                  <div>
+                    <div className="absolute inset-0 bg-linear-to-r from-green-600/95 to-green-400/60">
+                      <motion.div
+                        initial={{ opacity: 0, y: 25 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        className=" h-full w-[80%]   flex flex-col justify-center mx-auto"
+                      >
+                        <h3 className="text-white text-3xl font-bold mb-4 max-w-96">
+                          {slide.title}
+                        </h3>
+                        <p className="text-white font-normal">
+                          {slide.content}
+                        </p>
+                        <div className="flex gap-2.5 mt-4">
+                          <Link
+                            href={slide.href1}
+                            className={`${slide.btnColor} font-semibold bg-white py-2 px-6 rounded-lg hover:scale-105 transition-transform`}
+                          >
+                            {slide.btnText1}
+                          </Link>
+                          <Link
+                            href={slide.href2}
+                            className="text-white border-2 font-semibold border-white/50 py-2 px-6 rounded-lg hover:scale-105 transition-transform"
+                          >
+                            {slide.btnText2}
+                          </Link>
+                        </div>
+                      </motion.div>
                     </div>
                   </div>
                 </div>

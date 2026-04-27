@@ -10,6 +10,9 @@ import ScrollToTop from "@/utils/ScrollToTop";
 import Container from "@/app/_components/Container/Container";
 import ProductDetailsSlider from "@/app/_sliders/ProductDetailsSlider";
 import Slider from "@/app/_sliders/subProductsFromProductDetails";
+import { Suspense } from "react";
+import ProductSliderSkeleton from "@/app/_skeletons/ProductsSliderSkeleton";
+import TabsSkeleton from "@/app/_skeletons/TabsSkeleton";
 
 const figure = [
   {
@@ -46,6 +49,7 @@ const ProductDetails = async ({
       </div>
     );
   }
+
   const subProducts = await getSubProducts(product.category._id);
   //? Calc Discount Percentage
   const percentageDiscount: number | null = product.priceAfterDiscount
@@ -151,14 +155,19 @@ const ProductDetails = async ({
               </div>
             </div>
           </div>
-          <NavTabs product={product} />
+          <Suspense fallback={<TabsSkeleton />}>
+            <NavTabs product={product} />
+          </Suspense>
+
           <div className="space-y-5 mt-10">
             <div className="flex justify-between">
               <h2 className="border-s-8 border-primary-600 rounded text-2xl ps-3 font-bold text-gray-800">
                 You May Also <span className=" text-primary-600">Like</span>
               </h2>
             </div>
-            <Slider key={product._id} products={subProducts} />
+            <Suspense fallback={<ProductSliderSkeleton />}>
+              <Slider key={product._id} products={subProducts} />
+            </Suspense>
           </div>
         </div>
       </Container>

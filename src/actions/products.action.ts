@@ -5,66 +5,36 @@ export async function getProducts(
   categoryId?: string,
   brandId?: string,
 ): Promise<productType[] | null> {
-  if (categoryId) {
-    try {
-      const response = await fetch(
-        `${process.env.apiLink_v1}/products/?category[in]=${categoryId}`,
-        {
-          cache: "force-cache",
-        },
-      );
-      const finalRes = await response.json();
-      // console.log("final response " , finalRes);
+  try {
+    const url = categoryId
+      ? `${process.env.apiLink_v1}/products/?category[in]=${categoryId}`
+      : brandId
+        ? `${process.env.apiLink_v1}/products/?brand=${brandId}`
+        : `${process.env.apiLink_v1}/products`;
 
-      return finalRes?.data;
-    } catch {
-      return null;
-    }
-  } else if (brandId) {
-    try {
-      const response = await fetch(
-        `${process.env.apiLink_v1}/products/?brand=${brandId}`,
-        {
-          cache: "force-cache",
-        },
-      );
-      const finalRes = await response.json();
-      console.log("final response ", finalRes);
+    const response = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
 
-      return finalRes?.data;
-    } catch {
-      return null;
-    }
-  } else {
-    try {
-      const response = await fetch(`${process.env.apiLink_v1}/products`, {
-        next: { revalidate: 3600 },
-        cache: "force-cache",
-      });
-      const finalRes = await response.json();
-      // console.log("final response " , finalRes);
-
-      return finalRes?.data;
-    } catch {
-      return null;
-    }
+    const finalRes = await response.json();
+    return finalRes?.data ?? null;
+  } catch {
+    return null;
   }
 }
 
 export async function getProduct(id: string): Promise<productType | null> {
   try {
     const response = await fetch(`${process.env.apiLink_v1}/products/${id}`, {
-      cache: "force-cache",
+      next: { revalidate: 60 },
     });
     const finalRes = await response.json();
-
-    return finalRes?.data;
-  } catch (error) {
-    console.log(error);
-
+    return finalRes?.data ?? null;
+  } catch {
     return null;
   }
 }
+
 export async function getSubProducts(
   id: string,
 ): Promise<productType[] | null> {
@@ -72,13 +42,12 @@ export async function getSubProducts(
     const res = await fetch(
       `${process.env.apiLink_v1}/products?category[in]=${id}`,
       {
-        cache: "force-cache",
+        next: { revalidate: 3600 },
       },
     );
     const finalRes = await res.json();
-    return finalRes.data;
-  } catch (err) {
-    console.log(err);
+    return finalRes?.data ?? null;
+  } catch {
     return null;
   }
 }

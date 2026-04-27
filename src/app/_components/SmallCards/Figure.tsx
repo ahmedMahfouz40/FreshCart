@@ -1,7 +1,9 @@
-import React from "react";
+"use client"
 import { FaShieldAlt } from "react-icons/fa";
 import { FaHeadset, FaTruck } from "react-icons/fa6";
 import { IoReload } from "react-icons/io5";
+import { motion } from "framer-motion";
+
 const Figure = () => {
   const figure = [
     {
@@ -35,7 +37,13 @@ const Figure = () => {
   ];
   return (
     <>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 my-5 gap-4  lg:w-[90%] mx-auto py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        viewport={{ once: false, amount: 0.2 }}
+        className="grid md:grid-cols-2 lg:grid-cols-4 my-5 gap-4  lg:w-[90%] mx-auto py-8"
+      >
         {figure.map((fig) => {
           return (
             <div
@@ -54,7 +62,7 @@ const Figure = () => {
             </div>
           );
         })}
-      </div>
+      </motion.div>
     </>
   );
 };

@@ -1,5 +1,3 @@
-
-
 import Container from "@/app/_components/Container/Container";
 import NoProducts from "@/app/_components/NoProducts/NoProducts";
 import ProductCard from "@/app/_components/ProductCard/ProductCard";
@@ -22,21 +20,18 @@ const page = async ({
   const { subCategory, brand } = await searchParams;
 
   const products = await getProducts(subCategory, brand);
-
-  // Extract once, use everywhere
-  const categoryName = products?.[0]?.subcategory?.[0]?.name;
   
-  const isFiltered = !!(subCategory || brand);
+  const categoryName = products?.[0]?.subcategory?.[0]?.name;
 
   return (
     <div className="my-5">
-      <div className="bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white w-full h-50 py-14 px-4">
+      <div className="   bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white   w-full h-50 py-14 px-4">
         <Container>
           <div className="space-y-5">
-            <p className="text-sm leading-5">
-              {isFiltered ? (
+            <p className="text-sm leading-5 ">
+              {subCategory || brand ? (
                 <>
-                  <Link href="/" className="opacity-70 hover:opacity-100">
+                  <Link href={"/"} className="opacity-70 hover:opacity-100">
                     Home /
                   </Link>
                   <Link
@@ -49,7 +44,7 @@ const page = async ({
                 </>
               ) : (
                 <>
-                  <Link href="/" className="opacity-70 hover:opacity-100">
+                  <Link href={"/"} className="opacity-70 hover:opacity-100">
                     Home /
                   </Link>
                   <span>All Products</span>
@@ -57,8 +52,8 @@ const page = async ({
               )}
             </p>
             <div className="flex items-center gap-3">
-              <div className="relative overflow-hidden w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-white/20">
-                {isFiltered ? (
+              <div className="relative overflow-hidden w-16 h-16 rounded-2xl flex items-center justify-center text-4xl  bg-white/20">
+                {subCategory || brand ? (
                   products?.[0]?.imageCover ? (
                     <Image
                       src={products[0].imageCover}
@@ -74,11 +69,13 @@ const page = async ({
                 )}
               </div>
               <div>
-                <h1 className="text-4xl leading-10 font-bold">
-                  {isFiltered ? (categoryName ?? "Products") : "All Products"}
+                <h1 className="text-4xl leading-10 font-bold ">
+                  {subCategory || brand
+                    ? (categoryName ?? "Products")
+                    : "All Products"}
                 </h1>
                 <p className="opacity-80">
-                  {isFiltered
+                  {subCategory || brand
                     ? `Browse ${categoryName ?? ""} products`
                     : "Explore our complete product collection"}
                 </p>
@@ -90,7 +87,7 @@ const page = async ({
 
       <Container>
         <div className="my-5">
-          {isFiltered && (
+          {(subCategory || brand) && (
             <div className="mb-6 flex items-center gap-3 flex-wrap">
               <span className="flex items-center gap-2 text-sm text-gray-600">
                 <FaFilter />
@@ -113,12 +110,12 @@ const page = async ({
             </div>
           )}
           <p className="text-sm leading-5 text-[#6A7282] mb-10">
-            Showing {products?.length ?? 0} products
+          Showing {products?.length ?? 0} products
           </p>
         </div>
-        {products && products.length > 0 ? (
-          <div className="grid sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-            {products.map((product) => (
+        {products && products?.length > 0 ? (
+          <div className="grid  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
+            {products?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>

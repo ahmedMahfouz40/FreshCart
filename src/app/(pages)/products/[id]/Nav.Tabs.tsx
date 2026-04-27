@@ -1,30 +1,63 @@
+import { getReviewsForProduct } from "@/actions/reviews.action";
+import CardReview from "@/app/_components/CardReview/CardReview";
+import ReviewModal from "@/app/_components/CreateReviewModal/CreateReviewModal";
+import CreateReviewModal from "@/app/_components/CreateReviewModal/CreateReviewModal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { productType } from "@/types/product.type";
-import { FaCheck, FaStar, FaTruck } from "react-icons/fa6";
+import { BsStarHalf } from "react-icons/bs";
+import { FaCheck, FaRegStar, FaStar, FaTruck } from "react-icons/fa6";
 import { IoClipboard } from "react-icons/io5";
 import { TbReload } from "react-icons/tb";
-export default function NavTabs({ product }: { product: productType }) {
+export default async function NavTabs({ product }: { product: productType }) {
+  const res = await getReviewsForProduct(product._id);
+  const reviews = res?.data;
+  const hasReviews = reviews && reviews.length > 0;
+  const defaultCounts = [5, 4, 3, 2, 1].map((star) => ({
+    star,
+    count: 0,
+    pct: star === 1 ? 25 : 5,
+  }));
+  const ratingAvg = hasReviews
+    ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+    : "0.0";
+  const counts = hasReviews
+    ? [5, 4, 3, 2, 1].map((star) => ({
+        star,
+        count: reviews.filter((r) => r.rating === star).length,
+        pct: Math.round(
+          (reviews.filter((r) => r.rating === star).length / reviews.length) *
+            100,
+        ),
+      }))
+    : defaultCounts;
+
   return (
-    <Tabs defaultValue="ProductDetails" className="w-full  my-5 ">
-      <TabsList variant="line" className=" w-full lg:w-[70%] flex flex-wrap gap-2 me-auto mb-8">
+    <Tabs
+      defaultValue="ProductDetails"
+      className="w-full  my-5 border-b border-x border-gray-100 rounded-b-2xl"
+    >
+      <TabsList
+        variant="line"
+        className=" w-full lg:w-[70%] flex flex-wrap gap-2 me-auto mb-8"
+      >
         <TabsTrigger
           tabIndex={-1}
           value="ProductDetails"
-          className="text-[#4A5565] cursor-pointer hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6 hover:bg-primary-50"
+          className="text-[#4A5565]  cursor-pointer hover:text-primary-600 whitespace-nowrap text-xs sm:text-lg  py-3 sm:py-6 px-1 sm:px-6 hover:bg-primary-50 "
         >
           <IoClipboard /> <span>Product Details</span>
         </TabsTrigger>
         <TabsTrigger
           tabIndex={-1}
           value="Reviews"
-          className="text-[#4A5565] cursor-pointer  hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6  hover:bg-primary-50"
+          className="text-[#4A5565] cursor-pointer  hover:text-primary-600 whitespace-nowrap text-xs sm:text-lg  py-3 sm:py-6 px-1 sm:px-6  hover:bg-primary-50"
         >
-          <FaStar /> Reviews ({product.reviews?.length})
+          <FaStar /> Reviews ({reviews?.length})
         </TabsTrigger>
         <TabsTrigger
           tabIndex={-1}
           value="ShippingReturns"
-          className="text-[#4A5565] cursor-pointer hover:text-primary-600  text-xs sm:text-lg  py-3 sm:py-4 px-1 sm:px-6 hover:bg-primary-50"
+          className="text-[#4A5565] cursor-pointer hover:text-primary-600 whitespace-nowrap text-xs sm:text-lg  py-3 sm:py-6 px-1 sm:px-6 hover:bg-primary-50"
         >
           <FaTruck /> Shipping & Returns
         </TabsTrigger>
@@ -32,7 +65,7 @@ export default function NavTabs({ product }: { product: productType }) {
       {/* Product Details Content */}
       <TabsContent
         value="ProductDetails"
-        className="p-6 border-t shadow rounded-xl"
+        className="p-6 border-t border-gray-100 shadow rounded-b-xl "
       >
         <div className="leading-7">
           <h3 className="font-semibold  text-heading mb-4">
@@ -44,7 +77,7 @@ export default function NavTabs({ product }: { product: productType }) {
           <div className="bg-gray-50 col-span-2 sm:col-span-1 p-2 space-y-2">
             <h4 className="text-heading">Product Information</h4>
             <div className="flex justify-between">
-              <span className="text-gray-500 font-sm"> Ctegory </span>
+             <span className="text-gray-500 font-sm"> Category </span>
               <span className="text-sm text-heading">
                 {product.category.name}
               </span>
@@ -57,9 +90,7 @@ export default function NavTabs({ product }: { product: productType }) {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Brand </span>
-              <span className="text-sm text-heading">
-                {product.brand.name}
-              </span>
+              <span className="text-sm text-heading">{product.brand.name}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500 font-sm"> Items Sold </span>
@@ -101,10 +132,78 @@ export default function NavTabs({ product }: { product: productType }) {
           </div>
         </div>
       </TabsContent>
-      <TabsContent value="Reviews">Reviews</TabsContent>
+
+      {/* Reviews */}
+      <TabsContent value="Reviews">
+        <div className="p-6">
+          <div className="space-y-6">
+            <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
+              <div className="text-center">
+                <div className="text-5xl font-bold text-gray-900 mb-2">
+                  {ratingAvg}
+                </div>
+                <div className="flex gap-1 justify-center text-[#FCC800] text-lg">
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    if (+ratingAvg >= star) {
+                      return <FaStar key={star} />;
+                    } else if (+ratingAvg >= star - 0.5) {
+                      return <BsStarHalf key={star} />;
+                    } else {
+                      return <FaRegStar key={star} />;
+                    }
+                  })}
+                </div>
+                <p className="text-sm text-gray-500 mt-2">
+                  Based on {reviews?.length ?? 0} reviews
+                </p>
+              </div>
+              <div className="flex-1 w-full">
+                {counts.map((item) => (
+                  <div key={item.star} className="flex items-center gap-3 mb-2">
+                    <span className="text-sm text-gray-600 w-8">
+                      {item.star} star
+                    </span>
+                    <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-yellow-400 rounded-full transition-all duration-300"
+                        style={{ width: item.pct + "%" }}
+                      />
+                    </div>
+                    <span className="text-sm text-gray-500 w-10">
+                      {item.pct}%
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-t max-h-100 overflow-y-auto scrollbar  border-gray-200 pt-6 space-y-4">
+              {hasReviews &&
+                reviews.map((item) => (
+                  <CardReview key={item._id} item={item}  />
+                ))}
+            </div>
+            {/* Create Review */}
+            <div className="text-center py-8">
+              <span className="text-6xl text-gray-300 mb-3 inline-block">
+                <FaStar />
+              </span>
+
+              <p className="text-gray-500">
+                Customer reviews will be displayed here.
+              </p>
+              <ReviewModal
+                title="Write a Review"
+                productId={product._id}
+              />
+            </div>
+          </div>
+        </div>
+      </TabsContent>
+
+      {/* Shipping & Returns */}
       <TabsContent value="ShippingReturns">
         <div className="grid sm:grid-cols-2 gap-4 my-5">
-          <div className="bg-gray-100 p-5 rounded-lg space-y-2">
+          <div className="bg-gray-100 p-5 rounded-lg space-y-2  border-t border-gray-200 shadow rounded-b-xl ">
             <div className="flex items-center gap-2">
               <span className="rounded-full bg-primary-600 w-12 h-12 text-2xl text-white flex items-center justify-center">
                 <FaTruck />

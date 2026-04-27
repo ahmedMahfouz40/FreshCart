@@ -1,7 +1,7 @@
 import { BsStarHalf } from "react-icons/bs";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 
-const Rating = ({ rating }: { rating: number }) => {
+const Rating = ({ rating }: { rating: number | 0 }) => {
   return (
     <div>
       <div className="flex gap-3">

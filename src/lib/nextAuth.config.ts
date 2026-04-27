@@ -35,9 +35,6 @@ export const nextAuthConfig: NextAuthOptions = {
   ],
 
   callbacks: {
-    async redirect({baseUrl }) {
-      return baseUrl; // always go home after login
-    },
     jwt(params) {
       // console.log("params from jwt :", params);
       if (params.user)

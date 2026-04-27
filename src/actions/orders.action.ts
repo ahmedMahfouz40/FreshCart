@@ -6,7 +6,7 @@ import {
   shippingAddressType,
 } from "@/types/order.type";
 import getMyToken from "@/utils/getMyToken";
-import { veriryToken } from "./verifyToken";
+import { getMyId } from "@/utils/getMyId";
 
 export async function createCashOrder(
   cartId: string,
@@ -45,9 +45,9 @@ export async function createVisaOrder(
 }
 
 export async function getUserOrders(): Promise<orderData[]> {
-  const tkn = await veriryToken();
-  const userId = tkn.decoded.id;
+  const userId = await getMyId();
   const res = await fetch(`${process.env.apiLink_v1}/orders/user/${userId}`);
   const finalRes = await res.json();
   return finalRes;
 }
+
