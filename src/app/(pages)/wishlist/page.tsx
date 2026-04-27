@@ -1,6 +1,6 @@
 "use client";
 
-import Container from "@/app/_components/Container/Container";
+import Container from "@/components/Container/Container";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,7 +11,7 @@ import {
   FaTrash,
 } from "react-icons/fa6";
 import Loading from "./loading";
-import EmptyWishlist from "@/app/_components/EmptyWishlist/EmptyWishlist";
+import EmptyWishlist from "@/components/EmptyWishlist/EmptyWishlist";
 import { toast } from "sonner";
 import { useAddToCart } from "@/hooks/useAddToCart";
 import { useEffect, useRef } from "react";

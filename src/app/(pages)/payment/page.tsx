@@ -1,6 +1,6 @@
 "use client";
-import BackToCart from "@/app/_components/Buttons/BackToCart";
-import Container from "@/app/_components/Container/Container";
+import BackToCart from "@/components/Buttons/BackToCart";
+import Container from "@/components/Container/Container";
 import { FaShieldAlt } from "react-icons/fa";
 import {
   FaBookmark,
@@ -11,17 +11,17 @@ import {
   FaTruck,
 } from "react-icons/fa6";
 
-import InfoBanner from "@/app/_components/InfoBanner/InfoBanner";
+import InfoBanner from "@/components/InfoBanner/InfoBanner";
 import { BsBox2Fill } from "react-icons/bs";
 import Image from "next/image";
 
 import OrderSummaryCart from "@/app/_skeletons/OrderSummaryCart";
 
-import PaymentEmpty from "@/app/_components/PaymentEmpty/PaymentEmpty";
+import PaymentEmpty from "@/components/PaymentEmpty/PaymentEmpty";
 
 import { useAppSelector } from "@/hooks/reduxHooks";
 import { useState } from "react";
-import PaymentLoading from "@/app/_components/PaymentLoading/PaymentLoading";
+import PaymentLoading from "@/components/PaymentLoading/PaymentLoading";
 import CheckoutForm from "@/app/_Forms/CheckoutForm";
 import { shallowEqual } from "react-redux";
 

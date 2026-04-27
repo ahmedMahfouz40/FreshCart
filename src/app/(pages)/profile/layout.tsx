@@ -1,6 +1,6 @@
-import AccountSidebar from "@/app/_components/AccountSidebar/AccountSidebar";
-import Container from "@/app/_components/Container/Container";
-import Header from "@/app/_components/Header/Header";
+import AccountSidebar from "@/components/AccountSidebar/AccountSidebar";
+import Container from "@/components/Container/Container";
+import Header from "@/components/Header/Header";
 import { ReactNode } from "react";
 import { FaUser } from "react-icons/fa6";
 

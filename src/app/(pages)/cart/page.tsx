@@ -1,10 +1,10 @@
 "use client";
-import Container from "@/app/_components/Container/Container";
+import Container from "@/components/Container/Container";
 import { FaShoppingCart } from "react-icons/fa";
-import ShoppingCard from "../../_components/ShoppingCard/ShoppingCard";
-import ShoppingSidebar from "../../_components/ShoppingSidebar/ShoppingSidebar";
+import ShoppingCard from "../../../components/ShoppingCard/ShoppingCard";
+import ShoppingSidebar from "../../../components/ShoppingSidebar/ShoppingSidebar";
 import Link from "next/link";
-import ClearCart from "@/app/_components/Buttons/ClearCart";
+import ClearCart from "@/components/Buttons/ClearCart";
 import { useAppSelector } from "@/hooks/reduxHooks";
 
 const Page = () => {

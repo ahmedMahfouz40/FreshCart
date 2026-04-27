@@ -1,11 +1,11 @@
 "use client";
-import AddAddressModal from "../../../_components/AddAddressModal/AddAddressModal";
+import AddAddressModal from "../../../../components/AddAddressModal/AddAddressModal";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { useEffect } from "react";
 import { fetchUserAddress } from "@/redux/slices/addressSlice";
-import AddressCart from "@/app/_components/AddressCart/AddressCart";
+import AddressCart from "@/components/AddressCart/AddressCart";
 import AddressCardSkeleton from "@/app/_skeletons/AddressCartSkeleton";
-import NoAddresses from "@/app/_components/NoAddresses/NoAddresses";
+import NoAddresses from "@/components/NoAddresses/NoAddresses";
 
 const Address = () => {
   const { userAddresses, isLoading, hasFetched } = useAppSelector(

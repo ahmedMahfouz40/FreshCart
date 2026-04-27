@@ -1,6 +1,6 @@
-import Container from "@/app/_components/Container/Container";
-import NoProducts from "@/app/_components/NoProducts/NoProducts";
-import ProductCard from "@/app/_components/ProductCard/ProductCard";
+import Container from "@/components/Container/Container";
+import NoProducts from "@/components/NoProducts/NoProducts";
+import ProductCard from "@/components/ProductCard/ProductCard";
 import { getProducts } from "@/actions/products.action";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +20,7 @@ const page = async ({
   const { subCategory, brand } = await searchParams;
 
   const products = await getProducts(subCategory, brand);
-  
+
   const categoryName = products?.[0]?.subcategory?.[0]?.name;
 
   return (
@@ -110,7 +110,7 @@ const page = async ({
             </div>
           )}
           <p className="text-sm leading-5 text-[#6A7282] mb-10">
-          Showing {products?.length ?? 0} products
+            Showing {products?.length ?? 0} products
           </p>
         </div>
         {products && products?.length > 0 ? (

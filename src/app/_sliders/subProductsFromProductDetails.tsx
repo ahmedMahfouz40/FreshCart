@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/app/_components/ProductCard/ProductCard";
+import ProductCard from "@/components/ProductCard/ProductCard";
 import { productType } from "@/types/product.type";
 import { useId } from "react";
 import {

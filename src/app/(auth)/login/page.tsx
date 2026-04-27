@@ -5,7 +5,7 @@ import LoginForm from "../../_Forms/LoginForm";
 import image from "@/images/login-Image.png";
 import Link from "next/link";
 import { FaLock, FaShieldAlt } from "react-icons/fa";
-import Container from "@/app/_components/Container/Container";
+import Container from "@/components/Container/Container";
 const Signin = () => {
   return (
     <>

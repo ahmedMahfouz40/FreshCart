@@ -20,7 +20,7 @@ import { HiCreditCard } from "react-icons/hi";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import InfoBanner from "@/app/_components/InfoBanner/InfoBanner";
+import InfoBanner from "@/components/InfoBanner/InfoBanner";
 import { BsFillCreditCard2BackFill } from "react-icons/bs";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import React, { useCallback, useEffect } from "react";

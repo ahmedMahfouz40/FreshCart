@@ -1,4 +1,4 @@
-import AddAddressModal from "@/app/_components/AddAddressModal/AddAddressModal";
+import AddAddressModal from "@/components/AddAddressModal/AddAddressModal";
 import React from "react";
 import { FaLocationDot, FaPlus } from "react-icons/fa6";
 

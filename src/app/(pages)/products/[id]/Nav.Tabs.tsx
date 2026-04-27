@@ -1,7 +1,7 @@
 import { getReviewsForProduct } from "@/actions/reviews.action";
-import CardReview from "@/app/_components/CardReview/CardReview";
-import ReviewModal from "@/app/_components/CreateReviewModal/CreateReviewModal";
-import CreateReviewModal from "@/app/_components/CreateReviewModal/CreateReviewModal";
+import CardReview from "@/components/CardReview/CardReview";
+import ReviewModal from "@/components/CreateReviewModal/CreateReviewModal";
+import CreateReviewModal from "@/components/CreateReviewModal/CreateReviewModal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { productType } from "@/types/product.type";
 import { BsStarHalf } from "react-icons/bs";

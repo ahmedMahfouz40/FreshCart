@@ -1,17 +1,16 @@
-import ProductCard from "./_components/ProductCard/ProductCard";
+import ProductCard from "../components/ProductCard/ProductCard";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 const ShopByCategories = dynamic(
-  () => import("./_components/ShopByCategories/ShopByCategories"),
+  () => import("../components/ShopByCategories/ShopByCategories"),
 );
-import CardsHome from "./_components/CardsHome/CardsHome";
-import Figure from "./_components/SmallCards/Figure";
+import CardsHome from "../components/CardsHome/CardsHome";
+import Figure from "../components/SmallCards/Figure";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
-import Container from "./_components/Container/Container";
+import Container from "../components/Container/Container";
 import { getProducts } from "@/actions/products.action";
 import HomeSlider from "./_sliders/HomeSlider";
 const Home = async () => {
-  
   const products = await getProducts();
 
   return (

@@ -4,7 +4,7 @@ import avatar from "@/images/signup-avatar.png";
 import Image from "next/image";
 import { MdOutlineFacebook } from "react-icons/md";
 import Link from "next/link";
-import Container from "@/app/_components/Container/Container";
+import Container from "@/components/Container/Container";
 import SignupForm from "@/app/_Forms/SignupForm";
 
 const Signup = () => {

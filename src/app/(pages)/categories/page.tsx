@@ -1,4 +1,4 @@
-import Container from "@/app/_components/Container/Container";
+import Container from "@/components/Container/Container";
 import { getAllCategories } from "@/actions/categories.action";
 import Image from "next/image";
 import Link from "next/link";
