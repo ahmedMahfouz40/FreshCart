@@ -6,7 +6,7 @@ import { updateCartProduct } from "@/actions/cart.actions";
 import { toast } from "sonner";
 import CardEmpty from "../CardEmpty/CardEmpty";
 import Link from "next/link";
-import CartItemSkeleton from "@/app/_skeletons/CartItemSkeleton";
+import CartItemSkeleton from "@/components/skeletons/CartItemSkeleton";
 import { useDeleteFromCart } from "@/hooks/useDeleteFromCart";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { fetchUserCart, updateCartQuantity } from "@/redux/slices/cartSlice";

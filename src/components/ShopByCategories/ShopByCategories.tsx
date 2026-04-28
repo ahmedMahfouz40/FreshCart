@@ -24,7 +24,7 @@ const ShopByCategories = async () => {
       <div className="grid grid-cols-2 md:grid-cols-5 xl:grid-cols-6 gap-5 p-4 ">
         {categories?.map((prod) => (
           <Link
-            href={"/"}
+            href={`products/?subCategory=${prod._id}`}
             key={prod._id}
             className="flex flex-col items-center gap-2 shadow rounded-xl hover:shadow-xl transition-all"
           >

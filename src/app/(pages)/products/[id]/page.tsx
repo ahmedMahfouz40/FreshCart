@@ -1,4 +1,4 @@
-import { getProduct, getSubProducts } from "@/actions/products.action";
+import { getProduct } from "@/actions/products.action";
 import Rating from "@/components/Rating/Rating";
 import Quantity from "./Quantity";
 import { FaTruckFast } from "react-icons/fa6";
@@ -8,11 +8,11 @@ import ProductDetailsBtns from "../../../../components/Buttons/ProductDetailsBtn
 import NavTabs from "./Nav.Tabs";
 import ScrollToTop from "@/utils/ScrollToTop";
 import Container from "@/components/Container/Container";
-import ProductDetailsSlider from "@/app/_sliders/ProductDetailsSlider";
-import Slider from "@/app/_sliders/subProductsFromProductDetails";
+import ProductDetailsSlider from "@/components/Sliders/ProductDetailsSlider";
 import { Suspense } from "react";
-import ProductSliderSkeleton from "@/app/_skeletons/ProductsSliderSkeleton";
-import TabsSkeleton from "@/app/_skeletons/TabsSkeleton";
+import ProductSliderSkeleton from "@/components/skeletons/ProductsSliderSkeleton";
+import TabsSkeleton from "@/components/skeletons/TabsSkeleton";
+import SubProductsSection from "@/components/GetSubProducts/GetSubProducts";
 
 const figure = [
   {
@@ -50,7 +50,6 @@ const ProductDetails = async ({
     );
   }
 
-  const subProducts = await getSubProducts(product.category._id);
   //? Calc Discount Percentage
   const percentageDiscount: number | null = product.priceAfterDiscount
     ? Math.round(
@@ -166,7 +165,7 @@ const ProductDetails = async ({
               </h2>
             </div>
             <Suspense fallback={<ProductSliderSkeleton />}>
-              <Slider key={product._id} products={subProducts} />
+              <SubProductsSection categoryId={product.category._id} />
             </Suspense>
           </div>
         </div>

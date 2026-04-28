@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { useEffect } from "react";
 import { fetchUserAddress } from "@/redux/slices/addressSlice";
 import AddressCart from "@/components/AddressCart/AddressCart";
-import AddressCardSkeleton from "@/app/_skeletons/AddressCartSkeleton";
+import AddressCardSkeleton from "@/components/skeletons/AddressCartSkeleton";
 import NoAddresses from "@/components/NoAddresses/NoAddresses";
 
 const Address = () => {

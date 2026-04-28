@@ -47,11 +47,10 @@ export const nextAuthConfig: NextAuthOptions = {
   },
 
   session: {
-    maxAge: 60 * 60 * 7,
+    maxAge: 60 * 60 * 24 * 7, // 1 week
   },
 
   pages: {
     signIn: "/login",
   },
 };
-

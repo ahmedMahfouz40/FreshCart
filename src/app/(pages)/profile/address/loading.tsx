@@ -1,4 +1,4 @@
-import AddressCardSkeleton from "@/app/_skeletons/AddressCartSkeleton";
+import AddressCardSkeleton from "@/components/skeletons/AddressCartSkeleton";
 import React from "react";
 
 const loading = () => {

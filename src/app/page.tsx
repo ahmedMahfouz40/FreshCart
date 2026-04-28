@@ -5,11 +5,11 @@ const ShopByCategories = dynamic(
   () => import("../components/ShopByCategories/ShopByCategories"),
 );
 import Figure from "../components/SmallCards/Figure";
-import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
+import CategorySkeleton from "@/components/skeletons/CategorySkeleton";
 import Container from "../components/Container/Container";
 import { getProducts } from "@/actions/products.action";
-import HomeSlider from "./_sliders/HomeSlider";
-import HomeCards from "../components/CardsHome/CardsHome";
+import HomeSlider from "../components/Sliders/HomeSlider";
+import HomeCards from "../components/CardsHome/HomeCards";
 const Home = async () => {
   const products = await getProducts();
 

@@ -1,5 +1,5 @@
 import ContactCard from "@/components/ContactCard/ContactCard";
-import ContactUsForm from "@/app/_Forms/ContactUsForm";
+import ContactUsForm from "@/components/Forms/ContactUsForm";
 import {
   FaPhone,
   FaEnvelope,

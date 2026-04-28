@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MdOutlineFacebook } from "react-icons/md";
 import Link from "next/link";
 import Container from "@/components/Container/Container";
-import SignupForm from "@/app/_Forms/SignupForm";
+import SignupForm from "@/components/Forms/SignupForm";
 
 const Signup = () => {
   return (

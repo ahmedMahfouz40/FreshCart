@@ -1,7 +1,7 @@
 import { FaClock, FaGoogle, FaStar, FaTruck, FaUsers } from "react-icons/fa6";
 import Image from "next/image";
 import { MdOutlineFacebook } from "react-icons/md";
-import LoginForm from "../../_Forms/LoginForm";
+import LoginForm from "../../../components/Forms/LoginForm";
 import image from "@/images/login-Image.png";
 import Link from "next/link";
 import { FaLock, FaShieldAlt } from "react-icons/fa";

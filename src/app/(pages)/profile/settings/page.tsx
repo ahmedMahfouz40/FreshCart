@@ -1,5 +1,5 @@
-import ChangePassForm from "@/app/_Forms/ChangePassForm";
-import SettingsForm from "@/app/_Forms/SettingsForm";
+import ChangePassForm from "@/components/Forms/ChangePassForm";
+import SettingsForm from "@/components/Forms/SettingsForm";
 import { FaLock, FaUser } from "react-icons/fa6";
 
 const page = () => {

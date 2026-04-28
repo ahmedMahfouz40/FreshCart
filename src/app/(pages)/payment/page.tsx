@@ -15,14 +15,14 @@ import InfoBanner from "@/components/InfoBanner/InfoBanner";
 import { BsBox2Fill } from "react-icons/bs";
 import Image from "next/image";
 
-import OrderSummaryCart from "@/app/_skeletons/OrderSummaryCart";
+import OrderSummaryCart from "@/components/skeletons/OrderSummaryCart";
 
 import PaymentEmpty from "@/components/PaymentEmpty/PaymentEmpty";
 
 import { useAppSelector } from "@/hooks/reduxHooks";
 import { useState } from "react";
 import PaymentLoading from "@/components/PaymentLoading/PaymentLoading";
-import CheckoutForm from "@/app/_Forms/CheckoutForm";
+import CheckoutForm from "@/components/Forms/CheckoutForm";
 import { shallowEqual } from "react-redux";
 
 const Page = () => {

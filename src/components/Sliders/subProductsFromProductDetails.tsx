@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Slider({
+export default function SubProductsSlider({
   products,
 }: {
   products: productType[] | null;
