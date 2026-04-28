@@ -34,15 +34,15 @@ const Footer = () => {
   ];
 
   const shopList = [
-    { label: "All Products", link: "/Products" },
+    { label: "All Products", link: "/products" },
     { label: "Categories", link: "/categories" },
-    { label: "Brands", link: "/Brands" },
-    { label: "Electronics", link: "/Electronics" },
-    { label: "Mens&apos;s Fashion", link: "/MensFashion" },
-    { label: "women&apos;s Fashion", link: "/WemenFashion" },
+    { label: "Brands", link: "/brands" },
+    { label: "Electronics", link: "products?subCategory=6439d2d167d9aa4ca970649f" },
+    { label: "Mens&apos;s Fashion", link: "products?subCategory=6439d5b90049ad0b52b90048"  },
+    { label: "women&apos;s Fashion", link: "products?subCategory=6439d58a0049ad0b52b9003f" },
   ];
   const accountList = [
-    { label: "My Account", link: "/profile" },
+    { label: "My Account", link: "/profile/settings" },
     { label: "Order History", link: "/allorders" },
     { label: "Wishlist", link: "/wishlist" },
     { label: "Shopping Cart", link: "/cart" },
@@ -54,12 +54,12 @@ const Footer = () => {
     { label: "Help Center", link: "/help" },
     { label: "Shipping Info", link: "/shipping" },
     { label: "Returns & Refunds", link: "/returns" },
-    { label: "Track Order", link: "/allorders" },
+    { label: "Track Order", link: "/track-order" },
   ];
   const legaltList = [
     { label: "Privacy Policy", link: "/privacy" },
-    { label: "Terms Of Service", link: "/service" },
-    { label: "Cookie Policy", link: "/policy" },
+    { label: "Terms Of Service", link: "/terms" },
+    { label: "Cookie Policy", link: "/cookies" },
   ];
 
   return (

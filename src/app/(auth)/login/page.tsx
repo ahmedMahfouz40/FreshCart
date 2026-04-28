@@ -47,7 +47,7 @@ const Signin = () => {
             </div>
           </div>
           {/* Right Side  */}
-          <div className="p-12 rounded shadow-lg">
+          <div className="p-4 sm:p-12 rounded shadow-lg">
             {/* header */}
             <div className="text-center space-y-1">
               <h1 className="text-3xl font-bold leading-9 text-[#1E2939] space-y-2 ">

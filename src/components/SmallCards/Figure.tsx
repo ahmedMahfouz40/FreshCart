@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FaShieldAlt } from "react-icons/fa";
 import { FaHeadset, FaTruck } from "react-icons/fa6";
 import { IoReload } from "react-icons/io5";
@@ -38,7 +38,7 @@ const Figure = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
+        initial={{ opacity: 0, y: 45 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         viewport={{ once: false, amount: 0.2 }}

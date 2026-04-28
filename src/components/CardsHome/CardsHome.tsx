@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
-const CardsHome = () => {
+const HomeCards = () => {
   return (
     <div className="grid md:grid-cols-2 gap-4 text-white my-20">
       {/* Left card */}
@@ -38,9 +38,9 @@ const CardsHome = () => {
 
       {/* Right card */}
       <motion.div
-        initial={{ opacity: 0, x: 30 }}
+        initial={{ opacity: 0, x: 54 }}
         whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
         viewport={{ once: false, amount: 0.2 }}
         className="relative space-y-3 overflow-hidden rounded-2xl bg-linear-145 from-[#FF8904] to-[#FF2056] p-8"
       >
@@ -65,4 +65,4 @@ const CardsHome = () => {
     </div>
   );
 };
-export default CardsHome;
+export default HomeCards;

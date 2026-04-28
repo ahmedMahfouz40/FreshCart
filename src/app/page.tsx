@@ -4,12 +4,12 @@ import dynamic from "next/dynamic";
 const ShopByCategories = dynamic(
   () => import("../components/ShopByCategories/ShopByCategories"),
 );
-import CardsHome from "../components/CardsHome/CardsHome";
 import Figure from "../components/SmallCards/Figure";
 import CategorySkeleton from "@/app/_skeletons/CategorySkeleton";
 import Container from "../components/Container/Container";
 import { getProducts } from "@/actions/products.action";
 import HomeSlider from "./_sliders/HomeSlider";
+import HomeCards from "../components/CardsHome/CardsHome";
 const Home = async () => {
   const products = await getProducts();
 
@@ -22,7 +22,7 @@ const Home = async () => {
           <Suspense fallback={<CategorySkeleton />}>
             <ShopByCategories />
           </Suspense>
-          <CardsHome />
+          <HomeCards />
           {/* =============== */}
 
           {/* =============== */}
@@ -32,6 +32,7 @@ const Home = async () => {
               Products
             </span>
           </h2>
+
           <div className="grid  sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5  gap-4">
             {products &&
               products.map((product) => (

@@ -97,9 +97,9 @@ export default function HomeSlider() {
                   <div>
                     <div className="absolute inset-0 bg-linear-to-r from-green-600/95 to-green-400/60">
                       <motion.div
-                        initial={{ opacity: 0, y: 25 }}
+                        initial={{ opacity: 0, y: 54 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                         viewport={{ once: false, amount: 0.2 }}
                         className=" h-full w-[80%]   flex flex-col justify-center mx-auto"
                       >

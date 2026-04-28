@@ -9,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -19,6 +18,7 @@ import { FaSpinner, FaUserPlus } from "react-icons/fa6";
 import { useState } from "react";
 import { signupAcion } from "@/actions/signup.action";
 import { signUpSchema } from "@/schemas/Signup.schema";
+
 const SignupForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -29,14 +29,17 @@ const SignupForm = () => {
       password: "",
       rePassword: "",
       phone: "",
+      agreeTermsAndPolicy: false,
     },
     resolver: zodResolver(signUpSchema),
   });
 
   async function handleSignUp(values: signupDataType) {
+    const { agreeTermsAndPolicy: _agree, ...userData } = values;
+    void _agree;
     setIsLoading(true);
     try {
-      const isSignup = await signupAcion(values);
+      const isSignup = await signupAcion(userData);
       if (isSignup) {
         toast.success("sign up successfully", {
           position: "top-center",
@@ -184,7 +187,7 @@ const SignupForm = () => {
                   aria-invalid={fieldState.invalid}
                   placeholder="+201010203040"
                   autoComplete="off"
-                  type="phone"
+                  type="tel"
                   className="py-5! px-3! rounded-md"
                 />
                 {fieldState.invalid && (
@@ -196,28 +199,47 @@ const SignupForm = () => {
         </div>
         {/* privacy policy */}
         <div className="mb-5">
-          <Field orientation="horizontal">
-            <Checkbox
-              id="terms-checkbox"
-              className="cursor-pointer"
-              name="terms-checkbox"
-            />
-
-            <Label htmlFor="terms-checkbox text-[#364153]">
-              <div className="flex flex-wrap gap-2 items-center">
-                I agree to the
-                <Link href={"/"} className="text-primary">
-                  Terms of Service
-                </Link>
-                and
-                <Link href={"/"} className="text-primary">
-                  Privacy Policy
-                </Link>
-                *
-              </div>
-            </Label>
-          </Field>
+          <Controller
+            name="agreeTermsAndPolicy"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id={field.name}
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="cursor-pointer mt-0.5 self-center"
+                  />
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="text-[#364153] flex gap-1 flex-wrap font-normal cursor-pointer"
+                  >
+                    I agree to the{" "}
+                    <Link
+                      href="/terms"
+                      className="text-primary hover:underline"
+                    >
+                      Terms of Service
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                      href="/privacy"
+                      className="text-primary hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>{" "}
+                    *
+                  </FieldLabel>
+                </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
         </div>
+
         {/* Submit Button */}
         <div>
           <button

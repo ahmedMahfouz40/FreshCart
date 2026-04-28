@@ -1,5 +1,8 @@
 "use server";
-import { signupDataType } from "@/types/SignupDatatype";
+import { signUpSchema } from "@/schemas/Signup.schema";
+import { z } from "zod";
+
+type signupDataType = Omit<z.infer<typeof signUpSchema>, "agreeTermsAndPolicy">;
 
 export async function signupAcion(values: signupDataType) {
   const res = await fetch(`${process.env.apiLink_v1}/auth/signup`, {
@@ -9,7 +12,6 @@ export async function signupAcion(values: signupDataType) {
     body: JSON.stringify(values),
     method: "POST",
   });
-  console.log("response from signup : ", res);
 
   const finalRes = await res.json();
   console.log("SignUp Final Res: ", finalRes);

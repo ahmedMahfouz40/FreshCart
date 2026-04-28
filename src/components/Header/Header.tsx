@@ -18,7 +18,7 @@ const Header = ({
   return (
     <div>
       <div
-        className={` ${style ? style.join(" ") : " bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white"}   w-full h-50 py-14 px-4`}
+        className={` ${style ? style.join(" ") : " bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white"}   w-full  py-10 px-4`}
       >
         <Container>
           <div className="space-y-5">
@@ -29,18 +29,20 @@ const Header = ({
               >
                 Home /
               </Link>
-              <span> {title.includes(" ") ? title.split(" ")[1] : title}</span>
+              <span> {title}</span>
               <span>
                 {subCategTitle && "/"} {subCategTitle}
               </span>
             </p>
-            <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl  bg-white/20">
+            <div className="flex flex-wrap  items-center gap-3">
+              <div className="w-14 h-14  sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-2xl sm:text-4xl  bg-white/20">
                 {icon}
               </div>
               <div>
-                <h1 className="text-4xl leading-10 font-bold ">{title}</h1>
-                <p className="opacity-80">{desc}</p>
+                <h1 className="text-3xl sm:text-4xl leading-10 font-bold ">
+                  {title}
+                </h1>
+                <p className="opacity-80 text-sm sm:tex-[16px]">{desc}</p>
               </div>
             </div>
           </div>

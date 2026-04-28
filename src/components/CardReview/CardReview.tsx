@@ -84,7 +84,7 @@ const CardReview = ({ item }: { item: reviewData }) => {
         </div>
       </div>
       {/* Content */}
-      <div className="py-5 text-gray-500 px-2 bg-gray-50/10">{item.review}</div>
+      <div className="py-5 text-gray-500 px-2 bg-gray-50/10 w-full   wrap-break-word">{item.review}</div>
     </div>
   );
 };

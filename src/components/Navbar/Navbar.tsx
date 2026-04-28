@@ -44,9 +44,12 @@ export default function Navbar() {
   const wishlistCount = wishlistProducts?.length || 0;
   const session = useSession();
 
-  const handleSignOut = React.useCallback(() => {
-    signOut({ redirect: true, callbackUrl: "/login" });
-  }, []);
+  const handleSignOut = React.useCallback(async () => {
+  await signOut({
+    redirect: true,
+    callbackUrl: "/login",
+  });
+}, []);
 
   const cartReducer = useAppSelector((state) => state.cartReducer);
 
@@ -87,7 +90,7 @@ export default function Navbar() {
               {/* If User Authenticated */}
               <div className="flex items-center gap-3 ">
                 <Link
-                  href={"/profile/settings "}
+                  href={"/profile/settings"}
                   className="flex items-center gap-1  hover:text-primary transition-all"
                 >
                   <CiUser />

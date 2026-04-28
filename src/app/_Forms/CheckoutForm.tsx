@@ -154,7 +154,7 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                   <FieldLabel
                     key={item._id}
                     htmlFor={item._id}
-                    className="p-5 rounded-xl border cursor-pointer transition-all
+                    className="p-1 sm:p-5 rounded-xl border-2! border-primary-50  cursor-pointer transition-all
                                   group has-[button[data-state=checked]]:border-primary 
                                 has-[button[data-state=checked]]:bg-primary/5"
                   >
@@ -162,33 +162,33 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                       orientation="horizontal"
                       className="items-center justify-between"
                     >
-                      <div className="flex items-center">
+                      <div className="flex items-start  gap-3">
                         <span
-                          className="w-12 h-12 me-3 rounded-xl bg-[#F3F4F6] text-[#99A1AF] 
-                                        flex items-center justify-center text-xl
-                                        transition-all
-                                      group-has-[button[data-state=checked]]:bg-primary
-                                      group-has-[button[data-state=checked]]:text-white"
+                          className="w-10 h-10 shrink-0 border-2 border-primary-100  rounded-xl bg-[#F3F4F6] text-[#99A1AF] 
+                                    flex items-center justify-center text-lg
+                                    transition-all mt-0.5
+                                  group-has-[button[data-state=checked]]:bg-primary
+                                  group-has-[button[data-state=checked]]:text-white"
                         >
                           <FaLocationDot />
                         </span>
 
-                        <FieldContent>
-                          <FieldTitle className="font-bold leading-6 text-heading group-has-[button[data-state=checked]]:text-primary-700">
+                        <FieldContent className="min-w-0 flex-1">
+                          <FieldTitle className="font-bold leading-6 text-heading group-has-[button[data-state=checked]]:text-primary-700 truncate">
                             {item.name}
                           </FieldTitle>
-                          <FieldDescription className="text-sm text-[#6A7282]">
+                          <FieldDescription className="text-sm text-[#6A7282] line-clamp-2">
                             {item.details}
                           </FieldDescription>
 
-                          <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                            <span className="flex items-center gap-1">
-                              <FaPhone className="text-[10px]" />
-                              {item.phone}
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-gray-500">
+                            <span className="flex items-center gap-1 min-w-0">
+                              <FaPhone className="text-[10px] shrink-0" />
+                              <span className="truncate">{item.phone}</span>
                             </span>
-                            <span className="flex items-center gap-1">
-                              <FaCity className="text-[10px]" />
-                              {item.city}
+                            <span className="flex items-center gap-1 min-w-0">
+                              <FaCity className="text-[10px] shrink-0" />
+                              <span className="truncate">{item.city}</span>
                             </span>
                           </div>
                         </FieldContent>
@@ -244,13 +244,13 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     placeholder="e.g. Cairo, Alexandria, Giza"
                     className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                   <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaCity />
                   </div>
                 </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </Field>
             )}
           />
@@ -272,13 +272,13 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     placeholder="Street name, building number, floor, apartment..."
                     className={`pt-4 pe-4 pb-15.5 min-h-20 resize-none ps-14 border-2 ${fieldState.error ? "border-red-500" : ""}`}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                   <div className="absolute left-5 top-[25%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaLocationDot />
                   </div>
                 </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </Field>
             )}
           />
@@ -304,9 +304,6 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     placeholder="010xxxxxxxx "
                     className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                   <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaPhone />
                   </div>
@@ -314,6 +311,9 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     Egyptian numbers only
                   </p>
                 </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </Field>
             )}
           />
@@ -339,9 +339,6 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     placeholder="ex..12345 "
                     className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
                   <div className="absolute  left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaMapPin />
                   </div>
@@ -349,6 +346,9 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     Used for accurate delivery to your area.
                   </p>
                 </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </Field>
             )}
           />

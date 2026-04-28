@@ -3,6 +3,7 @@ export const signUpSchema = zod
   .object({
     name: zod.string("Enter Your Name"),
     email: zod
+
       .email("*Invalid email address")
       .nonempty("*Please enter your email "),
     password: zod
@@ -22,6 +23,9 @@ export const signUpSchema = zod
     phone: zod
       .string("enter egyption number")
       .regex(/^01[0125][0-9]{8}$/gm, "enter egyption number"),
+    agreeTermsAndPolicy: zod.boolean().refine((val) => val === true, {
+      message: "*You must accept the terms and conditions",
+    }),
   })
   .refine(
     (values) => {
@@ -32,4 +36,3 @@ export const signUpSchema = zod
       path: ["rePassword"],
     },
   );
-  

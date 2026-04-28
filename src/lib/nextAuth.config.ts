@@ -36,17 +36,12 @@ export const nextAuthConfig: NextAuthOptions = {
 
   callbacks: {
     jwt(params) {
-      // console.log("params from jwt :", params);
       if (params.user)
         params.token.realToken = params.user.realTokenFromBackend;
-      // console.log("token from params" , params.token);
 
       return params.token;
     },
-
     session(params) {
-      // console.log("params from session : ", params);
-
       return params.session;
     },
   },
@@ -59,3 +54,4 @@ export const nextAuthConfig: NextAuthOptions = {
     signIn: "/login",
   },
 };
+

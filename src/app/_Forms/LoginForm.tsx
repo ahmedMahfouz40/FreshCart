@@ -4,31 +4,37 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { loginSchema } from "../../schemas/login.schema";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { FaSpinner } from "react-icons/fa6";
+import {
+  FaEnvelope,
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaSpinner,
+} from "react-icons/fa6";
 import { signinDataType } from "@/types/LoginDatatype";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
+      keepMeSignIn: false,
     },
     resolver: zodResolver(loginSchema),
   });
   async function handleLogin(values: signinDataType) {
+    const { keepMeSignIn, ...userData } = values;
     setIsLoading(true);
     try {
       const result = await signIn("credentials", {
-        ...values,
+        ...userData,
         redirect: false,
         callbackUrl: "/",
       });
@@ -57,6 +63,9 @@ const LoginForm = () => {
       setIsLoading(false);
     }
   }
+  function handleShowPassword() {
+    setShowPassword((prev) => !prev);
+  }
 
   return (
     <>
@@ -71,16 +80,18 @@ const LoginForm = () => {
                 <FieldLabel htmlFor={field.name} className="text-[#364153]">
                   Email*
                 </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="ali@example.com"
-                  autoComplete="off"
-                  type="email"
-                  className="py-5! px-3! rounded-md "
-                />
-
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="ali@example.com"
+                    autoComplete="email"
+                    type="email"
+                    className="px-4 py-6 pl-12 border-gray-200 rounded-xl "
+                  />
+                  <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                </div>
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
@@ -89,7 +100,7 @@ const LoginForm = () => {
           />
         </div>
         {/* Password */}
-        <div className="mb-6">
+        <div className="mb-6 ">
           <Controller
             name="password"
             control={form.control}
@@ -98,15 +109,27 @@ const LoginForm = () => {
                 <FieldLabel htmlFor={field.name} className="text-[#364153]">
                   Password*
                 </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="create a strong password"
-                  autoComplete="off"
-                  type="password"
-                  className="py-5! px-3! rounded-md"
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="create a strong password"
+                    autoComplete="current-password"
+                    type={showPassword ? "text" : "password"}
+                    className="pl-12! pr-12! py-6! rounded-xl border-gray-200"
+                  />
+
+                  <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                  <button
+                    onClick={handleShowPassword}
+                    type="button"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
 
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -115,29 +138,31 @@ const LoginForm = () => {
             )}
           />
         </div>
-        {/* Keep me Sign in ( Checkbox) */}
-        <div className="mb-5">
-          <Field orientation="horizontal">
-            <Checkbox
-              id="terms-checkbox"
-              className="cursor-pointer"
-              name="terms-checkbox"
-            />
-            <Label htmlFor="terms-checkbox text-[#364153]">
-              <div className="flex flex-wrap gap-2 items-center">
-                I agree to the
-                <Link href={"/"} className="text-primary">
-                  Terms of Service
-                </Link>
-                and
-                <Link href={"/"} className="text-primary">
-                  Privacy Policy
-                </Link>
-                *
-              </div>
-            </Label>
-          </Field>
+
+        {/* Keep Me Sign In */}
+        <div className="mb-6 ">
+          <Controller
+            name="keepMeSignIn"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    id={field.name}
+                  />
+                  <FieldLabel htmlFor={field.name} className="text-[#364153]">
+                    <span className=" text-sm text-gray-700">
+                      Keep me signed in
+                    </span>
+                  </FieldLabel>
+                </div>
+              </Field>
+            )}
+          />
         </div>
+
         {/* Signin Button */}
         <div>
           <button

@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Control, Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Field,
@@ -11,18 +11,111 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { changePassSchema } from "@/schemas/ChangePass.schema";
-import { FaLock, FaSpinner } from "react-icons/fa6";
+import { FaEye, FaEyeSlash, FaLock, FaSpinner } from "react-icons/fa6";
 import { changeUserPassword } from "@/actions/userAuth.action";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+//  Alert Banner
+const AlertBanner = memo(
+  ({ status, message }: { status: "success" | "fail"; message?: string }) => (
+    <div
+      className={`mb-6 p-4 rounded-xl text-sm font-medium border ${
+        status === "success"
+          ? "bg-green-50 text-green-700 border-green-200"
+          : "bg-red-50 text-red-700 border-red-200"
+      }`}
+    >
+      {status === "success"
+        ? "Password changed successfully"
+        : message || "Something went wrong"}
+    </div>
+  ),
+);
+
+AlertBanner.displayName = "AlertBanner";
+
+//  Password Field
+const PasswordField = memo(
+  ({
+    name,
+    label,
+    description,
+    inputId,
+    control,
+    showPassword,
+    onToggle,
+  }: {
+    name: "currentPassword" | "password" | "rePassword";
+    label: string;
+    description?: string;
+    inputId: string;
+    control: Control<z.infer<typeof changePassSchema>>;
+    showPassword: string | null;
+    onToggle: (name: string) => void;
+  }) => (
+    <FieldGroup>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={inputId}>{label}</FieldLabel>
+            <div className="relative">
+              <Input
+                {...field}
+                id={inputId}
+                aria-invalid={fieldState.invalid}
+                placeholder={`Enter Your ${label}`}
+                className="focus-visible:border-amber-600 py-6 rounded-2xl"
+                type={showPassword === name ? "text" : "password"}
+              />
+              <button
+                type="button"
+                onClick={() => onToggle(name)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+              >
+                {showPassword === name ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {description && <FieldDescription>{description}</FieldDescription>}
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+    </FieldGroup>
+  ),
+);
+PasswordField.displayName = "PasswordField";
+
+// ─── Fields Config
+const fields = [
+  {
+    name: "currentPassword",
+    label: "Current Password",
+    inputId: "form-rhf-input-currentPass",
+  },
+  {
+    name: "password",
+    label: "New Password",
+    inputId: "form-rhf-input-password",
+    description: "Must be at least 6 characters",
+  },
+  {
+    name: "rePassword",
+    label: "Confirm New Password",
+    inputId: "form-rhf-input-rePass",
+  },
+] as const;
+
+// ─── Main Form
 export default function ChangePassForm() {
   const [isUpdated, setIsUpdated] = useState<"success" | "fail" | false>(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
-  // to see if timout is doing or not
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
-  // unMounting Phase
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -37,7 +130,7 @@ export default function ChangePassForm() {
       rePassword: "",
     },
   });
-  //  Handle fail message
+
   const handleFail = useCallback((message: string) => {
     setIsUpdated("fail");
     setErrorMessage(message);
@@ -57,21 +150,17 @@ export default function ChangePassForm() {
           setIsUpdated("success");
           form.reset();
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
-          timeoutRef.current = setTimeout(() => {
-            setIsUpdated(false);
-          }, 10000);
-        } else if (res.statusMsg == "fail") {
+          timeoutRef.current = setTimeout(() => setIsUpdated(false), 10000);
+        } else if (res.statusMsg === "fail") {
           handleFail(res.message);
-        } else if (res.message == "fail") {
+        } else if (res.message === "fail") {
           handleFail(res.errors.msg);
-          setIsUpdated("fail");
         }
       } catch {
-        toast.error("cannot change password", {
+        toast.error("Cannot change password", {
           richColors: true,
           position: "top-center",
         });
-        throw new Error("cannot change password");
       } finally {
         setIsLoading(false);
       }
@@ -79,119 +168,32 @@ export default function ChangePassForm() {
     [form, handleFail],
   );
 
+  const handleShowPassword = useCallback((msg: string) => {
+    setShowPassword((prev) => (prev === msg ? null : msg));
+  }, []);
+
   return (
     <form
       id="form-rhf-input"
       onSubmit={form.handleSubmit(handleChangeUsrPassword)}
       className="space-y-5"
     >
-      {/* If User Updated Successfully */}
-      {isUpdated === "success" ? (
-        <div
-          className={`mb-6 p-4 rounded-xl text-sm font-medium bg-green-50 text-green-700 border border-green-200`}
-        >
-          Password changed successfully
-        </div>
-      ) : isUpdated == "fail" ? (
-        <div
-          className={`mb-6 p-4 rounded-xl text-sm font-medium bg-red-50 text-red-700 border border-red-200`}
-        >
-          {errorMessage || "Something went wrong"}
-        </div>
-      ) : (
-        ""
-      )}
-      {/* Current Password */}
-      <div>
-        <FieldGroup>
-          <Controller
-            name="currentPassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-input-currentPass">
-                  Current Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-input-currentPass"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Enter Your Current Password"
-                  className="focus-visible:border-amber-600 "
-                  type="password"
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-      </div>
-      {/* Password */}
-      <div>
-        <FieldGroup>
-          <Controller
-            name="password"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-input-password">
-                  New Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-input-password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Enter Your New Password"
-                  className="focus-visible:border-amber-600 "
-                  type="password"
-                />
-                <FieldDescription>
-                  {" "}
-                  Must be at least 6 characters{" "}
-                </FieldDescription>
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-      </div>
-      {/* rePassword */}
-      <div>
-        <FieldGroup>
-          <Controller
-            name="rePassword"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="form-rhf-input-rePass">
-                  Confirm New Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-input-rePass"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Confirm Your New Password"
-                  className="focus-visible:border-amber-600 "
-                  type="password"
-                />
+      {isUpdated && <AlertBanner status={isUpdated} message={errorMessage} />}
 
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-      </div>
-      {/* Submit Button */}
+      {fields.map((f) => (
+        <PasswordField
+          key={f.name}
+          {...f}
+          control={form.control}
+          showPassword={showPassword}
+          onToggle={handleShowPassword}
+        />
+      ))}
+
       <button
         disabled={isLoading}
         type="submit"
-        className={`${isLoading && "opacity-60 cursor-not-allowed"} active:scale-[0.98]  py-3 px-6 rounded-xl bg-[#E17100] text-white flex items-center gap-2 cursor-pointer  hover:scale-[1.01]  transition-all duration-200`}
+        className={`${isLoading && "opacity-60 cursor-not-allowed"} active:scale-[0.98] py-3 px-6 rounded-xl bg-[#E17100] text-white flex items-center gap-2 cursor-pointer hover:scale-[1.01] transition-all duration-200`}
       >
         {isLoading ? (
           <>
