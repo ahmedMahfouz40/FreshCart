@@ -97,7 +97,7 @@ const ContactUsForm = () => {
                     {...field}
                     required
                     placeholder="John Doe"
-                    className="w-full px-4 py-6 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
+                    className="w-full px-4 py-6  text-xs sm:text-sm rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
                   />
                 )}
               />
@@ -118,7 +118,7 @@ const ContactUsForm = () => {
                     type="email"
                     required
                     placeholder="john@example.com"
-                    className="w-full px-4 py-6 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
+                    className="w-full px-4 py-6 rounded-xl  text-xs sm:text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
                   />
                 )}
               />
@@ -144,7 +144,7 @@ const ContactUsForm = () => {
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
 
-                    <SelectContent>
+                    <SelectContent className=" text-xs sm:text-sm">
                       <SelectItem value="general">General Inquiry</SelectItem>
                       <SelectItem value="order">Order Support</SelectItem>
                       <SelectItem value="shipping">
@@ -186,7 +186,7 @@ const ContactUsForm = () => {
                   rows={5}
                   required
                   placeholder="How can we help you?"
-                  className="w-full px-4 py-6 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all resize-none"
+                  className="w-full  text-xs sm:text-sm px-4 py-6 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all resize-none"
                 />
               )}
             />

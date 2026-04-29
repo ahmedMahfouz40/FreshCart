@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa6";
 import Loading from "./loading";
 import EmptyWishlist from "@/components/EmptyWishlist/EmptyWishlist";
-import { toast } from "sonner";
 import { useAddToCart } from "@/hooks/useAddToCart";
 import { useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
@@ -30,6 +29,7 @@ const Wishlist = () => {
     wishlistProducts: wishlist,
     isLoading,
     isError,
+    hasFetched: isSuccess,
   } = useAppSelector((state) => state.wishlistReducer);
   const dispatch = useAppDispatch();
   const hasFetched = useRef(false);
@@ -44,8 +44,10 @@ const Wishlist = () => {
     useDeleteFromWishlist();
   const { cartProducts } = useAppSelector((state) => state.cartReducer);
 
-  if (isLoading && wishlist.length === 0) return <Loading />;
-  if (!isLoading && wishlist.length === 0) return <EmptyWishlist />;
+  if (isLoading) return <Loading />;
+  if (isError) return <EmptyWishlist />;
+  if (wishlist.length === 0 && isSuccess) return <EmptyWishlist />;
+  if (!isSuccess) return <Loading />;
 
   return (
     <div>
@@ -76,7 +78,7 @@ const Wishlist = () => {
           </div>
         </div>
         {/* Layout */}
-        <div className="divide-y divide-gray-100 bg-white shadow  px-4 py-8 rounded">
+        <div className="divide-y divide-gray-200  shadow px-2 py-4 sm:px-4 sm:py-8 rounded">
           {/* Table Head */}
           <div className="hidden md:grid md:grid-cols-12 py-4 px-6 gap-2 bg-gray-50 rounded-t-2xl border border-[#F3F4F6] text-sm text-[#6A7282]">
             <div className="col-span-6 ">
@@ -100,23 +102,37 @@ const Wishlist = () => {
             return (
               <div
                 key={item._id}
-                className="grid grid-cols-12 gap-2 py-4 px-6 items-center"
+                className="grid grid-cols-12 gap-2  py-4 px-3 sm:px-6 items-center"
               >
-                <div className="col-span-12 md:col-span-6">
-                  <div className="flex gap-4 items-center">
-                    <div className=" relative w-20 h-20 rounded-xl border border-[#F3F4F6] overflow-hidden">
+                <div className="col-span-12 md:col-span-6 ">
+                  <div className="flex gap-4 items-center ">
+                    <Link
+                      href={`/products/${item._id}`}
+                      className=" relative w-20 h-20  rounded-xl border  border-[#F3F4F6] overflow-hidden"
+                    >
                       <Image
                         fill
                         src={item.imageCover}
                         alt={item.title}
                         className="w-full"
                       />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-heading">{item.title}</h3>
-                      <p className="text-sm text-[#99A1AF] leading-5">
+                    </Link>
+                    <div className="space-y-2 w-3/4">
+                      <Link
+                        href={`/products/${item._id}`}
+                        className="inline-block hover:underline"
+                      >
+                        <h3 className="text-heading w-full line-clamp-2">
+                          {item.title}
+                        </h3>
+                      </Link>
+                      <br />
+                      <Link
+                        href={`/products/?subCategory=${item.category._id}`}
+                        className="text-sm text-[#99A1AF] leading-5 hover:underline "
+                      >
                         {item.category.name}
-                      </p>
+                      </Link>
                     </div>
                   </div>
                 </div>

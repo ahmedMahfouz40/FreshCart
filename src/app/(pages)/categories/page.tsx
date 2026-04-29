@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FaArrowRight, FaLayerGroup } from "react-icons/fa6";
+import Header from "@/components/Header/Header";
 
 const page = async () => {
   const categories = await getAllCategories();
   if (!categories || categories?.length == 0) {
     return (
       <>
-        {" "}
         <div className="text-center py-20 ">
           <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
             <FaLayerGroup className="text-3xl text-gray-400" />
@@ -28,34 +28,12 @@ const page = async () => {
 
   return (
     <div>
-      <div className="text-white bg-linear-to-br   from-[#16A34A] via-[#22C55E] to-[#4ADE80] w-full h-50 py-14 px-4">
-        <Container>
-          <div className="space-y-5">
-            <p className="text-sm leading-5 ">
-              <Link
-                href={"/"}
-                className="opacity-70 hover:opacity-100 transition-colors"
-              >
-                Home /
-              </Link>
-              <span> Categories</span>
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl  bg-white/20">
-                <FaLayerGroup />
-              </div>
-              <div>
-                <h1 className="text-4xl leading-10 font-bold ">
-                  All Categories
-                </h1>
-                <p className="opacity-80">
-                  Browse our wide range of product categories
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
+      <Header
+        title="All Categories"
+        desc="Browse our wide range of product categories"
+        icon={<FaLayerGroup />}
+      />
+
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-4 py-4 my-5">
           {categories?.map((category) => (

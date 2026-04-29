@@ -130,7 +130,7 @@ export default function SettingsForm() {
                   id="form-rhf-input-name"
                   aria-invalid={fieldState.invalid}
                   placeholder="Usama"
-                  className="py-4"
+                  className="py-4 text-xs sm:text-sm"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -157,6 +157,7 @@ export default function SettingsForm() {
                   aria-invalid={fieldState.invalid}
                   placeholder="Enter Your Email"
                   type="email"
+                   className=" text-xs sm:text-sm"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -182,6 +183,7 @@ export default function SettingsForm() {
                   id="form-rhf-input-phone"
                   aria-invalid={fieldState.invalid}
                   placeholder="010xxxxxxxx"
+                  className=" text-xs sm:text-sm"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

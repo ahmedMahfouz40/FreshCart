@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FaCheck, FaTrash } from "react-icons/fa6";
+import { FaCheck, FaSpinner, FaTrash } from "react-icons/fa6";
 import { useState } from "react";
 import { updateCartProduct } from "@/actions/cart.actions";
 import { toast } from "sonner";
@@ -23,9 +23,16 @@ const ShoppingCard = () => {
       <CartItemSkeleton key={i} />
     ));
   }
-
-  if (!cartReducer.cartProducts || cartReducer.cartProducts.length === 0) {
+  if (cartReducer.isError) {
     return <CardEmpty />;
+  }
+  if (cartReducer.isSuccess && cartReducer.cartProducts.length === 0) {
+    return <CardEmpty />;
+  }
+  if (!cartReducer.isSuccess) {
+    return Array.from({ length: 3 }).map((_, i) => (
+      <CartItemSkeleton key={i} />
+    ));
   }
 
   async function handleUpdateProduct(id: string, count: number) {
@@ -65,7 +72,7 @@ const ShoppingCard = () => {
     <>
       {cartReducer.isLoading ? (
         Array.from({ length: 3 }).map((_, i) => <CartItemSkeleton key={i} />)
-      ) : !cartReducer.cartProducts || cartReducer.cartProducts.length === 0 ? (
+      ) : cartReducer.isError || cartReducer.cartProducts.length === 0 ? (
         <>
           <CardEmpty />
         </>
@@ -76,13 +83,19 @@ const ShoppingCard = () => {
               <div
                 key={cart.product._id}
                 className={`flex flex-col sm:flex-row gap-3 sm:gap-4 relative
-                ${isDeleting === cart.product._id ? "cursor-wait opacity-50 bg-gray-200" : "bg-white"}
+                ${isDeleting === cart.product._id || LoadingUpdateId == cart.product._id ? "cursor-wait opacity-50 bg-gray-200" : "bg-white"}
                 shadow border border-gray-100 rounded-2xl my-4 p-4`}
               >
+                {(isDeleting === cart.product._id ||
+                  LoadingUpdateId === cart.product._id) && (
+                  <div className="flex  items-center justify-center text-xl inset-0 absolute">
+                    <FaSpinner className="animate-spin text-primary" />
+                  </div>
+                )}
                 {/* Image */}
                 <div className="relative w-full sm:w-28 sm:min-w-28">
                   <div className="bg-gray-100 p-3 shadow rounded-xl flex items-center justify-center min-h-27.5">
-                    <Link href={`product/${cart.product._id}`}>
+                    <Link href={`products/${cart.product._id}`}>
                       <Image
                         width={300}
                         height={300}
@@ -101,13 +114,21 @@ const ShoppingCard = () => {
 
                 {/* Info */}
                 <div className="flex-1 space-y-2">
-                  <h3 className="font-semibold text-base sm:text-lg text-heading">
-                    {cart.product.title}
-                  </h3>
+                  <Link
+                    href={`/products/${cart.product._id}`}
+                    className="inline-block hover:underline mb-2"
+                  >
+                    <h3 className="font-semibold text-base line-clamp-3 w-full sm:text-lg text-heading">
+                      {cart.product.title}
+                    </h3>
+                  </Link>
                   <div className="text-xs flex items-center gap-2 flex-wrap">
-                    <span className="py-1 px-2.5 text-primary-500 bg-primary-100 rounded-xl">
+                    <Link
+                      href={`products/?subCategory=${cart.product.category._id}`}
+                      className="py-1 px-2.5 text-primary-500 bg-primary-100 rounded-xl"
+                    >
                       {cart.product.category.name}
-                    </span>
+                    </Link>
                     <span className="text-gray-400">
                       SKU: {cart.product._id.slice(-6).toUpperCase()}
                     </span>
@@ -121,13 +142,16 @@ const ShoppingCard = () => {
 
                   {/* Actions */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <div className="flex bg-gray-100 p-1 rounded-2xl items-center gap-1">
+                    <div className="flex bg-gray-100 p-1 rounded-2xl items-center    gap-1 ">
                       <button
-                        disabled={LoadingUpdateId === cart.product._id}
+                        disabled={
+                          LoadingUpdateId === cart.product._id ||
+                          cart.count == 1
+                        }
                         onClick={() =>
                           handleUpdateProduct(cart.product._id, cart.count - 1)
                         }
-                        className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-wait disabled:opacity-50"
+                        className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         -
                       </button>
@@ -139,7 +163,7 @@ const ShoppingCard = () => {
                         onClick={() =>
                           handleUpdateProduct(cart.product._id, cart.count + 1)
                         }
-                        className="w-9 h-9 rounded-lg bg-primary text-white shadow text-2xl cursor-pointer disabled:cursor-wait disabled:opacity-50"
+                        className="w-9 h-9 rounded-lg bg-primary text-white shadow text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         +
                       </button>
@@ -160,7 +184,7 @@ const ShoppingCard = () => {
                       </div>
                       <button
                         onClick={() => handleDeleteFromCart(cart.product._id)}
-                        className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center text-red-600 border border-red-300 shadow hover:bg-red-500 hover:text-white transition-colors hover:border-0 cursor-pointer"
+                        className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center self-end text-red-600 border border-red-300 shadow hover:bg-red-500 hover:text-white transition-colors hover:border-0 cursor-pointer"
                       >
                         <FaTrash />
                       </button>

@@ -244,7 +244,7 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     placeholder="e.g. Cairo, Alexandria, Giza"
                     className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
                   />
-                  <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
+                  <div className="absolute left-5 top-[50%]  -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center  text-xs sm:text-sm justify-center rounded">
                     <FaCity />
                   </div>
                 </div>
@@ -270,7 +270,7 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                   <Textarea
                     {...field}
                     placeholder="Street name, building number, floor, apartment..."
-                    className={`pt-4 pe-4 pb-15.5 min-h-20 resize-none ps-14 border-2 ${fieldState.error ? "border-red-500" : ""}`}
+                    className={`pt-4 pe-4 pb-15.5 min-h-20 resize-none ps-14 border-2  text-xs sm:text-sm ${fieldState.error ? "border-red-500" : ""}`}
                   />
                   <div className="absolute left-5 top-[25%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaLocationDot />
@@ -302,7 +302,7 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     id="input-field-phone"
                     type="tel"
                     placeholder="010xxxxxxxx "
-                    className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
+                    className={`py-6 pe-4 ps-14 border-2  text-xs sm:text-sm ${fieldState.invalid && "border-red-500"}`}
                   />
                   <div className="absolute left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaPhone />
@@ -337,7 +337,7 @@ const CheckoutForm = ({ setIsPaymentLoading, cartId }: chechoutFormProps) => {
                     id="input-field-postalCode"
                     type="text"
                     placeholder="ex..12345 "
-                    className={`py-6 pe-4 ps-14 border-2 ${fieldState.invalid && "border-red-500"}`}
+                    className={`py-6 pe-4 ps-14 border-2  text-xs sm:text-sm ${fieldState.invalid && "border-red-500"}`}
                   />
                   <div className="absolute  left-5 top-[50%] -translate-y-1/2 text-gray-600 bg-gray-200 w-8 h-8 flex items-center justify-center rounded">
                     <FaMapPin />

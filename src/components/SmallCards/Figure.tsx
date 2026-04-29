@@ -37,17 +37,15 @@ const Figure = () => {
   ];
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, y: 45 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        viewport={{ once: false, amount: 0.2 }}
-        className="grid md:grid-cols-2 lg:grid-cols-4 my-5 gap-4  lg:w-[90%] mx-auto py-8"
-      >
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 my-5 gap-4  lg:w-[90%] mx-auto py-8">
         {figure.map((fig) => {
           return (
-            <div
-              key={fig?.title}
+            <motion.div
+              key={fig.title}
+              initial={{ opacity: 0, y: 45 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: false, amount: 0.2 }}
               className="flex items-center gap-2 rounded-xl p-3 shadow-xl border "
             >
               <span
@@ -59,10 +57,10 @@ const Figure = () => {
                 <h3 className="font-semibold mb-1">{fig?.title}</h3>
                 <p className="text-xs text-[#6A7282]">{fig?.desc}</p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </motion.div>
+      </div>
     </>
   );
 };

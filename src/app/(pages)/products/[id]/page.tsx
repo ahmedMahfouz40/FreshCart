@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import ProductSliderSkeleton from "@/components/skeletons/ProductsSliderSkeleton";
 import TabsSkeleton from "@/components/skeletons/TabsSkeleton";
 import SubProductsSection from "@/components/GetSubProducts/GetSubProducts";
+import Link from "next/link";
 
 const figure = [
   {
@@ -68,9 +69,12 @@ const ProductDetails = async ({
             </div>
             <div className="lg:col-span-8 p-6 space-y-5 shadow-xl">
               <div>
-                <span className="text-primary-600 py-1.5 me-2  text-xs px-3 bg-primary-100 rounded-2xl">
+                <Link
+                  href={`/products/?subCategory=${product.category._id}`}
+                  className="text-primary-600 py-1.5 me-2  text-xs px-3 bg-primary-100 rounded-2xl"
+                >
                   {product.category.name}
-                </span>
+                </Link>
                 <span className="bg-gray-100 py-1.5 px-3 text-xs rounded-2xl text-[#364153]">
                   {product.brand.name}
                 </span>

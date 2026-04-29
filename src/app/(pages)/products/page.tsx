@@ -28,7 +28,7 @@ const page = async ({
 
   return (
     <div className="my-5">
-      <div className="bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white w-full h-50 py-14 px-4">
+      <div className="bg-linear-to-br from-[#16A34A] via-[#22C55E] to-[#4ADE80] text-white w-full py-5 sm:py-10 md:py-14 px-4">
         <Container>
           <div className="space-y-5">
             <p className="text-sm leading-5">
@@ -54,8 +54,8 @@ const page = async ({
                 </>
               )}
             </p>
-            <div className="flex items-center gap-3">
-              <div className="relative overflow-hidden w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-white/20">
+            <div className="flex items-center gap-3 flex-wrap ">
+              <div className="relative overflow-hidden w-16 h-16 rounded-2xl flex  items-center justify-center text-4xl bg-white/20">
                 {isFiltered ? (
                   products?.[0]?.imageCover ? (
                     <Image
@@ -72,10 +72,10 @@ const page = async ({
                 )}
               </div>
               <div>
-                <h1 className="text-4xl leading-10 font-bold">
+                <h1 className="text-3xl md:text-4xl leading-10 font-bold">
                   {isFiltered ? (categoryName ?? "Products") : "All Products"}
                 </h1>
-                <p className="opacity-80">
+                <p className="opacity-80 text-sm sm:text-[16px]">
                   {isFiltered
                     ? `Browse ${categoryName ?? ""} products`
                     : "Explore our complete product collection"}
@@ -115,7 +115,7 @@ const page = async ({
           </p>
         </div>
         {products && products.length > 0 ? (
-          <div className="grid sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
             {products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

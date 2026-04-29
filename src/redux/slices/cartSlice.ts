@@ -33,17 +33,29 @@ const cartSlice = createSlice({
       state.isSuccess = false;
     },
     removeFromCart: (state, action) => {
-      state.cartProducts = state.cartProducts.filter(
-        (item) => item.product._id !== action.payload,
+      const item = state.cartProducts.find(
+        (item) => item.product._id === action.payload,
       );
-      state.numOfCartItems -= 1;
+
+      if (item) {
+        state.totalCartPrice -= item.price * item.count;
+        state.numOfCartItems -= 1;
+        state.cartProducts = state.cartProducts.filter(
+          (item) => item.product._id !== action.payload,
+        );
+      }
     },
 
     updateCartQuantity: (state, action) => {
       const { productId, quantity } = action.payload;
+
       const item = state.cartProducts.find((p) => p.product._id === productId);
+      // ! how it's work ? ->
       if (item) {
-        item.count = quantity;
+        //? quantity => new count | item.count => current count
+        const priceDiff = (quantity - item.count) * item.price; //? priceDiff => how many units changed  ( price per unit )
+        state.totalCartPrice += priceDiff; //? even it's negative OR positive it'll update the total card price
+        item.count = quantity; //? reset the count of item by new count
       }
     },
   },

@@ -17,6 +17,7 @@ import {
   FaSpinner,
 } from "react-icons/fa6";
 import { signinDataType } from "@/types/LoginDatatype";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -107,7 +108,15 @@ const LoginForm = () => {
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name} className="text-[#364153]">
-                  Password*
+                  <div className="flex justify-between gap-2  w-full">
+                    <span> Password*</span>
+                    <Link
+                      className="text-sm text-primary-600 hover:text-primary-700 cursor-pointer font-medium"
+                      href="/forget-password"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
                 </FieldLabel>
                 <div className="relative">
                   <Input

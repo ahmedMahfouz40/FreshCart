@@ -25,10 +25,11 @@ import { createReviewSchema } from "@/schemas/createReview.schema";
 import { ReviewFormValues } from "@/types/reviews.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa6";
 import { toast } from "sonner";
+import { Textarea } from "../ui/textarea";
 
 interface reviewModalProps {
   productId?: string;
@@ -61,9 +62,19 @@ export default function ReviewModal({
     defaultValues: existingReview ?? emptyValues,
     resolver: zodResolver(createReviewSchema),
   });
+  useEffect(() => {
+    if (existingReview) form.reset(existingReview);
+  }, [existingReview, form]);
 
   const handleReview = useCallback(
     async (values: ReviewFormValues) => {
+      if (isUpdateMode && !reviewId) {
+        toast.error("Missing review ID", {
+          richColors: true,
+          position: "top-center",
+        });
+        return;
+      }
       setIsLoading(true);
       const review = {
         review: values.review,
@@ -71,7 +82,7 @@ export default function ReviewModal({
       };
       try {
         const res = isUpdateMode
-          ? await updateReviewForProduct(reviewId!, productId! , review)
+          ? await updateReviewForProduct(reviewId!, productId!, review)
           : await createReviewForProduct(productId!, review);
 
         if (res.message === "fail") {
@@ -104,12 +115,18 @@ export default function ReviewModal({
   );
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        setOpen(v);
+        if (!v) form.reset();
+      }}
+    >
       <DialogTrigger asChild>
         {icon ? (
           <Button
             variant="default"
-            className="w-10 h-10  disabled:opacity-60 disabled:cursor-not-allowed  rounded-2xl cursor-pointer bg-primary-100  text-primary-500  hover:bg-primary-500 hover:text-white transition-colors  flex items-center justify-center text-lg"
+            className="w-10 h-10  disabled:opacity-60 disabled:cursor-not-allowed border border-primary-50 rounded-2xl cursor-pointer bg-primary-50/50  text-primary-500  hover:bg-primary-500 hover:text-white transition-colors  flex items-center justify-center text-lg"
           >
             {icon}
           </Button>
@@ -124,7 +141,7 @@ export default function ReviewModal({
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="text-heading text-xl font-bold">
             {isUpdateMode ? "Update Review" : "Create Review"}
           </DialogTitle>
           <DialogDescription>
@@ -139,16 +156,18 @@ export default function ReviewModal({
               name="review"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-input-review">
+                <Field>
+                  <FieldLabel
+                    htmlFor="form-rhf-input-review"
+                    className="font-bold text-sm text-gray-700"
+                  >
                     Review
                   </FieldLabel>
-                  <Input
-                    {...field}
+                  <Textarea
                     id="form-rhf-input-review"
-                    aria-invalid={fieldState.invalid}
+                    {...field}
                     placeholder="Enter your Review"
-                    type="text"
+                    className={` p-2   min-h-30 resize-none  border-2 ${fieldState.error ? "border-red-500" : ""}`}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -156,6 +175,7 @@ export default function ReviewModal({
                 </Field>
               )}
             />
+
             <Controller
               name="rating"
               control={form.control}
@@ -169,7 +189,10 @@ export default function ReviewModal({
                     id="form-rhf-input-rating"
                     aria-invalid={fieldState.invalid}
                     placeholder="enter rating between 1 ~ 5"
-                    type="text"
+                    type="number"
+                    min={1}
+                    max={5}
+                    className="py-6 px-2 rounded-2xl"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

@@ -73,7 +73,7 @@ const PasswordField = memo(
               <button
                 type="button"
                 onClick={() => onToggle(name)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400  text-xs sm:text-sm hover:text-gray-600 cursor-pointer"
               >
                 {showPassword === name ? <FaEyeSlash /> : <FaEye />}
               </button>

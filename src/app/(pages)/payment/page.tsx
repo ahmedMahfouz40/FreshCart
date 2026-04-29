@@ -24,6 +24,7 @@ import { useState } from "react";
 import PaymentLoading from "@/components/PaymentLoading/PaymentLoading";
 import CheckoutForm from "@/components/Forms/CheckoutForm";
 import { shallowEqual } from "react-redux";
+import Link from "next/link";
 
 const Page = () => {
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
@@ -127,7 +128,10 @@ const Page = () => {
                         className="p-3  mb-4 bg-[#F9FAFB] rounded-xl flex flex-wrap items-center justify-end gap-3"
                       >
                         <div className="flex-1 flex  items-center gap-3">
-                          <div className="w-14 h-14 bg-white rounded relative">
+                          <Link
+                            href={`/products/${item._id}`}
+                            className="w-14 h-14 bg-white rounded relative"
+                          >
                             <Image
                               src={item.product.imageCover}
                               fill
@@ -135,11 +139,16 @@ const Page = () => {
                               sizes="56px"
                               className="object-cover"
                             />
-                          </div>
+                          </Link>
                           <div>
-                            <h5 className="text-sm text-heading leading-5 self-start truncate max-w-45">
-                              {item.product.title}
-                            </h5>
+                            <Link
+                              href={`/products/${item.product._id}`}
+                              className="w-full hover:underline"
+                            >
+                              <h5 className="text-sm text-heading leading-5 self-start truncate max-w-45">
+                                {item.product.title}
+                              </h5>
+                            </Link>
                             <p className="text-xs text-[#6A7282] leading-4">
                               {item.count} × {item.price} EGP
                             </p>

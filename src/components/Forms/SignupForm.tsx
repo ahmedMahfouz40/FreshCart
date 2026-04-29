@@ -79,7 +79,7 @@ const SignupForm = () => {
                   placeholder="Ali"
                   autoComplete="off"
                   type="text"
-                  className="py-5! px-3! rounded-md"
+                  className="py-5! px-3! rounded-md  text-xs sm:text-sm"
                 />
 
                 {fieldState.invalid && (
@@ -106,7 +106,7 @@ const SignupForm = () => {
                   placeholder="ali@example.com"
                   autoComplete="off"
                   type="email"
-                  className="py-5! px-3! rounded-md "
+                  className="py-5! px-3! rounded-md  text-xs sm:text-sm"
                 />
 
                 {fieldState.invalid && (
@@ -133,7 +133,7 @@ const SignupForm = () => {
                   placeholder="create a strong password"
                   autoComplete="off"
                   type="password"
-                  className="py-5! px-3! rounded-md"
+                  className="py-5! px-3! rounded-md  text-xs sm:text-sm"
                 />
                 <FieldDescription className="text-xs ">
                   Must be at least 8 characters with numbers and symbols
@@ -162,7 +162,7 @@ const SignupForm = () => {
                   placeholder="confirm your password"
                   autoComplete="off"
                   type="password"
-                  className="py-5! px-3! rounded-md"
+                  className="py-5! px-3! rounded-md  text-xs sm:text-sm"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -188,7 +188,7 @@ const SignupForm = () => {
                   placeholder="+201010203040"
                   autoComplete="off"
                   type="tel"
-                  className="py-5! px-3! rounded-md"
+                  className="py-5! px-3! rounded-md  text-xs sm:text-sm"
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

@@ -9,7 +9,7 @@ import CategorySkeleton from "@/components/skeletons/CategorySkeleton";
 import Container from "../components/Container/Container";
 import { getProducts } from "@/actions/products.action";
 import HomeSlider from "../components/Sliders/HomeSlider";
-import HomeCards from "../components/CardsHome/HomeCards";
+import HomeCards from "../components/HomeCards/HomeCards";
 const Home = async () => {
   const products = await getProducts();
 

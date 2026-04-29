@@ -41,7 +41,7 @@ const CardReview = ({ item }: { item: reviewData }) => {
   }
 
   return (
-    <div className="bg-gray-50/70 rounded-2xl py-2 px-1 sm:p-4">
+    <div className="bg-gray-50/70 rounded-2xl py-2 m-1 px-2 sm:p-4">
       <div className="  flex flex-wrap items-center gap-2 justify-between">
         <div className="flex items-center gap-2 ">
           <span className="w-12 h-12 rounded-full flex items-center justify-center text-2xl bg-primary-100 text-primary">
@@ -70,7 +70,7 @@ const CardReview = ({ item }: { item: reviewData }) => {
               <button
                 disabled={isDeleting}
                 onClick={() => handleDeleteReview(item._id)}
-                className="w-10 h-10  disabled:opacity-60 disabled:cursor-not-allowed  rounded-2xl cursor-pointer bg-red-100  text-red-500  hover:bg-red-500 hover:text-white transition-colors  flex items-center justify-center text-lg"
+                className="w-10 h-10  disabled:opacity-60 disabled:cursor-not-allowed border border-red-50  rounded-2xl cursor-pointer bg-red-50/70  text-red-500  hover:bg-red-500 hover:text-white transition-colors  flex items-center justify-center text-lg"
               >
                 {isDeleting ? (
                   <FaSpinner className="animate-spin" />

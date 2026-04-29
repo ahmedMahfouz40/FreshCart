@@ -1,7 +1,6 @@
 import { getReviewsForProduct } from "@/actions/reviews.action";
 import CardReview from "@/components/CardReview/CardReview";
 import ReviewModal from "@/components/CreateReviewModal/CreateReviewModal";
-import CreateReviewModal from "@/components/CreateReviewModal/CreateReviewModal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { productType } from "@/types/product.type";
 import { BsStarHalf } from "react-icons/bs";
@@ -135,7 +134,7 @@ export default async function NavTabs({ product }: { product: productType }) {
 
       {/* Reviews */}
       <TabsContent value="Reviews">
-        <div className="p-6">
+        <div className="p-1 sm:p-6">
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
               <div className="text-center">
