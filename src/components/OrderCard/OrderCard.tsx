@@ -2,7 +2,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { FaBox, FaClock, FaLocationDot, FaPhone } from "react-icons/fa6";
+import {
+  FaBox,
+  FaClock,
+  FaLocationDot,
+  FaPhone,
+  FaTruck,
+} from "react-icons/fa6";
 import { TbCashBanknote, TbReceipt } from "react-icons/tb";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -10,15 +16,16 @@ import { orderData } from "@/types/order.type";
 import { formatDate } from "@/utils/formateDate";
 const OrderCard = ({ order }: { order: orderData }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isCash = order.paymentMethodType === "cash";
 
   return (
     <div
       className={`border rounded-2xl  mb-5 ${isOpen ? "border-[#BBF7D0]" : "border-[#F3F4F6]"}  shadow hover:shadow-lg transition-all`}
     >
-      <div className="flex gap-3 border-b border-[#F3F4F6] p-4">
+      <div className="flex gap-5 border-b border-[#F3F4F6] p-4">
         {/* Image — fixed small size on all screens */}
-        <div className="shrink-0 w-18 h-18 sm:w-20 sm:h-20">
-          <div className="p-2 w-full h-full bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center">
+        <div className=" w-20 h-20 sm:w-24 sm:h-24">
+          <div className="relative p-2 w-full h-full bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center">
             <Image
               width={400}
               height={400}
@@ -26,6 +33,11 @@ const OrderCard = ({ order }: { order: orderData }) => {
               alt={order.cartItems[0].product.category.name}
               className="w-full h-full object-contain"
             />
+            {order.cartItems.length > 1 && (
+              <div className="absolute -top-2  -right-2 text-sm  bg-black text-white w-7 h-7 rounded-full flex items-center justify-center">
+                +{order.cartItems.length - 1}
+              </div>
+            )}
           </div>
         </div>
 
@@ -33,15 +45,27 @@ const OrderCard = ({ order }: { order: orderData }) => {
           {/* Top row */}
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1">
-              <Badge className="bg-[#FEF3C6] text-[#E17100] flex items-center gap-1 text-xs">
-                <FaClock size={10} /> Processing
+              <Badge
+                className={`${isCash ? "bg-[#FEF3C6] text-[#E17100]" : "bg-[#DCFCE7]  text-[#155DFC]"}  flex items-center gap-1 text-xs p-3`}
+              >
+                {isCash ? (
+                  <>
+                    <FaClock size={10} /> Processing
+                  </>
+                ) : (
+                  <>
+                    <FaTruck size={10} /> On the way
+                  </>
+                )}
               </Badge>
               <h3 className="font-bold text-base text-heading leading-6">
                 <span className="text-[#99A1AF] text-sm font-normal"># </span>
                 {order.id}
               </h3>
             </div>
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-[#F3F4F6]">
+            <div
+              className={` ${isCash ? "bg-[#F3F4F6] text-gray-600" : "bg-purple-200 text-purple-600"} w-9 h-9 rounded-xl flex items-center text-2xl justify-center shrink-0 `}
+            >
               <TbCashBanknote />
             </div>
           </div>
@@ -102,7 +126,10 @@ const OrderCard = ({ order }: { order: orderData }) => {
           {/* order Items */}
           {order.cartItems.map((cart) => (
             <>
-              <div key={cart._id} className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-4">
+              <div
+                key={cart._id}
+                className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-4"
+              >
                 {/* Left side */}
                 <div className="flex items-center gap-2 min-w-0 flex-1">
                   <div className="shrink-0 relative p-2 rounded-xl bg-[#F9FAFB] w-16 ">
@@ -153,10 +180,14 @@ const OrderCard = ({ order }: { order: orderData }) => {
               <FaPhone /> {order.shippingAddress.phone}
             </p>
           </div>
-          <div className="w-full md:w-1/2 box p-4 border border-[#FEE685] rounded-2xl bg-[#FEF3C6] space-y-4">
+          <div
+            className={`w-full md:w-1/2 box p-4 border rounded-2xl  space-y-4 ${isCash ? " border-[#FEE685] bg-[#FEF3C6]" : "border-blue-300 bg-blue-100"} `}
+          >
             <h4 className="flex items-center gap-2 text-heading text-sm font-semibold">
-              <span className="w-6 h-6 flex items-center justify-center rounded-lg bg-[#FE9A00] text-white">
-                <FaClock />
+              <span
+                className={`w-6 h-6 flex items-center justify-center rounded-lg  text-white ${isCash ? "bg-[#FE9A00]" : "bg-blue-500 "} `}
+              >
+                {isCash ? <FaClock /> : <FaTruck />}
               </span>
               Order Summary
             </h4>
