@@ -8,4 +8,5 @@ export interface cartState {
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
+  isIdle:boolean
 }

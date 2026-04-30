@@ -13,10 +13,11 @@ import {
 import Loading from "./loading";
 import EmptyWishlist from "@/components/EmptyWishlist/EmptyWishlist";
 import { useAddToCart } from "@/hooks/useAddToCart";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { fetchUserWishlist } from "@/redux/slices/wishlistSlice";
 import { useDeleteFromWishlist } from "@/hooks/useDeleteFromWishlist";
+import { shallowEqual } from "react-redux";
 
 const Wishlist = () => {
   const {
@@ -29,25 +30,31 @@ const Wishlist = () => {
     wishlistProducts: wishlist,
     isLoading,
     isError,
-    hasFetched: isSuccess,
-  } = useAppSelector((state) => state.wishlistReducer);
+    hasFetched,
+    cartProducts,
+  } = useAppSelector(
+    (state) => ({
+      wishlistProducts: state.wishlistReducer.wishlistProducts,
+      isLoading: state.wishlistReducer.isLoading,
+      isError: state.wishlistReducer.isError,
+      hasFetched: state.wishlistReducer.hasFetched,
+      cartProducts: state.cartReducer.cartProducts,
+    }),
+    shallowEqual,
+  );
   const dispatch = useAppDispatch();
-  const hasFetched = useRef(false);
+
   useEffect(() => {
-    if (!hasFetched.current) {
+    if (!hasFetched) {
       dispatch(fetchUserWishlist());
-      hasFetched.current = true;
     }
-  }, [dispatch]);
+  }, [dispatch, hasFetched]);
 
   const { handleDeleteFromWishlist, isLoading: isDeleting } =
     useDeleteFromWishlist();
-  const { cartProducts } = useAppSelector((state) => state.cartReducer);
 
-  if (isLoading) return <Loading />;
-  if (isError) return <EmptyWishlist />;
-  if (wishlist.length === 0 && isSuccess) return <EmptyWishlist />;
-  if (!isSuccess) return <Loading />;
+  if (isLoading || !hasFetched) return <Loading />;
+  if (isError || wishlist.length === 0) return <EmptyWishlist />;
 
   return (
     <div>

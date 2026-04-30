@@ -18,6 +18,7 @@ const initialState: cartState = {
   isLoading: false,
   isError: false,
   isSuccess: false,
+  isIdle: true,
 };
 const cartSlice = createSlice({
   name: "cart",
@@ -64,6 +65,7 @@ const cartSlice = createSlice({
       state.isLoading = true;
       state.isSuccess = false;
       state.isError = false;
+      state.isIdle = false;
     });
     builder.addCase(fetchUserCart.rejected, (state) => {
       state.isLoading = false;

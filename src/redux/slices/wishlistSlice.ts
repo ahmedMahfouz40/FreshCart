@@ -18,6 +18,7 @@ const initialState: wishlistSliceType = {
   hasFetched: false,
   isError: false,
   isInWishlist: "",
+
 };
 const wishlistSlice = createSlice({
   initialState,
@@ -39,7 +40,7 @@ const wishlistSlice = createSlice({
     builder.addCase(fetchUserWishlist.rejected, (state) => {
       state.isLoading = false;
       state.isError = true;
-      state.hasFetched = false;
+      state.hasFetched = true;
     });
     builder.addCase(fetchUserWishlist.fulfilled, (state, action) => {
       const userWishlist = action.payload;
