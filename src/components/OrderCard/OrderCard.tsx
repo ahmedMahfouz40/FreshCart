@@ -95,9 +95,9 @@ const OrderCard = ({ order }: { order: orderData }) => {
             </div>
             <button
               onClick={() => setIsOpen((prev) => !prev)}
-              className={`py-2 px-4 flex items-center gap-1.5 rounded-xl cursor-pointer text-xs font-semibold
-          ${isOpen ? "bg-primary text-white" : "bg-primary-100 text-primary"}`}
-            >
+              className={`py-2 px-4 flex items-center  gap-1.5 rounded-xl cursor-pointer ms-auto text-xs font-semibold
+              ${isOpen ? "bg-primary text-white" : "bg-primary-100 text-primary"}`}
+                >
               {isOpen ? "Hide" : "Details"}
               <IoIosArrowDown
                 size={14}
