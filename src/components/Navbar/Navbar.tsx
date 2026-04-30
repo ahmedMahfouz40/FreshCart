@@ -14,7 +14,9 @@ import { IoIosGift, IoMdSearch } from "react-icons/io";
 import { CiHeart, CiUser } from "react-icons/ci";
 import {
   FaArrowRightFromBracket,
+  FaBoxOpen,
   FaCartShopping,
+  FaGear,
   FaHeadset,
   FaPhone,
   FaTruck,
@@ -360,14 +362,39 @@ export default function Navbar() {
                         <div>
                           <Link
                             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
-                            href="/profile/settings"
+                            href="/profile/address"
                             onClick={closeSheet}
+                            title="profile"
                           >
                             <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
                               <FaUser className="text-gray-500" />
                             </div>
                             <span className="font-medium text-gray-700">
                               {session?.data?.user?.name}
+                            </span>
+                          </Link>
+                          <Link
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
+                            href="/allorders"
+                            onClick={closeSheet}
+                          >
+                            <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                              <FaBoxOpen className="text-gray-500" />
+                            </div>
+                            <span className="font-medium text-gray-700">
+                              Orders
+                            </span>
+                          </Link>
+                          <Link
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary-50/50 transition-colors"
+                            href="/profile/settings"
+                            onClick={closeSheet}
+                          >
+                            <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                              <FaGear className="text-gray-500" />
+                            </div>
+                            <span className="font-medium text-gray-700">
+                              Settings
                             </span>
                           </Link>
                           <button
