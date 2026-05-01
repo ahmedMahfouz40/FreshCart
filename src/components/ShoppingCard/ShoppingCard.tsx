@@ -51,8 +51,7 @@ const ShoppingCard = () => {
       if (res.statusMsg == "fail") {
         toast.error(res.message, { position: "top-center", richColors: true });
       }
-    } catch (error) {
-      console.log("error updating cart", error);
+    } catch  {
       toast.error("server error ", {
         position: "top-center",
         richColors: true,

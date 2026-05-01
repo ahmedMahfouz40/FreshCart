@@ -51,7 +51,7 @@ const ProductCard = ({ product }: { product: productType }) => {
           {product.priceAfterDiscount ? (
             <>
               <div className="flex gap-2  items-center flex-wrap">
-                <h3 className="font-bold text-[18px] flex items-center w-full gap-1  text-primary-600 leading-5">
+                <h3 className="font-bold text-[18px] flex items-center flex-wrap w-full gap-1  text-primary-600 leading-5">
                   {product.priceAfterDiscount} <span>EGP</span>
                 </h3>
                 <p className="text-xs text-muted-foreground line-through">

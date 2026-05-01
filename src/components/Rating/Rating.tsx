@@ -5,7 +5,7 @@ const Rating = ({ rating }: { rating: number | 0 }) => {
   return (
     <div>
       <div className="flex  gap-3 mb-2 items-center">
-        <div className="flex gap-1 text-[#FCC800] text-lg">
+        <div className="flex gap-1 items-center flex-wrap text-[#FCC800] text-lg">
           {[1, 2, 3, 4, 5].map((star) => {
             if (rating >= star) {
               return <FaStar key={star} />;

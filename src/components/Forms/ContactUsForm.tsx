@@ -40,7 +40,6 @@ const ContactUsForm = () => {
 
     await delay(1000);
 
-    console.log("data from contact us", data);
 
     setStatus("success");
     reset();

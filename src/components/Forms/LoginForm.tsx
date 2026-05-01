@@ -39,7 +39,6 @@ const LoginForm = () => {
         redirect: false,
         callbackUrl: "/",
       });
-      console.log(result);
 
       if (result?.ok) {
         toast.success("Signed in successfully", {
@@ -54,8 +53,7 @@ const LoginForm = () => {
           richColors: true,
         });
       }
-    } catch (error) {
-      console.log("error at Sign in: ", error);
+    } catch  {
       toast.error("Error while Signing In", {
         position: "top-center",
         richColors: true,
