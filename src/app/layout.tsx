@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import MySessionProvider from "../providers/MySessionProvider";
 import Footer from "../components/Footer/Footer";
 import ReduxProvider from "../providers/ReduxProvider";
+import AppInitializer from "@/providers/AppInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,10 +42,12 @@ export default function RootLayout({
       >
         <MySessionProvider>
           <ReduxProvider>
-            <Toaster />
-            <Navbar />
-            {children}
-            <Footer />
+            <AppInitializer>
+              <Toaster />
+              <Navbar />
+              {children}
+              <Footer />
+            </AppInitializer>
           </ReduxProvider>
         </MySessionProvider>
       </body>

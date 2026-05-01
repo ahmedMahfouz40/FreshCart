@@ -1,20 +1,20 @@
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 const ShopByCategories = dynamic(
-  () => import("../components/ShopByCategories/ShopByCategories"),
+  () => import("../../components/ShopByCategories/ShopByCategories"),
 );
-import Figure from "../components/SmallCards/Figure";
+import Figure from "../../components/SmallCards/Figure";
 import CategorySkeleton from "@/components/skeletons/CategorySkeleton";
-import Container from "../components/Container/Container";
+import Container from "../../components/Container/Container";
 import { getProducts } from "@/actions/products.action";
-import HomeSlider from "../components/Sliders/HomeSlider";
-import HomeCards from "../components/HomeCards/HomeCards";
+import HomeSlider from "../../components/Sliders/HomeSlider";
+import HomeCards from "../../components/HomeCards/HomeCards";
 const Home = async () => {
   const products = await getProducts();
 
   return (
-    <div className=" my-5">
+    <div className=" mb-5">
       <HomeSlider />
       <Container>
         <div>
@@ -23,9 +23,6 @@ const Home = async () => {
             <ShopByCategories />
           </Suspense>
           <HomeCards />
-          {/* =============== */}
-
-          {/* =============== */}
           <h2 className="border-s-5 border-primary-600 px-2 rounded my-3 font-bold text-3xl">
             <span>Featured</span>
             <span className="text-primary-600 border-primary-600">

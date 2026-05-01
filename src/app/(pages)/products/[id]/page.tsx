@@ -168,9 +168,11 @@ const ProductDetails = async ({
                 You May Also <span className=" text-primary-600">Like</span>
               </h2>
             </div>
-            <Suspense fallback={<ProductSliderSkeleton />}>
-              <SubProductsSection categoryId={product.category._id} />
-            </Suspense>
+            <div className="mb-5">
+              <Suspense fallback={<ProductSliderSkeleton />}>
+                <SubProductsSection categoryId={product.category._id} />
+              </Suspense>
+            </div>
           </div>
         </div>
       </Container>

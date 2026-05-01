@@ -20,7 +20,7 @@ const ProductCard = ({ product }: { product: productType }) => {
 
   return (
     <CardAnimationWrapper>
-      <div className="relative border rounded-2xl border-[#E5E7EB] overflow-hidden p-3 hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
+      <div className="relative border  rounded-2xl border-[#E5E7EB] overflow-hidden p-3 hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
         {/* Image  */}
         <Link href={`/products/${product._id}`}>
           <Image
@@ -34,7 +34,7 @@ const ProductCard = ({ product }: { product: productType }) => {
         {/* Title & Category */}
         <p className="text-xs text-muted-foreground">{product.category.name}</p>
         <Link href={`/products/${product._id}`} className="w-full">
-          <h2 className="text-xl my-1 text-gray-800 line-clamp-2">
+          <h2 className="text-xl my-1 text-gray-800 line-clamp-1">
             {product.title}
           </h2>
         </Link>
@@ -50,9 +50,9 @@ const ProductCard = ({ product }: { product: productType }) => {
           {/* Price  */}
           {product.priceAfterDiscount ? (
             <>
-              <div className="flex gap-2 items-center flex-wrap">
-                <h3 className="font-bold text-[18px] text-primary-600 leading-5">
-                  {product.priceAfterDiscount} EGP
+              <div className="flex gap-2  items-center flex-wrap">
+                <h3 className="font-bold text-[18px] flex items-center w-full gap-1  text-primary-600 leading-5">
+                  {product.priceAfterDiscount} <span>EGP</span>
                 </h3>
                 <p className="text-xs text-muted-foreground line-through">
                   {product.price} EGP
@@ -64,7 +64,9 @@ const ProductCard = ({ product }: { product: productType }) => {
               {product.price} EGP
             </h3>
           )}
-          <AddToCart productId={product._id} />
+          <div>
+            <AddToCart productId={product._id} />
+          </div>
         </div>
 
         {/* Options absolute */}

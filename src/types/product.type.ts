@@ -1,7 +1,7 @@
 export interface Root {
   results: number;
   metadata: Metadata;
-  data: productType[] ;
+  data: productType[];
 }
 
 export interface Metadata {
@@ -72,4 +72,6 @@ export interface Brand {
   name: string;
   slug: string;
   image: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

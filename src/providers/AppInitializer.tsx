@@ -1,27 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { fetchUserWishlist } from "@/redux/slices/wishlistSlice";
 import { fetchUserAddress } from "@/redux/slices/addressSlice";
 import { fetchUserCart } from "@/redux/slices/cartSlice";
 import { useSession } from "next-auth/react";
 
-const AppInitializer = () => {
+const AppInitializer = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
-  const { status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (status === "loading" || status === "unauthenticated") return;
+    if (!session?.user) return;
 
     Promise.all([
       dispatch(fetchUserWishlist()),
       dispatch(fetchUserCart()),
       dispatch(fetchUserAddress()),
     ]);
-  }, [dispatch, status]);
+  }, [dispatch, session]);
 
-  return null;
+  return <>{children}</>;
 };
 
 export default AppInitializer;

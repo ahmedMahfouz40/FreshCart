@@ -1,13 +1,6 @@
+import { Brand } from "./product.type";
+
 export interface brandsType {
-  data: [
-    {
-      createdAt: string;
-      image: string;
-      name: string;
-      slug: string;
-      updatedAt: string;
-      _id: string;
-    },
-  ];
+  data: Brand[];
   results: number;
 }
