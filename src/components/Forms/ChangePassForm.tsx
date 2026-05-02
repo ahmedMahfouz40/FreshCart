@@ -67,7 +67,7 @@ const PasswordField = memo(
                 id={inputId}
                 aria-invalid={fieldState.invalid}
                 placeholder={`Enter Your ${label}`}
-                className="focus-visible:border-amber-600 py-6 rounded-2xl"
+                className="focus-visible:border-amber-600 text-xs sm:text-sm  py-6 rounded-2xl"
                 type={showPassword === name ? "text" : "password"}
               />
               <button

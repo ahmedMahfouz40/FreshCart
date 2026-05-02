@@ -14,6 +14,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { orderData } from "@/types/order.type";
 import { formatDate } from "@/utils/formateDate";
+import Link from "next/link";
 const OrderCard = ({ order }: { order: orderData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isCash = order.paymentMethodType === "cash";
@@ -97,7 +98,7 @@ const OrderCard = ({ order }: { order: orderData }) => {
               onClick={() => setIsOpen((prev) => !prev)}
               className={`py-2 px-4 flex items-center  gap-1.5 rounded-xl cursor-pointer ms-auto text-xs font-semibold
               ${isOpen ? "bg-primary text-white" : "bg-primary-100 text-primary"}`}
-                >
+            >
               {isOpen ? "Hide" : "Details"}
               <IoIosArrowDown
                 size={14}
@@ -128,10 +129,10 @@ const OrderCard = ({ order }: { order: orderData }) => {
             <>
               <div
                 key={cart._id}
-                className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-4"
+                className="flex mb-4 gap-2 items-center justify-between rounded-xl bg-white border border-gray-100 p-2 sm:p-4"
               >
                 {/* Left side */}
-                <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="flex items-center gap-2  ">
                   <div className="shrink-0 relative p-2 rounded-xl bg-[#F9FAFB] w-16 ">
                     <Image
                       src={cart.product.imageCover}
@@ -141,18 +142,21 @@ const OrderCard = ({ order }: { order: orderData }) => {
                       className="w-full"
                     />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-heading truncate">
+                  <div>
+                    <Link
+                      href={`/products/${cart.product._id}`}
+                      className="text-heading line-clamp-1 hover:underline transition-all"
+                    >
                       {cart.product.title}
-                    </p>
-                    <p className="text-sm leading-5 text-gray-500">
-                      {cart.count} × {cart.price} EGP
+                    </Link>
+                    <p className="text-sm leading-5 text-gray-500 flex items-center flex-wrap gap-1">
+                      <span>{cart.count}</span> × <span>{cart.price} EGP</span>
                     </p>
                   </div>
                 </div>
 
                 {/* Right side */}
-                <div className="shrink-0 text-right ml-2">
+                <div className=" text-right flex-1 ml-2">
                   <p className="text-heading text-lg leading-7 font-bold">
                     {cart.count * cart.price}
                   </p>

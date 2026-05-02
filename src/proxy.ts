@@ -12,9 +12,6 @@ export default async function proxy(req: NextRequest) {
       : "next-auth.session-token",
   });
 
-  console.log("JWT token result:", jwt);
-  console.log("=== END DEBUG ===");
-
   if (jwt) {
     return NextResponse.next();
   }

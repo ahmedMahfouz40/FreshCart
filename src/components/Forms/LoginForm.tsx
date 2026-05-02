@@ -31,7 +31,8 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   async function handleLogin(values: signinDataType) {
-    const { keepMeSignIn, ...userData } = values;
+    const { keepMeSignIn: _, ...userData } = values;
+    void _;
     setIsLoading(true);
     try {
       const result = await signIn("credentials", {
@@ -53,7 +54,7 @@ const LoginForm = () => {
           richColors: true,
         });
       }
-    } catch  {
+    } catch {
       toast.error("Error while Signing In", {
         position: "top-center",
         richColors: true,
@@ -87,7 +88,7 @@ const LoginForm = () => {
                     placeholder="ali@example.com"
                     autoComplete="email"
                     type="email"
-                    className="px-4 py-6 pl-12 border-gray-200 rounded-xl "
+                    className="px-4 py-6 pl-12 border-gray-200 text-xs sm:text-sm rounded-xl "
                   />
                   <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 </div>
@@ -124,7 +125,7 @@ const LoginForm = () => {
                     placeholder="create a strong password"
                     autoComplete="current-password"
                     type={showPassword ? "text" : "password"}
-                    className="pl-12! pr-12! py-6! rounded-xl border-gray-200"
+                    className="pl-12! pr-12! py-6! rounded-xl text-xs sm:text-sm border-gray-200"
                   />
 
                   <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
