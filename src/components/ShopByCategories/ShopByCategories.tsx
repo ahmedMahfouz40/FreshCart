@@ -26,12 +26,12 @@ const ShopByCategories = async () => {
           <Link
             href={`products/?subCategory=${prod._id}`}
             key={prod._id}
-            className="flex flex-col items-center gap-2 shadow rounded-xl hover:shadow-xl transition-all"
+            className="flex flex-col items-center gap-2 shadow rounded-xl hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
           >
             <Image
               src={prod.image}
               width={300}
-              className=" h-20 w-20 rounded-full"
+              className=" h-20 w-20 rounded-full "
               height={300}
               alt={prod.name}
             />

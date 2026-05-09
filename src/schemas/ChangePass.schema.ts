@@ -31,4 +31,13 @@ export const changePassSchema = zod
       error: "rePassword doesn't match with password",
       path: ["rePassword"],
     },
+  )
+  .refine(
+    (values) => {
+      return values.currentPassword !== values.password;
+    },
+    {
+      error: "password must not be the same as new password",
+      path: ["password"],
+    },
   );
