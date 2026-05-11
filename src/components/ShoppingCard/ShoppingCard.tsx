@@ -135,7 +135,7 @@ const ShoppingCard = () => {
                     onClick={() =>
                       handleUpdateProduct(cart.product._id, cart.count - 1)
                     }
-                    className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                    className={`w-9 h-9 rounded-lg bg-white ${cart.count > 1 ? "text-gray-500" : "text-red-500"}  shadow text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50`}
                   >
                     -
                   </button>
