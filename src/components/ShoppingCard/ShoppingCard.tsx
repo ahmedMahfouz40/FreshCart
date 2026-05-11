@@ -51,7 +51,7 @@ const ShoppingCard = () => {
       if (res.statusMsg == "fail") {
         toast.error(res.message, { position: "top-center", richColors: true });
       }
-    } catch  {
+    } catch {
       toast.error("server error ", {
         position: "top-center",
         richColors: true,
@@ -137,7 +137,7 @@ const ShoppingCard = () => {
                     }
                     className="w-9 h-9 rounded-lg bg-white text-gray-500 shadow text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    -
+                    {cart.count > 1 ? "-" : "\u20E0"}
                   </button>
                   <span className="w-9 h-9 flex items-center justify-center rounded-lg text-heading font-bold text-sm">
                     {cart.count}
